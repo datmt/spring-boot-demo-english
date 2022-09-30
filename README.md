@@ -1,4 +1,12 @@
-<h1 align="center"><a href="https://github.com/xkcoding" target="_blank">Spring Boot Demo</a></h1>
+<h1 align="center"><a href="https://github.com/xkcoding" target="_blank">Spring Boot Demo in English</a></h1>
+
+
+This repo is a clone of the original repo in Chinese. Credits to the orginal creator.
+
+Repo translated using Azure translator.
+
+
+
 <p align="center">
   <a href="https://travis-ci.com/xkcoding/spring-boot-demo"><img alt="Travis-CI" src="https://travis-ci.com/xkcoding/spring-boot-demo.svg?branch=master"/></a>
   <a href=" https://www.codacy.com/app/xkcoding/spring-boot-demo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=xkcoding/spring-boot-demo&amp;utm_campaign=Badge_Grade "><img alt="Codacy" src="https://api.codacy.com/project/badge/Grade/1f2e3d437b174bfc943dae1600332ec1"/></a>
@@ -9,14 +17,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/xkcoding/spring-boot-demo/stargazers"><img alt="star" src="https://img.shields.io/github/stars/xkcoding/spring-boot-demo.svg?label=Stars&style=social"/></a>
-  <a href="https://github.com/xkcoding/spring-boot-demo/network/members"><img alt="star" src="https://img.shields.io/github/forks/xkcoding/spring-boot-demo.svg?label=Fork&style=social"/></a>
-  <a href="https://github.com/xkcoding/spring-boot-demo/watchers"><img alt="star" src="https://img.shields.io/github/watchers/xkcoding/spring-boot-demo.svg?label=Watch&style=social"/></a>
+  <a href="https://github.com/xkcoding/spring-boot-demo-english/stargazers"><img alt="star" src="https://img.shields.io/github/stars/xkcoding/spring-boot-demo.svg?label=Stars&style=social"/></a>
+  <a href="https://github.com/xkcoding/spring-boot-demo-english/network/members"><img alt="star" src="https://img.shields.io/github/forks/xkcoding/spring-boot-demo.svg?label=Fork&style=social"/></a>
+  <a href="https://github.com/xkcoding/spring-boot-demo-english/watchers"><img alt="star" src="https://img.shields.io/github/watchers/xkcoding/spring-boot-demo.svg?label=Watch&style=social"/></a>
 </p>
 
-<p align="center">
-  <span>Chinese | <a href="./README.en.md">English</a></span>
-</p>
 
 ## Project Introduction
 

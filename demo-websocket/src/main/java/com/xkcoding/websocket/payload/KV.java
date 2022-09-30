@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * 键值匹配
+ * Key-value matching
  * </p>
  *
  * @author yangkai.shen
@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class KV {
     /**
-     * 键
+     * Key
      */
     private String key;
 
     /**
-     * 值
+     5 yuan
      */
     private Object value;
 }

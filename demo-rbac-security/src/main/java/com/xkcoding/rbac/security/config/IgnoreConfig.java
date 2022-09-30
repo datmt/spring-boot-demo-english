@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * <p>
- * 忽略配置
+ * Ignore configuration
  * </p>
  *
  * @author yangkai.shen
@@ -16,47 +16,47 @@ import java.util.List;
 @Data
 public class IgnoreConfig {
     /**
-     * 需要忽略的 URL 格式，不考虑请求方法
+     * URL formats that need to be ignored, regardless of the request method
      */
     private List<String> pattern = Lists.newArrayList();
 
     /**
-     * 需要忽略的 GET 请求
+     * GET requests that need to be ignored
      */
     private List<String> get = Lists.newArrayList();
 
     /**
-     * 需要忽略的 POST 请求
+     * POST requests that need to be ignored
      */
     private List<String> post = Lists.newArrayList();
 
     /**
-     * 需要忽略的 DELETE 请求
+     * DELETE requests that need to be ignored
      */
     private List<String> delete = Lists.newArrayList();
 
     /**
-     * 需要忽略的 PUT 请求
+     * PUT requests that need to be ignored
      */
     private List<String> put = Lists.newArrayList();
 
     /**
-     * 需要忽略的 HEAD 请求
+     * HEAD requests that need to be ignored
      */
     private List<String> head = Lists.newArrayList();
 
     /**
-     * 需要忽略的 PATCH 请求
+     * PATCH requests that need to be ignored
      */
     private List<String> patch = Lists.newArrayList();
 
     /**
-     * 需要忽略的 OPTIONS 请求
+     * OPTIONS requests that need to be ignored
      */
     private List<String> options = Lists.newArrayList();
 
     /**
-     * 需要忽略的 TRACE 请求
+     * TRACE requests that need to be ignored
      */
     private List<String> trace = Lists.newArrayList();
 }

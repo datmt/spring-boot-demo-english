@@ -1,6 +1,6 @@
 # spring-boot-demo-template-thymeleaf
 
-> 本 demo 主要演示了 Spring Boot 项目如何集成 thymeleaf 模板引擎
+> This demo demonstrates how the Spring Boot project integrates with the thymeleaf template engine
 
 ## pom.xml
 
@@ -76,7 +76,7 @@
 ```java
 /**
  * <p>
- * 主页
+ * Homepage
  * </p>
  *
  * @author yangkai.shen
@@ -108,7 +108,7 @@ public class IndexController {
 ```java
 /**
  * <p>
- * 用户页面
+ * User page
  * </p>
  *
  * @author yangkai.shen
@@ -144,7 +144,7 @@ public class UserController {
 <header th:replace="~{common/head :: header}"></header>
 <body>
 <div id="app" style="margin: 20px 20%">
-	欢迎登录，<span th:text="${user.name}"></span>！
+	Welcome to log in, <span th:text="${user.name}"></span>!
 </div>
 </body>
 </html>
@@ -159,9 +159,9 @@ public class UserController {
 <body>
 <div id="app" style="margin: 20px 20%">
    <form action="/demo/user/login" method="post">
-      用户名<input type="text" name="name" placeholder="用户名"/>
-      密码<input type="password" name="password" placeholder="密码"/>
-      <input type="submit" value="登录">
+      username<input type="text" name="name" placeholder="username"/>
+      password<input type="password" name="password" placeholder="password"/>
+      <input type="submit" value="Login" >
    </form>
 </div>
 </body>
@@ -184,7 +184,7 @@ spring:
     cache: false
 ```
 
-## Thymeleaf语法糖学习文档
+## Thymeleaf syntax sugar learning documentation
 
 https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
 

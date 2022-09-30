@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 测试接口.
+ * Test interface.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-09  14:37
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     /**
-     * 拥有 ROLE_ADMIN 的用户才能访问的资源
+     * Resources that only users with ROLE_ADMIN can access
      *
      * @return ADMIN
      */
@@ -25,7 +25,7 @@ public class TestController {
     }
 
     /**
-     * 拥有 ROLE_TEST 的用户才能访问的资源
+     * Resources that only users with ROLE_TEST can access
      *
      * @return TEST
      */
@@ -36,7 +36,7 @@ public class TestController {
     }
 
     /**
-     * scope 有 READ 的用户资源才能访问
+     * scope User resources with READ are available to access
      *
      * @return READ
      */
@@ -47,7 +47,7 @@ public class TestController {
     }
 
     /**
-     * scope 有 WRITE 的用户资源才能访问
+     * scope User resources with WRITE can only be accessed
      *
      * @return WRITE
      */

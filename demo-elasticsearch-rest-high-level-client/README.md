@@ -1,28 +1,28 @@
 # spring-boot-demo-elasticsearch-rest-high-level-client
 
-> 此 demo 主要演示了 Spring Boot 如何集成 `elasticsearch-rest-high-level-client` 完成对 `ElasticSearch 7.x` 版本的基本 CURD 操作
+> This demo demonstrates how Spring Boot integrates 'elasticsearch-rest-high-level-client' to complete basic CURD operations on the 'ElasticSearch 7.x' release
 
-## Elasticsearch 升级
+## Elasticsearch upgrade
 
-先升级到 6.8，索引创建，设置 mapping 等操作加参数：include_type_name=true，然后滚动升级到 7，旧索引可以用 type 访问。具体可以参考：
+First upgrade to 6.8, index creation, set mapping and other operations plus parameters: include_type_name=true, and then scroll to upgrade to 7, the old index can be accessed with type. For details, please refer to:
 
 https://www.elastic.co/cn/blog/moving-from-types-to-typeless-apis-in-elasticsearch-7-0
 
 https://www.elastic.co/guide/en/elasticsearch/reference/7.0/removal-of-types.html
 
-## 注意
+## Note
 
-作者编写本 demo 时，ElasticSearch 版本为 `7.3.0`，使用 docker 运行，下面是所有步骤：
+When the author wrote this demo, the version of ElasticSearch was '7.3.0' and it ran using docker, here are all the steps:
 
-1.下载镜像：`docker pull elasticsearch:7.3.0`
+1. Download the image: 'docker pull elasticsearch:7.3.0'
 
-2.下载安装 `docker-compose`，参考文档： https://docs.docker.com/compose/install/
+2. Download and install 'docker-compose', reference document: https://docs.docker.com/compose/install/
 
 ```bash
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
 
-3.编写docker-compose 文件
+3. Write a docker-compose file
 
 ```yaml
 version: "3"
@@ -48,7 +48,7 @@ services:
         max-size: "50m"
 
 ```
-4.启动: `docker-compose -f elasticsearch.yaml up -d`
+4.Launch: 'docker-compose -f elasticsearch.yaml up -d'
 
 ## pom.xml
 
@@ -104,7 +104,7 @@ services:
       <artifactId>spring-boot-configuration-processor</artifactId>
     </dependency>
 
-    <!-- 工具类 -->
+    <!-- Tool Class -->
     <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-all</artifactId>
@@ -165,16 +165,16 @@ services:
 
 ## Person.java
 
-> 实体类
+> Entity classes
 >
 
 ```java
 package com.xkcoding.elasticsearch.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok. AllArgsConstructor;
+import lombok. Builder;
+import lombok. Data;
+import lombok. NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -195,32 +195,32 @@ public class Person implements Serializable {
     private static final long serialVersionUID = 8510634155374943623L;
 
     /**
-     * 主键
+     * Primary key
      */
     private Long id;
 
     /**
-     * 名字
+     * First name
      */
     private String name;
 
     /**
-     * 国家
+     * Country
      */
     private String country;
 
     /**
-     * 年龄
+     * Age
      */
     private Integer age;
 
     /**
-     * 生日
+     * Birthday
      */
     private Date birthday;
 
     /**
-     * 介绍
+     * Introduction
      */
     private String remark;
 
@@ -302,7 +302,7 @@ public interface PersonService {
 
 ## PersonServiceImpl.java
 
-> service 实现类型，基本CURD操作
+> service implementation type, basic curd operation
 
 ```java
 package com.xkcoding.elasticsearch.service.impl;
@@ -374,7 +374,7 @@ public class PersonServiceImpl extends BaseElasticsearchService implements Perso
     @Override
     public void delete(String index, Person person) {
         if (ObjectUtils.isEmpty(person)) {
-            // 如果person 对象为空，则删除全量
+            If the person object is empty, the full amount is deleted
             searchList(index).forEach(p -> {
                 deleteRequest(index, String.valueOf(p.getId()));
             });
@@ -400,7 +400,7 @@ public class PersonServiceImpl extends BaseElasticsearchService implements Perso
 
 ## ElasticsearchApplicationTests.java
 
-> 主要功能测试，参见service 注释说明
+> the main functional test, see the service comment
 
 ```java
 package com.xkcoding.elasticsearch;
@@ -426,7 +426,7 @@ public class ElasticsearchApplicationTests {
     private PersonService personService;
 
     /**
-     * 测试删除索引
+     * Test to drop indexes
      */
     @Test
     public void deleteIndexTest() {
@@ -434,7 +434,7 @@ public class ElasticsearchApplicationTests {
     }
 
     /**
-     * 测试创建索引
+     * Test index creation
      */
     @Test
     public void createIndexTest() {
@@ -442,31 +442,31 @@ public class ElasticsearchApplicationTests {
     }
 
     /**
-     * 测试新增
+     * New to testing
      */
     @Test
     public void insertTest() {
         List<Person> list = new ArrayList<>();
-        list.add(Person.builder().age(11).birthday(new Date()).country("CN").id(1L).name("哈哈").remark("test1").build());
+        list.add(Person.builder().age(11).birthday(new Date()).country("CN").id(1L).name("haha").remark("test1").build());
         list.add(Person.builder().age(22).birthday(new Date()).country("US").id(2L).name("hiahia").remark("test2").build());
-        list.add(Person.builder().age(33).birthday(new Date()).country("ID").id(3L).name("呵呵").remark("test3").build());
+        list.add(Person.builder().age(33).birthday(new Date()).country("ID").id(3L).name("Oh").remark("test3").build());
 
         personService.insert(ElasticsearchConstant.INDEX_NAME, list);
     }
 
     /**
-     * 测试更新
+     * Test updates
      */
     @Test
     public void updateTest() {
-        Person person = Person.builder().age(33).birthday(new Date()).country("ID_update").id(3L).name("呵呵update").remark("test3_update").build();
+        Person person = Person.builder().age(33).birthday(new Date()).country("ID_update").id(3L).name("Oh update").remark("test3_update").build();
         List<Person> list = new ArrayList<>();
         list.add(person);
         personService.update(ElasticsearchConstant.INDEX_NAME, list);
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void deleteTest() {
@@ -474,7 +474,7 @@ public class ElasticsearchApplicationTests {
     }
 
     /**
-     * 测试查询
+     * Test query
      */
     @Test
     public void searchListTest() {
@@ -485,9 +485,9 @@ public class ElasticsearchApplicationTests {
 }
 ```
 
-## 参考
+## Reference
 
-- ElasticSearch 官方文档：https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+- Official ElasticSearch documentation: https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
 
 - Java High Level REST Client：https://www.elastic.co/guide/en/elasticsearch/client/java-rest/7.3/java-rest-high.html
 

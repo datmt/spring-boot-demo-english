@@ -8,7 +8,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 
 /**
  * <p>
- * 教师节点
+ * Teacher node
  * </p>
  *
  * @author yangkai.shen
@@ -22,14 +22,14 @@ import org.neo4j.ogm.annotation.NodeEntity;
 @NodeEntity
 public class Teacher {
     /**
-     * 主键，自定义主键策略，使用UUID生成
+     * Primary key, custom primary key strategy, generated using UUID
      */
     @Id
     @GeneratedValue(strategy = CustomIdStrategy.class)
     private String id;
 
     /**
-     * 教师姓名
+     * Teacher's name
      */
     @NonNull
     private String name;

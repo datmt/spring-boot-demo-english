@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * 主键注解
+ * Primary key annotations
  * </p>
  *
  * @author yangkai.shen
@@ -17,9 +17,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 public @interface Pk {
     /**
-     * 自增
+     * Self-incrementing
      *
-     * @return 自增主键
+     * @return Self-augmented primary key
      */
     boolean auto() default true;
 }

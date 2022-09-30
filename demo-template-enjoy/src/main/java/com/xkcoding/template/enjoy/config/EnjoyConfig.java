@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>
- * Enjoy 模板配置类
+ * Enjoy template configuration class
  * </p>
  *
  * @author yangkai.shen
@@ -18,12 +18,12 @@ public class EnjoyConfig {
     @Bean(name = "jfinalViewResolver")
     public JFinalViewResolver getJFinalViewResolver() {
         JFinalViewResolver jfr = new JFinalViewResolver();
-        // setDevMode 配置放在最前面
+        The setDevMode configuration is placed first
         jfr.setDevMode(true);
-        // 使用 ClassPathSourceFactory 从 class path 与 jar 包中加载模板文件
+        Use ClassPathSourceFactory to load template files from class path and jar packages
         jfr.setSourceFactory(new ClassPathSourceFactory());
-        // 在使用 ClassPathSourceFactory 时要使用 setBaseTemplatePath
-        // 代替 jfr.setPrefix("/view/")
+        Use setBaseTemplatePath when using ClassPathSourceFactory
+        instead of jfr.setPrefix("/view/")
         JFinalViewResolver.engine.setBaseTemplatePath("/templates/");
 
         jfr.setSessionInView(true);

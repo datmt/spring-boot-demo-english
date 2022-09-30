@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 分页请求参数
+ * Paging request parameters
  * </p>
  *
  * @author yangkai.shen
@@ -13,12 +13,12 @@ import lombok.Data;
 @Data
 public class PageCondition {
     /**
-     * 当前页码
+     * Current page number
      */
     private Integer currentPage;
 
     /**
-     * 每页条数
+     * Number of articles per page
      */
     private Integer pageSize;
 

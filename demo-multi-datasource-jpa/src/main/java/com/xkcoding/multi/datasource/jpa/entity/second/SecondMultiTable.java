@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 /**
  * <p>
- * 多数据源测试表
+ * Multi-data source test table
  * </p>
  *
  * @author yangkai.shen
@@ -25,13 +25,13 @@ import javax.persistence.Table;
 @Builder
 public class SecondMultiTable {
     /**
-     * 主键
+     * Primary key
      */
     @Id
     private Long id;
 
     /**
-     * 名称
+     * Name
      */
     private String name;
 }

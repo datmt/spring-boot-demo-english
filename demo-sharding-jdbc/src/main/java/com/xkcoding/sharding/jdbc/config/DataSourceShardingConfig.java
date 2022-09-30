@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>
- * sharding-jdbc 的数据源配置
+ * Data source configuration for sharding-jdbc
  * </p>
  *
  * @author yangkai.shen
@@ -35,7 +35,7 @@ public class DataSourceShardingConfig {
     private static final Snowflake snowflake = IdUtil.createSnowflake(1, 1);
 
     /**
-     * 需要手动配置事务管理器
+     * Manual configuration of the transaction manager is required
      */
     @Bean
     public DataSourceTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource) {
@@ -46,11 +46,11 @@ public class DataSourceShardingConfig {
     @Primary
     public DataSource dataSource() throws SQLException {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
-        // 设置分库策略
+        Set the database breakout policy
         shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("user_id", "ds${user_id % 2}"));
-        // 设置规则适配的表
+        Set the table for rule adaptation
         shardingRuleConfig.getBindingTableGroups().add("t_order");
-        // 设置分表策略
+        Set the table-breaking policy
         shardingRuleConfig.getTableRuleConfigs().add(orderTableRule());
         shardingRuleConfig.setDefaultDataSourceName("ds0");
         shardingRuleConfig.setDefaultTableShardingStrategyConfig(new NoneShardingStrategyConfiguration());
@@ -63,9 +63,9 @@ public class DataSourceShardingConfig {
 
     private TableRuleConfiguration orderTableRule() {
         TableRuleConfiguration tableRule = new TableRuleConfiguration();
-        // 设置逻辑表名
+        Sets the logical table name
         tableRule.setLogicTable("t_order");
-        // ds${0..1}.t_order_${0..2} 也可以写成 ds$->{0..1}.t_order_$->{0..1}
+        ds${0..1}.t_order_${0..2} can also be written as ds$->{0..1}.t_order_$->{0..1}
         tableRule.setActualDataNodes("ds${0..1}.t_order_${0..2}");
         tableRule.setTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("order_id", "t_order_$->{order_id % 3}"));
         tableRule.setKeyGenerator(customKeyGenerator());
@@ -76,14 +76,14 @@ public class DataSourceShardingConfig {
     private Map<String, DataSource> dataSourceMap() {
         Map<String, DataSource> dataSourceMap = new HashMap<>(16);
 
-        // 配置第一个数据源
+        Configure the first data source
         HikariDataSource ds0 = new HikariDataSource();
         ds0.setDriverClassName("com.mysql.cj.jdbc.Driver");
         ds0.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/spring-boot-demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8");
         ds0.setUsername("root");
         ds0.setPassword("root");
 
-        // 配置第二个数据源
+        Configure the second data source
         HikariDataSource ds1 = new HikariDataSource();
         ds1.setDriverClassName("com.mysql.cj.jdbc.Driver");
         ds1.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/spring-boot-demo-2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8");
@@ -96,7 +96,7 @@ public class DataSourceShardingConfig {
     }
 
     /**
-     * 自定义主键生成器
+     * Custom primary key generator
      */
     private KeyGenerator customKeyGenerator() {
         return new CustomSnowflakeKeyGenerator(snowflake);

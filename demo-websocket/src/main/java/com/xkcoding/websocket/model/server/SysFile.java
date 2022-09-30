@@ -2,7 +2,7 @@ package com.xkcoding.websocket.model.server;
 
 /**
  * <p>
- * 系统文件相关信息实体
+ * System file related information entity
  * </p>
  *
  * @author yangkai.shen
@@ -10,37 +10,37 @@ package com.xkcoding.websocket.model.server;
  */
 public class SysFile {
     /**
-     * 盘符路径
+     * Drive letter path
      */
     private String dirName;
 
     /**
-     * 盘符类型
+     * Drive letter type
      */
     private String sysTypeName;
 
     /**
-     * 文件类型
+     * File type
      */
     private String typeName;
 
     /**
-     * 总大小
+     * Total size
      */
     private String total;
 
     /**
-     * 剩余大小
+     * Remaining size
      */
     private String free;
 
     /**
-     * 已经使用量
+     * Amount already used
      */
     private String used;
 
     /**
-     * 资源的使用率
+     * Utilization of resources
      */
     private double usage;
 

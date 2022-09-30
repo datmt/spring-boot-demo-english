@@ -1,16 +1,16 @@
 # spring-boot-demo-graylog
 
-> 此 demo 主要演示了 Spring Boot 项目如何接入 GrayLog 进行日志管理。
+> This demo mainly demonstrates how the Spring Boot project can access GrayLog for log management.
 
-## 注意
+## Note
 
-作者在编写此 demo 时，`graylog` 采用 `docker-compose` 启动，其中 `graylog` 依赖的 `mongodb` 以及 `elasticsearch` 都同步启动，生产环境建议使用外部存储。
+When the author wrote this demo, 'graylog' was started with 'docker-compose', where 'mongodb' and 'elasticsearch' dependencies were launched synchronously, and the production environment recommended using external storage.
 
-## 1. 环境准备
+## 1. Environment preparation
 
-**编写 `graylog` 的 `docker-compose` 启动文件**
+**Write 'docker-compose' startup files for 'graylog'**
 
-> 如果本地没有 `mongo:3` 和 `elasticsearch-oss:6.6.1` 的镜像，会比较耗时间
+> If there are no images of 'mongo:3' and 'elasticsearch-oss:6.6.1' locally, it will be time-consuming
 
 ```yaml
 version: '2'
@@ -35,16 +35,16 @@ services:
   graylog:
     image: graylog/graylog:3.0
     environment:
-      # 加密盐值，不设置，graylog会启动失败
-      # 该字段最少需要16个字符
+      # Encryption salt value, do not set, graylog will start failure
+      # This field requires a minimum of 16 characters
       - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
-      # 设置用户名
+      # Set the user name
       - GRAYLOG_ROOT_USERNAME=admin
-      # 设置密码，此为密码进过SHA256加密后的字符串
-      # 加密方式，执行 echo -n "Enter Password: " && head -1 </dev/stdin | tr -d '\n' | sha256sum | cut -d" " -f1
+      # Set the password, which is the string after the password has been encrypted by SHA256
+      # Encryption mode, execute echo -n "Enter Password: " && head -1 </dev/stdin | tr -d '\n' | sha256sum | cut -d" " -f1
       - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
       - GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/
-      # 设置时区
+      # Set the time zone
       - GRAYLOG_ROOT_TIMEZONE=Asia/Shanghai
     links:
       - mongodb:mongo
@@ -104,7 +104,7 @@ services:
       <scope>test</scope>
     </dependency>
 
-    <!-- 提供logback传输日志到graylog的依赖 -->
+    <!-- provides logback to transfer logs to graylog dependencies -->
     <dependency>
       <groupId>de.siegmar</groupId>
       <artifactId>logback-gelf</artifactId>
@@ -143,30 +143,30 @@ spring:
   ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
   ~
   ~    http://www.apache.org/licenses/LICENSE-2.0
-  ~ Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+  ~ Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or  implied. See the License for the specific language governing permissions and limitations under the License.
   -->
 <configuration scan="true" scanPeriod="60 seconds">
 
-  <!-- 彩色日志依赖的渲染类 -->
+  <!-- Rendering class on which color logs depend - >
   <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
   <conversionRule conversionWord="wex"
                   converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
   <conversionRule conversionWord="wEx"
                   converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
-  <!-- 彩色日志格式 -->
+  <!-- Color log format -->
   <property name="CONSOLE_LOG_PATTERN"
-            value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{50}){cyan} %clr(:){faint} %file:%line - %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-  <!-- graylog全日志格式 -->
+            value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss. SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{50}){cyan} %clr(:){faint} %file:%line - %m%n${ LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+  <!-- graylog full log format -->
   <property name="GRAY_LOG_FULL_PATTERN"
-            value="%n%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%logger{50}] %file:%line%n%-5level: %msg%n"/>
-  <!-- graylog简化日志格式 -->
+            value="%n%d{yyyy-MM-dd HH:mm:ss. SSS} [%thread] [%logger{50}] %file:%line%n%-5level: %msg%n"/>
+  <!-- graylog simplifies the log format -->
   <property name="GRAY_LOG_SHORT_PATTERN"
             value="%m%nopex"/>
 
-  <!-- 获取服务名 -->
+  <!-- Get Service Name -->
   <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
 
-  <!-- 控制台输出 -->
+  <!-- Console Output -->
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
       <pattern>${CONSOLE_LOG_PATTERN}</pattern>
@@ -174,7 +174,7 @@ spring:
     </encoder>
   </appender>
 
-  <!-- graylog 日志收集 -->
+  <!-- graylog log collection -->
   <appender name="GELF" class="de.siegmar.logbackgelf.GelfUdpAppender">
     <graylogHost>localhost</graylogHost>
     <graylogPort>12201</graylogPort>
@@ -200,7 +200,7 @@ spring:
     </encoder>
   </appender>
 
-  <!-- 日志输出级别 -->
+  <!-- Log output level -->
   <root level="INFO">
     <appender-ref ref="STDOUT"/>
     <appender-ref ref="GELF" />
@@ -217,7 +217,7 @@ spring:
   <logger name="java.sql.Statement" level="DEBUG"/>
   <logger name="java.sql.PreparedStatement" level="DEBUG"/>
 
-  <!-- 减少部分debug日志 -->
+  <!-- Reduce some debug logs -->
   <logger name="druid.sql" level="INFO"/>
   <logger name="org.apache.shiro" level="INFO"/>
   <logger name="org.mybatis.spring" level="INFO"/>
@@ -244,46 +244,46 @@ spring:
   <logger name="org.apache.http" level="INFO"/>
   <logger name="com.netflix.discovery" level="INFO"/>
   <logger name="com.netflix.eureka" level="INFO"/>
-  <!-- 业务日志 -->
+  <!-- Business log -->
   <Logger name="com.xkcoding" level="DEBUG"/>
 
 </configuration>
 ```
 
-## 5. 配置 graylog 控制台，接收日志来源
+## 5. Configure the graylog console to receive log sources
 
-1. 登录 `graylog`，打开浏览器访问：http://localhost:9000
+1. Log in to 'graylog' and open a browser to access: http://localhost:9000
 
-   输入 `docker-compose.yml` 里配置的 `用户名/密码` 信息
+   Enter the 'username/password' information configured in 'docker-compose.yml'
 
-   ![登录graylog](http://static.xkcoding.com/spring-boot-demo/graylog/063124.jpg)
+   ! [login graylog] (http://static.xkcoding.com/spring-boot-demo/graylog/063124.jpg)
 
-2. 设置来源信息
+2. Set the source information
 
-   ![设置Inputs](http://static.xkcoding.com/spring-boot-demo/graylog/063125.jpg)
+   ! [Set Inputs] (http://static.xkcoding.com/spring-boot-demo/graylog/063125.jpg)
 
-   ![image-20190423164748993](http://static.xkcoding.com/spring-boot-demo/graylog/063121-1.jpg)
+   ! [image-20190423164748993] (http://static.xkcoding.com/spring-boot-demo/graylog/063121-1.jpg)
 
-   ![image-20190423164932488](http://static.xkcoding.com/spring-boot-demo/graylog/063121.jpg)
+   ! [image-20190423164932488] (http://static.xkcoding.com/spring-boot-demo/graylog/063121.jpg)
 
-   ![image-20190423165120586](http://static.xkcoding.com/spring-boot-demo/graylog/063122.jpg)
+   ! [image-20190423165120586] (http://static.xkcoding.com/spring-boot-demo/graylog/063122.jpg)
 
-## 6. 启动 Spring Boot 项目
+## 6. Start the Spring Boot project
 
-启动成功后，返回graylog页面查看日志信息
+After the startup is successful, return to the graylog page to view the log information
 
-![image-20190423165936711](http://static.xkcoding.com/spring-boot-demo/graylog/063123.jpg)
+! [image-20190423165936711] (http://static.xkcoding.com/spring-boot-demo/graylog/063123.jpg)
 
-## 参考
+## Reference
 
-- graylog 官方下载地址：https://www.graylog.org/downloads#open-source
+- graylog official download address: https://www.graylog.org/downloads#open-source
 
-- graylog 官方docker镜像：https://hub.docker.com/r/graylog/graylog/
+- graylog official docker image: https://hub.docker.com/r/graylog/graylog/
 
-- graylog 镜像启动方式：http://docs.graylog.org/en/stable/pages/installation/docker.html
+- Graylog image startup mode: http://docs.graylog.org/en/stable/pages/installation/docker.html
 
-- graylog 启动参数配置：http://docs.graylog.org/en/stable/pages/configuration/server.conf.html
+- graylog startup parameter configuration: http://docs.graylog.org/en/stable/pages/configuration/server.conf.html
 
-  注意，启动参数需要加 `GRAYLOG_` 前缀
+  Note that the startup parameters need to be prefixed with 'GRAYLOG_'
 
-- 日志收集依赖：https://github.com/osiegmar/logback-gelf
+- Log collection dependency: https://github.com/osiegmar/logback-gelf

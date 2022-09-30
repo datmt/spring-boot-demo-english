@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- * 限流注解，添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
+ * Flow restriction annotation, added {@link AliasFor} must be obtained via {@link AnnotationUtils} to take effect
  *
  * @author yangkai.shen
  * @date Created in 2019-09-12 14:14
@@ -32,12 +32,12 @@ public @interface RateLimiter {
     @AliasFor("value") double qps() default NOT_LIMITED;
 
     /**
-     * 超时时长
+     * Timeout duration
      */
     int timeout() default 0;
 
     /**
-     * 超时时间单位
+     * Timeout unit
      */
     TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
 }

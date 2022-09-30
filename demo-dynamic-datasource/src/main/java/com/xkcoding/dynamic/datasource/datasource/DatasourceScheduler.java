@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p>
- * 数据源缓存释放调度器
+ * Data source cache release scheduler
  * </p>
  *
  * @author yangkai.shen
@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public enum DatasourceScheduler {
     /**
-     * 当前实例
+     * Current instance
      */
     INSTANCE;
 

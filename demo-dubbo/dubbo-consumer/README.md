@@ -1,6 +1,6 @@
 # spring-boot-demo-dubbo-consumer
 
-> 此 module 主要是服务调用方的示例
+> This module is primarily an example of a service caller
 
 ## pom.xml
 
@@ -88,7 +88,7 @@ spring:
 ```java
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen
@@ -109,7 +109,7 @@ public class SpringBootDemoDubboConsumerApplication {
 ```java
 /**
  * <p>
- * Hello服务API
+ * Hello service API
  * </p>
  *
  * @author yangkai.shen

@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>
- * 通用分页参数返回
+ * Common paging parameters are returned
  * </p>
  *
  * @author yangkai.shen
@@ -22,12 +22,12 @@ public class PageResult<T> implements Serializable {
     private static final long serialVersionUID = 3420391142991247367L;
 
     /**
-     * 当前页数据
+     * Current page data
      */
     private List<T> rows;
 
     /**
-     * 总条数
+     * Total number of items
      */
     private Long total;
 

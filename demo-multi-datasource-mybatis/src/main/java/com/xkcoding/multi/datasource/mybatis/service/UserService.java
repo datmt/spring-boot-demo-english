@@ -5,7 +5,7 @@ import com.xkcoding.multi.datasource.mybatis.model.User;
 
 /**
  * <p>
- * 数据服务层
+ * Data service layer
  * </p>
  *
  * @author yangkai.shen
@@ -14,9 +14,9 @@ import com.xkcoding.multi.datasource.mybatis.model.User;
 public interface UserService extends IService<User> {
 
     /**
-     * 添加 User
+     * Add User
      *
-     * @param user 用户
+     * @param user user
      */
     void addUser(User user);
 }

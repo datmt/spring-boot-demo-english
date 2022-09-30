@@ -5,7 +5,7 @@ import org.neo4j.ogm.id.IdStrategy;
 
 /**
  * <p>
- * 自定义主键策略
+ * Custom primary key policy
  * </p>
  *
  * @author yangkai.shen

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * SpringBoot启动类
+ * SpringBoot startup class
  * </p>
  *
  * @author yangkai.shen
@@ -26,7 +26,7 @@ public class SpringBootDemoHelloworldApplication {
     /**
      * Hello，World
      *
-     * @param who 参数，非必须
+     * @param who parameter, optional
      * @return Hello, ${who}
      */
     @GetMapping("/hello")

@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- * 用户 Controller
+ * User Controller
  * </p>
  *
  * @author yangkai.shen
@@ -23,7 +23,7 @@ public class UserController {
     private final UserMapper userMapper;
 
     /**
-     * 获取用户列表
+     * Get a list of users
      */
     @GetMapping("/user")
     public List<User> getUserList() {

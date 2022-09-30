@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 用户相关操作.
+ * User-related actions.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 15:06
@@ -31,7 +31,7 @@ public class SysUserServiceImpl implements SysUserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysUser sysUser = sysUserRepository.findFirstByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
         List<SimpleGrantedAuthority> roles = sysUser.getRoles().stream().map(sysRole -> new SimpleGrantedAuthority(sysRole.getName())).collect(Collectors.toList());
-        // 在这里手动构建 UserDetails 的默认实现
+        Manually build the default implementation of UserDetails here
         return new User(sysUser.getUsername(), sysUser.getPassword(), roles);
     }
 

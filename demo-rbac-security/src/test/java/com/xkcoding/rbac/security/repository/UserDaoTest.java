@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * <p>
- * UserDao 测试
+ * UserDao test
  * </p>
  *
  * @author yangkai.shen

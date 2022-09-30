@@ -10,7 +10,7 @@ import org.neo4j.ogm.annotation.Relationship;
 
 /**
  * <p>
- * 课程节点
+ * Course nodes
  * </p>
  *
  * @author yangkai.shen
@@ -24,20 +24,20 @@ import org.neo4j.ogm.annotation.Relationship;
 @NodeEntity
 public class Lesson {
     /**
-     * 主键，自定义主键策略，使用UUID生成
+     * Primary key, custom primary key strategy, generated using UUID
      */
     @Id
     @GeneratedValue(strategy = CustomIdStrategy.class)
     private String id;
 
     /**
-     * 课程名称
+     * Course name
      */
     @NonNull
     private String name;
 
     /**
-     * 任教老师
+     * Teaching teacher
      */
     @Relationship(NeoConsts.R_TEACHER_OF_LESSON)
     @NonNull

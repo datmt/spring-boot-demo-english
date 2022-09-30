@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 安全配置类
+ * Security configuration class
  * </p>
  *
  * @author yangkai.shen

@@ -1,5 +1,5 @@
 # spring-boot-demo-orm-jdbctemplate
-> 本 demo 主要演示了Spring Boot如何使用 JdbcTemplate 操作数据库，并且简易地封装了一个通用的 Dao 层，包括增删改查。
+> This demo demonstrates how Spring Boot can use JdbcTemplate to manipulate databases and easily encapsulates a common Dao layer, including additions, deletions, and corrections.
 
 ## pom.xml
 
@@ -80,7 +80,7 @@
 ```java
 /**
  * <p>
- * Dao基类
+ * Dao base class
  * </p>
  *
  * @author yangkai.shen
@@ -98,11 +98,11 @@ public class BaseDao<T, P> {
    }
 
    /**
-    * 通用插入，自增列需要添加 {@link Pk} 注解
+    * Generic insertion, self-incrementing column requires the addition of {@link Pk} annotations
     *
-    * @param t          对象
-    * @param ignoreNull 是否忽略 null 值
-    * @return 操作的行数
+    * @param t object
+    * @param ignoreNull ignoreNull ignores null values
+    * @return number of rows of the operation
     */
    protected Integer insert(T t, Boolean ignoreNull) {
       String table = getTableName(t);
@@ -113,39 +113,39 @@ public class BaseDao<T, P> {
 
       String columns = StrUtil.join(Const.SEPARATOR_COMMA, columnList);
 
-      // 构造占位符
+      Constructs a placeholder
       String params = StrUtil.repeatAndJoin("?", columnList.size(), Const.SEPARATOR_COMMA);
 
-      // 构造值
+      Construct the value
       Object[] values = filterField.stream().map(field -> ReflectUtil.getFieldValue(t, field)).toArray();
 
       String sql = StrUtil.format("INSERT INTO {table} ({columns}) VALUES ({params})", Dict.create().set("table", table).set("columns", columns).set("params", params));
-      log.debug("【执行SQL】SQL：{}", sql);
-      log.debug("【执行SQL】参数：{}", JSONUtil.toJsonStr(values));
+      log.debug("[execute SQL]SQL:{}", sql);
+      log.debug("[execute SQL] parameter:{}", JSONUtil.toJsonStr(values));
       return jdbcTemplate.update(sql, values);
    }
 
    /**
-    * 通用根据主键删除
+    * Universal is deleted based on primary key
     *
-    * @param pk 主键
-    * @return 影响行数
+    * @param pk primary key
+    * @return Affects the number of rows
     */
    protected Integer deleteById(P pk) {
       String tableName = getTableName();
       String sql = StrUtil.format("DELETE FROM {table} where id = ?", Dict.create().set("table", tableName));
-      log.debug("【执行SQL】SQL：{}", sql);
-      log.debug("【执行SQL】参数：{}", JSONUtil.toJsonStr(pk));
+      log.debug("[execute SQL]SQL:{}", sql);
+      log.debug("[execute SQL] parameter:{}", JSONUtil.toJsonStr(pk));
       return jdbcTemplate.update(sql, pk);
    }
 
    /**
-    * 通用根据主键更新，自增列需要添加 {@link Pk} 注解
+    * Generally updated according to the primary key, self-incremented columns need to add {@link Pk} annotations
     *
-    * @param t          对象
-    * @param pk         主键
-    * @param ignoreNull 是否忽略 null 值
-    * @return 操作的行数
+    * @param t object
+    * @param pk primary key
+    * @param ignoreNull ignoreNull ignores null values
+    * @return number of rows of the operation
     */
    protected Integer updateById(T t, P pk, Boolean ignoreNull) {
       String tableName = getTableName(t);
@@ -154,56 +154,56 @@ public class BaseDao<T, P> {
 
       List<String> columnList = getColumns(filterField);
 
-      List<String> columns = columnList.stream().map(s -> StrUtil.appendIfMissing(s, " = ?")).collect(Collectors.toList());
+      List<String> columns = columnList.stream().map(s -> StrUtil.appendIfMissing(s, " = ?")). collect(Collectors.toList());
       String params = StrUtil.join(Const.SEPARATOR_COMMA, columns);
 
-      // 构造值
+      Construct the value
       List<Object> valueList = filterField.stream().map(field -> ReflectUtil.getFieldValue(t, field)).collect(Collectors.toList());
       valueList.add(pk);
 
       Object[] values = ArrayUtil.toArray(valueList, Object.class);
 
       String sql = StrUtil.format("UPDATE {table} SET {params} where id = ?", Dict.create().set("table", tableName).set("params", params));
-      log.debug("【执行SQL】SQL：{}", sql);
-      log.debug("【执行SQL】参数：{}", JSONUtil.toJsonStr(values));
+      log.debug("[execute SQL]SQL:{}", sql);
+      log.debug("[execute SQL] parameter:{}", JSONUtil.toJsonStr(values));
       return jdbcTemplate.update(sql, values);
    }
 
    /**
-    * 通用根据主键查询单条记录
+    * Universal query for single records based on primary key
     *
-    * @param pk 主键
-    * @return 单条记录
+    * @param pk primary key
+    * @return Single record
     */
    public T findOneById(P pk) {
       String tableName = getTableName();
       String sql = StrUtil.format("SELECT * FROM {table} where id = ?", Dict.create().set("table", tableName));
       RowMapper<T> rowMapper = new BeanPropertyRowMapper<>(clazz);
-      log.debug("【执行SQL】SQL：{}", sql);
-      log.debug("【执行SQL】参数：{}", JSONUtil.toJsonStr(pk));
+      log.debug("[execute SQL]SQL:{}", sql);
+      log.debug("[execute SQL] parameter:{}", JSONUtil.toJsonStr(pk));
       return jdbcTemplate.queryForObject(sql, new Object[]{pk}, rowMapper);
    }
 
    /**
-    * 根据对象查询
+    * Query based on object
     *
-    * @param t 查询条件
-    * @return 对象列表
+    * @param t query criteria
+    * @return Object list
     */
    public List<T> findByExample(T t) {
       String tableName = getTableName(t);
       List<Field> filterField = getField(t, true);
       List<String> columnList = getColumns(filterField);
 
-      List<String> columns = columnList.stream().map(s -> " and " + s + " = ? ").collect(Collectors.toList());
+      List<String> columns = columnList.stream().map(s -> " and " + s + " = ? "). collect(Collectors.toList());
 
       String where = StrUtil.join(" ", columns);
-      // 构造值
+      Construct the value
       Object[] values = filterField.stream().map(field -> ReflectUtil.getFieldValue(t, field)).toArray();
 
       String sql = StrUtil.format("SELECT * FROM {table} where 1=1 {where}", Dict.create().set("table", tableName).set("where", StrUtil.isBlank(where) ? "" : where));
-      log.debug("【执行SQL】SQL：{}", sql);
-      log.debug("【执行SQL】参数：{}", JSONUtil.toJsonStr(values));
+      log.debug("[execute SQL]SQL:{}", sql);
+      log.debug("[execute SQL] parameter:{}", JSONUtil.toJsonStr(values));
       List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql, values);
       List<T> ret = CollUtil.newArrayList();
       maps.forEach(map -> ret.add(BeanUtil.fillBeanWithMap(map, ReflectUtil.newInstance(clazz), true, false)));
@@ -211,10 +211,10 @@ public class BaseDao<T, P> {
    }
 
    /**
-    * 获取表名
+    * Get the table name
     *
-    * @param t 对象
-    * @return 表名
+    * @param t object
+    * @return Table name
     */
    private String getTableName(T t) {
       Table tableAnnotation = t.getClass().getAnnotation(Table.class);
@@ -226,9 +226,9 @@ public class BaseDao<T, P> {
    }
 
    /**
-    * 获取表名
+    * Get the table name
     *
-    * @return 表名
+    * @return Table name
     */
    private String getTableName() {
       Table tableAnnotation = clazz.getAnnotation(Table.class);
@@ -240,13 +240,13 @@ public class BaseDao<T, P> {
    }
 
    /**
-    * 获取列
+    * Get columns
     *
-    * @param fieldList 字段列表
-    * @return 列信息列表
+    * @param fieldList field list
+    * @return column information list
     */
    private List<String> getColumns(List<Field> fieldList) {
-      // 构造列
+      Construct the column
       List<String> columnList = CollUtil.newArrayList();
       for (Field field : fieldList) {
          Column columnAnnotation = field.getAnnotation(Column.class);
@@ -262,21 +262,21 @@ public class BaseDao<T, P> {
    }
 
    /**
-    * 获取字段列表 {@code 过滤数据库中不存在的字段，以及自增列}
+    * Get a list of fields {@code filter fields that do not exist in the database, as well as self-incrementing columns}
     *
-    * @param t          对象
-    * @param ignoreNull 是否忽略空值
-    * @return 字段列表
+    * @param t object
+    * @param ignoreNull ignoreNull ignores null values
+    * @return Field list
     */
    private List<Field> getField(T t, Boolean ignoreNull) {
-      // 获取所有字段，包含父类中的字段
+      Gets all fields, including the fields in the parent class
       Field[] fields = ReflectUtil.getFields(t.getClass());
 
-      // 过滤数据库中不存在的字段，以及自增列
+      Filter fields that do not exist in the database, as well as self-incrementing columns
       List<Field> filterField;
       Stream<Field> fieldStream = CollUtil.toList(fields).stream().filter(field -> ObjectUtil.isNull(field.getAnnotation(Ignore.class)) || ObjectUtil.isNull(field.getAnnotation(Pk.class)));
 
-      // 是否过滤字段值为null的字段
+      Whether to filter fields with a null field value
       if (ignoreNull) {
          filterField = fieldStream.filter(field -> ObjectUtil.isNotNull(ReflectUtil.getFieldValue(t, field))).collect(Collectors.toList());
       } else {
@@ -322,6 +322,6 @@ logging:
     com.xkcoding: debug
 ```
 
-## 备注
+## Notes
 
-其余详细代码参见 demo
+For the rest of the detailed code, see demo

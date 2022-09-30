@@ -10,7 +10,7 @@ import java.sql.Connection;
 
 /**
  * <p>
- * 内部数据源
+ * Internal data source
  * </p>
  *
  * @author yangkai.shen

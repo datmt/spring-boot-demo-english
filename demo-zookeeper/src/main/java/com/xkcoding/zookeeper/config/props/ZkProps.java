@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * <p>
- * Zookeeper 配置项
+ * Zookeeper configuration items
  * </p>
  *
  * @author yangkai.shen
@@ -15,17 +15,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "zk")
 public class ZkProps {
     /**
-     * 连接地址
+     * Connection address
      */
     private String url;
 
     /**
-     * 超时时间(毫秒)，默认1000
+     * Timeout (milliseconds), default 1000
      */
     private int timeout = 1000;
 
     /**
-     * 重试次数，默认3
+     * Number of retries, default 3
      */
     private int retry = 3;
 }

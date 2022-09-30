@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * <p>
- * 测试主从数据源
+ * Test the master-slave data source
  * </p>
  *
  * @author yangkai.shen
@@ -25,7 +25,7 @@ public class UserServiceImplTest extends SpringBootDemoMultiDatasourceMybatisApp
     private UserService userService;
 
     /**
-     * 主从库添加
+     * Add from master and slave libraries
      */
     @Test
     public void addUser() {
@@ -37,7 +37,7 @@ public class UserServiceImplTest extends SpringBootDemoMultiDatasourceMybatisApp
     }
 
     /**
-     * 从库查询
+     * Query from the library
      */
     @Test
     public void testListUser() {

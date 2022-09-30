@@ -29,7 +29,7 @@ public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
 
     /**
-     * 登录
+     * Login
      *
      * @param request {@link LoginRequest}
      * @return {@link Result}
@@ -58,7 +58,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     /**
-     * 查询全部
+     * Enquire all
      *
      * @return {@link Result}
      */
@@ -70,7 +70,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     /**
-     * 保存
+     * Save
      *
      * @param person {@link Person}
      */
@@ -81,7 +81,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     /**
-     * 删除
+     * Delete
      *
      * @param person {@link Person}
      */

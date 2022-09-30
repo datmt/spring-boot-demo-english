@@ -16,7 +16,7 @@ import java.io.File;
 
 /**
  * <p>
- * 七牛云上传Service
+ * Seven Cow Cloud Upload Service
  * </p>
  *
  * @author yangkai.shen
@@ -41,11 +41,11 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
     }
 
     /**
-     * 七牛云上传文件
+     * Seven Cow Cloud upload files
      *
-     * @param file 文件
-     * @return 七牛上传Response
-     * @throws QiniuException 七牛异常
+     * @param file file
+     * @return Seven Bulls upload Response
+     * @throws QiniuException Seven Bulls Exception
      */
     @Override
     public Response uploadFile(File file) throws QiniuException {
@@ -65,9 +65,9 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
     }
 
     /**
-     * 获取上传凭证
+     * Get upload credentials
      *
-     * @return 上传凭证
+     * @return Upload credentials
      */
     private String getUploadToken() {
         return this.auth.uploadToken(bucket, null, 3600, putPolicy);

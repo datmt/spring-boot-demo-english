@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 测试 Controller
+ * Test the Controller
  * </p>
  *
  * @author yangkai.shen
@@ -25,9 +25,9 @@ import java.util.Map;
 public class TestController {
 
     /**
-     * 测试方法
+     * Test method
      *
-     * @param who 测试参数
+     * @param who test parameters
      * @return {@link Dict}
      */
     @GetMapping("/test")
@@ -36,8 +36,8 @@ public class TestController {
     }
 
     /**
-     *  测试post json方法
-     * @param map 请求的json参数
+     * Test the post json method
+     * @param json parameter for map requests
      * @return {@link Dict}
      */
     @PostMapping("/testJson")

@@ -1,12 +1,12 @@
 # spring-boot-demo-task-quartz
 
-> 此 demo 主要演示了 Spring Boot 如何集成 Quartz 定时任务，并实现对定时任务的管理，包括新增定时任务，删除定时任务，暂停定时任务，恢复定时任务，修改定时任务启动时间，以及定时任务列表查询。
+> This demo demonstrates how Spring Boot integrates with Quartz scheduled tasks and implements the management of scheduled tasks, including adding scheduled tasks, deleting scheduled tasks, pausing scheduled tasks, resuming scheduled tasks, modifying scheduled task start time, and querying the scheduled task list.
 
-## 后端
+## Backend
 
-### 初始化
+### Initialization
 
-在 `init/dbTables` 下选择 Quartz 需要的表结构，然后手动创建表。
+Under 'init/dbTables', select the table structure that Quartz needs and create the table manually.
 
 ### pom.xml
 
@@ -109,10 +109,10 @@ server:
   servlet:
     context-path: /demo
 spring:
-# 省略其余配置，具体请 clone 本项目，查看详情
+# Omit the remaining configurations, please clone for details in this project
 # ......
   quartz:
-    # 参见 org.springframework.boot.autoconfigure.quartz.QuartzProperties
+    See org.springframework.boot.autoconfigure.quartz.QuartzProperties
     job-store-type: jdbc
     wait-for-jobs-to-complete-on-shutdown: true
     scheduler-name: SpringBootDemoScheduler
@@ -123,50 +123,50 @@ spring:
       org.quartz.jobStore.misfireThreshold: 5000
       org.quartz.jobStore.class: org.quartz.impl.jdbcjobstore.JobStoreTX
       org.quartz.jobStore.driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-      # 在调度流程的第一步，也就是拉取待即将触发的triggers时，是上锁的状态，即不会同时存在多个线程拉取到相同的trigger的情况，也就避免的重复调度的危险。参考：https://segmentfault.com/a/1190000015492260
+      # In the first step of the scheduling process, that is, when pulling triggers to be triggered, it is a locked state, that is, there will not be multiple threads pulling to the same trigger at the same time, so the danger of repeated scheduling is avoided. Reference: https://segmentfault.com/a/1190000015492260
       org.quartz.jobStore.acquireTriggersWithinLock: true
 
-# 省略其余配置，具体请 clone 本项目，查看详情
+# Omit the remaining configurations, please clone for details in this project
 # ......
 ```
 
 ---
 
-> 后端其余代码请 clone 本项目，查看具体代码
+> the rest of the code of the backend, please clone this project, to see the specific code
 
-## 前端
+## Front end
 
-> 前端页面请 clone 本项目，查看具体代码
+> front-end page, please clone this project, to see the specific code
 
-## 启动
+## Launch
 
-1. clone 本项目
-2. 初始化表格
-3. 启动 `SpringBootDemoTaskQuartzApplication.java`
-4. 打开浏览器，查看 http://localhost:8080/demo/job.html 
+1. clone This project
+2. Initialize the table
+3. Launch 'SpringBootDemoTaskQuartzApplication.java'
+4. Open a browser to view the http://localhost:8080/demo/job.html 
 
-![image-20181126214007372](http://static.xkcoding.com/spring-boot-demo/task/quartz/064006-1.jpg)
+! [image-20181126214007372] (http://static.xkcoding.com/spring-boot-demo/task/quartz/064006-1.jpg)
 
-![image-20181126214109926](http://static.xkcoding.com/spring-boot-demo/task/quartz/064008.jpg)
+! [image-20181126214109926] (http://static.xkcoding.com/spring-boot-demo/task/quartz/064008.jpg)
 
-![image-20181126214212905](http://static.xkcoding.com/spring-boot-demo/task/quartz/064009-1.jpg)
+! [image-20181126214212905] (http://static.xkcoding.com/spring-boot-demo/task/quartz/064009-1.jpg)
 
-![image-20181126214138641](http://static.xkcoding.com/spring-boot-demo/task/quartz/064009.jpg)
+! [image-20181126214138641] (http://static.xkcoding.com/spring-boot-demo/task/quartz/064009.jpg)
 
-![image-20181126214250757](http://static.xkcoding.com/spring-boot-demo/task/quartz/064007.jpg)
+! [image-20181126214250757] (http://static.xkcoding.com/spring-boot-demo/task/quartz/064007.jpg)
 
-## 参考
+## Reference
 
-- Spring Boot 官方文档：https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#boot-features-quartz
+- Spring Boot Official Documentation: https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#boot-features-quartz
 
-- Quartz 官方文档：http://www.quartz-scheduler.org/documentation/quartz-2.2.x/quick-start.html
+- Quartz Official Documentation: http://www.quartz-scheduler.org/documentation/quartz-2.2.x/quick-start.html
 
-- Quartz 重复调度问题：https://segmentfault.com/a/1190000015492260
+- Quartz Duplicate Scheduling Problem: https://segmentfault.com/a/1190000015492260
 
-- 关于Quartz定时任务状态 (在 `QRTZ_TRIGGERS` 表中的 `TRIGGER_STATE` 字段)
+- About Quartz timed task status ('QRTZ_TRIGGERS' field in the 'TRIGGER_STATE' table)
 
-  ![image-20181126171110378](http://static.xkcoding.com/spring-boot-demo/task/quartz/064006.jpg)
+  ! [image-20181126171110378] (http://static.xkcoding.com/spring-boot-demo/task/quartz/064006.jpg)
 
-- Vue.js 官方文档：https://cn.vuejs.org/v2/guide/
+- Vue.js Official Documentation: https://cn.vuejs.org/v2/guide/
 
-- Element-UI 官方文档：http://element-cn.eleme.io/#/zh-CN
+- Element-UI Official Documentation: http://element-cn.eleme.io/#/zh-CN

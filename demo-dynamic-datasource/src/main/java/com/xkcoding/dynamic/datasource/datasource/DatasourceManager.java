@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 数据源管理类
+ * Data source management class
  * </p>
  *
  * @author yangkai.shen
@@ -15,18 +15,18 @@ import java.time.LocalDateTime;
  */
 public class DatasourceManager {
     /**
-     * 默认释放时间
+     * Default release time
      */
     private static final Long DEFAULT_RELEASE = 10L;
 
     /**
-     * 数据源
+     * Data source
      */
     @Getter
     private HikariDataSource dataSource;
 
     /**
-     * 上一次使用时间
+     * Last use time
      */
     private LocalDateTime lastUseTime;
 
@@ -36,9 +36,9 @@ public class DatasourceManager {
     }
 
     /**
-     * 是否已过期，如果过期则关闭数据源
+     * Whether it has expired, and if so, close the data source
      *
-     * @return 是否过期，{@code true} 过期，{@code false} 未过期
+     * @return whether expired, {@code true} expired, {@code false} did not expire
      */
     public boolean isExpired() {
         if (LocalDateTime.now().isBefore(this.lastUseTime.plusMinutes(DEFAULT_RELEASE))) {
@@ -49,7 +49,7 @@ public class DatasourceManager {
     }
 
     /**
-     * 刷新上次使用时间
+     * Refresh last use time
      */
     public void refreshTime() {
         this.lastUseTime = LocalDateTime.now();

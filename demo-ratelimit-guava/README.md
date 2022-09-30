@@ -1,8 +1,8 @@
 # spring-boot-demo-ratelimit-guava
 
-> 此 demo 主要演示了 Spring Boot 项目如何通过 AOP 结合 Guava 的 RateLimiter 实现限流，旨在保护 API 被恶意频繁访问的问题。
+> This demo demonstrates how the Spring Boot project can implement throttling through AOP combined with Guava's RateLimiter, aiming to protect APIs from malicious and frequent access.
 
-## 1. 主要代码
+## 1. Primary code
 
 ### 1.1. pom.xml
 
@@ -78,14 +78,14 @@
 </project>
 ```
 
-### 1.2. 定义一个限流注解 `RateLimiter.java`
+### 1.2. Define a current-limit annotation 'RateLimiter.java'
 
-> 注意代码里使用了 `AliasFor` 设置一组属性的别名，所以获取注解的时候，需要通过 `Spring` 提供的注解工具类 `AnnotationUtils` 获取，不可以通过 `AOP` 参数注入的方式获取，否则有些属性的值将会设置不进去。
+> Note that 'AliasFor' is used in the code to set the alias of a set of properties, so when getting annotations, you need to get it through the annotation tool class 'AnnotationUtils' provided by 'Spring', and you can't get it through 'AOP' parameter injection, otherwise the value of some properties will not be set.
 
 ```java
 /**
  * <p>
- * 限流注解，添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
+ * Flow restriction annotation, added {@link AliasFor} must be obtained via {@link AnnotationUtils} to take effect
  *
  * @author yangkai.shen
  * @date Created in 2019-09-12 14:14
@@ -109,23 +109,23 @@ public @interface RateLimiter {
     @AliasFor("value") double qps() default NOT_LIMITED;
 
     /**
-     * 超时时长
+     * Timeout duration
      */
     int timeout() default 0;
 
     /**
-     * 超时时间单位
+     * Timeout unit
      */
     TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
 }
 ```
 
-### 1.3. 定义一个切面 `RateLimiterAspect.java`
+### 1.3. Define a slice 'RateLimiterAspect.java'
 
 ```java
 /**
  * <p>
- * 限流切面
+ * Flow restriction slices
  * </p>
  *
  * @author yangkai.shen
@@ -146,19 +146,19 @@ public class RateLimiterAspect {
     public Object pointcut(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
-        // 通过 AnnotationUtils.findAnnotation 获取 RateLimiter 注解
+        Get RateLimiter annotations via AnnotationUtils.findAnnotation
         RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
         if (rateLimiter != null && rateLimiter.qps() > RateLimiter.NOT_LIMITED) {
             double qps = rateLimiter.qps();
             if (RATE_LIMITER_CACHE.get(method.getName()) == null) {
-                // 初始化 QPS
+                Initialize QPS
                 RATE_LIMITER_CACHE.put(method.getName(), com.google.common.util.concurrent.RateLimiter.create(qps));
             }
 
-            log.debug("【{}】的QPS设置为: {}", method.getName(), RATE_LIMITER_CACHE.get(method.getName()).getRate());
-            // 尝试获取令牌
-            if (RATE_LIMITER_CACHE.get(method.getName()) != null && !RATE_LIMITER_CACHE.get(method.getName()).tryAcquire(rateLimiter.timeout(), rateLimiter.timeUnit())) {
-                throw new RuntimeException("手速太快了，慢点儿吧~");
+            log.debug("[{}]'s QPS is set to: {}", method.getName(), RATE_LIMITER_CACHE.get(method.getName()).getRate());
+            Try to get a token
+            if (RATE_LIMITER_CACHE.get(method.getName()) != null && ! RATE_LIMITER_CACHE.get(method.getName()).tryAcquire(rateLimiter.timeout(), rateLimiter.timeUnit())) {
+                throw new RuntimeException ("Hand speed is too fast, slow down~");
             }
         }
         return point.proceed();
@@ -166,12 +166,12 @@ public class RateLimiterAspect {
 }
 ```
 
-### 1.4. 定义两个API接口用于测试限流
+### 1.4. Define two API interfaces for testing current limiting
 
 ```java
 /**
  * <p>
- * 测试
+ * Test
  * </p>
  *
  * @author yangkai.shen
@@ -184,35 +184,35 @@ public class TestController {
     @RateLimiter(value = 1.0, timeout = 300)
     @GetMapping("/test1")
     public Dict test1() {
-        log.info("【test1】被执行了。。。。。");
-        return Dict.create().set("msg", "hello,world!").set("description", "别想一直看到我，不信你快速刷新看看~");
+        log.info ("[test1] was executed....) );
+        return Dict.create().set("msg", "hello,world!"). set("description", "Don't want to see me all the time, don't believe you quickly refresh to see ~");
     }
 
     @GetMapping("/test2")
     public Dict test2() {
-        log.info("【test2】被执行了。。。。。");
-        return Dict.create().set("msg", "hello,world!").set("description", "我一直都在，卟离卟弃");
+        log.info ("[test2] was executed....") );
+        return Dict.create().set("msg", "hello,world!"). set ("description", "I have always been there, porphyrinum away from porphyria");
     }
 }
 ```
 
-## 2. 测试
+## 2. Test
 
-- test1 接口未被限流的时候
+- When the test1 interface is not throttled
 
 <img src="http://static.xkcoding.com/spring-boot-demo/ratelimit/guava/063719.jpg" alt="image-20190912155209716" style="zoom:50%;" />
 
-- test1 接口频繁刷新，触发限流的时候
+- The test1 interface is frequently refreshed, triggering the flow throttling
 
 <img src="http://static.xkcoding.com/spring-boot-demo/ratelimit/guava/063718-1.jpg" alt="image-20190912155229745" style="zoom:50%;" />
 
-- test2 接口不做限流，可以一直刷新
+- The test2 interface does not limit the flow and can be refreshed all the time
 
 <img src="http://static.xkcoding.com/spring-boot-demo/ratelimit/guava/063718.jpg" alt="image-20190912155146012" style="zoom:50%;" />
 
-## 3. 参考
+## 3. reference
 
-- [限流原理解读之guava中的RateLimiter](https://juejin.im/post/5bb48d7b5188255c865e31bc)
+- [RateLimiter in Guava Interpretation of the Principle of Current Limiting] (https://juejin.im/post/5bb48d7b5188255c865e31bc)
 
-- [使用Guava的RateLimiter做限流](https://my.oschina.net/hanchao/blog/1833612)
+- [Limiting Flow with Guava's RateLimiter] (https://my.oschina.net/hanchao/blog/1833612)
 

@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 动态路由认证
+ * Dynamic route authentication
  * </p>
  *
  * @author yangkai.shen
@@ -61,13 +61,13 @@ public class RbacAuthorityService {
             List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
             List<Permission> permissions = permissionDao.selectByRoleIdList(roleIds);
 
-            //获取资源，前后端分离，所以过滤页面权限，只保留按钮权限
+            Get the resources, the front and back end are separated, so filter the page permissions, and only retain the button permissions
             List<Permission> btnPerms = permissions.stream()
-                // 过滤页面权限
+                Filter page permissions
                 .filter(permission -> Objects.equals(permission.getType(), Consts.BUTTON))
-                // 过滤 URL 为空
+                The filter URL is empty
                 .filter(permission -> StrUtil.isNotBlank(permission.getUrl()))
-                // 过滤 METHOD 为空
+                Filter METHOD is empty
                 .filter(permission -> StrUtil.isNotBlank(permission.getMethod())).collect(Collectors.toList());
 
             for (Permission btnPerm : btnPerms) {
@@ -85,20 +85,20 @@ public class RbacAuthorityService {
     }
 
     /**
-     * 校验请求是否存在
+     * Check if the request exists
      *
-     * @param request 请求
+     * @param request request
      */
     private void checkRequest(HttpServletRequest request) {
-        // 获取当前 request 的方法
+        The method that gets the current request
         String currentMethod = request.getMethod();
         Multimap<String, String> urlMapping = allUrlMapping();
 
         for (String uri : urlMapping.keySet()) {
-            // 通过 AntPathRequestMatcher 匹配 url
-            // 可以通过 2 种方式创建 AntPathRequestMatcher
-            // 1：new AntPathRequestMatcher(uri,method) 这种方式可以直接判断方法是否匹配，因为这里我们把 方法不匹配 自定义抛出，所以，我们使用第2种方式创建
-            // 2：new AntPathRequestMatcher(uri) 这种方式不校验请求方法，只校验请求路径
+            Match URLs via AntPathRequestMatcher
+            There are 2 ways to create an AntPathRequestMatcher
+            1:new AntPathRequestMatcher(uri,method) This way can directly determine whether the method matches or not, because here we throw the Method Mismatch custom throw, so we use the second way to create
+            2: new AntPathRequestMatcher(uri) This method does not verify the request method, only the request path
             AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(uri);
             if (antPathMatcher.matches(request)) {
                 if (!urlMapping.get(uri).contains(currentMethod)) {
@@ -113,22 +113,22 @@ public class RbacAuthorityService {
     }
 
     /**
-     * 获取 所有URL Mapping，返回格式为{"/test":["GET","POST"],"/sys":["GET","DELETE"]}
+     * Get all URL mappings in the format {"/test":["GET","POST"],"/sys:":["GET","DELETE"]}
      *
-     * @return {@link ArrayListMultimap} 格式的 URL Mapping
+     * @return URL Mapping in the format {@link ArrayListMultimap}
      */
     private Multimap<String, String> allUrlMapping() {
         Multimap<String, String> urlMapping = ArrayListMultimap.create();
 
-        // 获取url与类和方法的对应信息
+        Gets the information about URLs to classes and methods
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = mapping.getHandlerMethods();
 
         handlerMethods.forEach((k, v) -> {
-            // 获取当前 key 下的获取所有URL
+            Get all URLs under the current key
             Set<String> url = k.getPatternsCondition().getPatterns();
             RequestMethodsRequestCondition method = k.getMethodsCondition();
 
-            // 为每个URL添加所有的请求方法
+            Add all request methods for each URL
             url.forEach(s -> urlMapping.putAll(s, method.getMethods().stream().map(Enum::toString).collect(Collectors.toList())));
         });
 

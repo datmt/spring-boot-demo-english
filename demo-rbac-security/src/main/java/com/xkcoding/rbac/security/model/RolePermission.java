@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 /**
  * <p>
- * 角色-权限
+ * Role-permissions
  * </p>
  *
  * @author yangkai.shen
@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "sec_role_permission")
 public class RolePermission {
     /**
-     * 主键
+     * Primary key
      */
     @EmbeddedId
     private RolePermissionKey id;

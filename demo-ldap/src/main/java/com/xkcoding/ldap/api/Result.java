@@ -18,17 +18,17 @@ public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1696194043024336235L;
 
     /**
-     * 错误码
+     * Error code
      */
     private int errcode;
 
     /**
-     * 错误信息
+     * Error message
      */
     private String errmsg;
 
     /**
-     * 响应数据
+     * Response data
      */
     private T data;
 
@@ -55,10 +55,10 @@ public class Result<T> implements Serializable {
 
 
     /**
-     * 返回成功
+     * Returns success
      *
-     * @param <T> 泛型标记
-     * @return 响应信息 {@code Result}
+     * @param <T> generic tags
+     * @return Response information {@code Result}
      */
     public static <T> Result<T> success() {
         return new Result<>(ResultCode.SUCCESS);
@@ -66,11 +66,11 @@ public class Result<T> implements Serializable {
 
 
     /**
-     * 返回成功-携带数据
+     * Returns success-carry data
      *
-     * @param data 响应数据
-     * @param <T>  泛型标记
-     * @return 响应信息 {@code Result}
+     * @param data response data
+     * @param <T> generic tags
+     * @return Response information {@code Result}
      */
     public static <T> Result<T> success(@Nullable T data) {
         return new Result<>(ResultCode.SUCCESS, data);

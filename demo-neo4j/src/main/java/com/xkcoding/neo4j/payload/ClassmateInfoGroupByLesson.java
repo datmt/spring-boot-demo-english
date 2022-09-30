@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- * 按照课程分组的同学关系
+ * Classmate relationships grouped by course
  * </p>
  *
  * @author yangkai.shen
@@ -18,12 +18,12 @@ import java.util.List;
 @QueryResult
 public class ClassmateInfoGroupByLesson {
     /**
-     * 课程名称
+     * Course name
      */
     private String lessonName;
 
     /**
-     * 学生信息
+     * Student information
      */
     private List<Student> students;
 }

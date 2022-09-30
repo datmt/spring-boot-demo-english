@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen

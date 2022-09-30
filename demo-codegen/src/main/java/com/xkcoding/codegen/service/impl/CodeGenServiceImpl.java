@@ -23,7 +23,7 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * <p>
- * 代码生成器
+ * Code generator
  * </p>
  *
  * @author yangkai.shen
@@ -41,10 +41,10 @@ public class CodeGenServiceImpl implements CodeGenService {
     private final String PAGE_SQL_TEMPLATE = " limit ?,?";
 
     /**
-     * 分页查询表信息
+     * Paginated query table information
      *
-     * @param request 请求参数
-     * @return 表名分页信息
+     * @param request request parameters
+     * @return Table name paging information
      */
     @Override
     @SneakyThrows
@@ -80,21 +80,21 @@ public class CodeGenServiceImpl implements CodeGenService {
     }
 
     /**
-     * 生成代码
+     * Generate code
      *
-     * @param genConfig 生成配置
-     * @return 代码压缩文件
+     * @param genConfig build configuration
+     * @return Code compression file
      */
     @Override
     public byte[] generatorCode(GenConfig genConfig) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream);
 
-        //查询表信息
+        Query table information
         Entity table = queryTable(genConfig.getRequest());
-        //查询列信息
+        Query column information
         List<Entity> columns = queryColumns(genConfig.getRequest());
-        //生成代码
+        Generate the code
         CodeGenUtil.generatorCode(genConfig, table, columns, zip);
         IoUtil.close(zip);
         return outputStream.toByteArray();

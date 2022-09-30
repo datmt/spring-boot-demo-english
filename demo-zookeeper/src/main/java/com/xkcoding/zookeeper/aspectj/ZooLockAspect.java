@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 
 /**
  * <p>
- * 使用 aop 切面记录请求日志信息
+ * Use aop slices to record request log information
  * </p>
  *
  * @author yangkai.shen
@@ -44,7 +44,7 @@ public class ZooLockAspect {
     }
 
     /**
-     * 切入点
+     * Entry point
      */
     @Pointcut("@annotation(com.xkcoding.zookeeper.annotation.ZooLock)")
     public void doLock() {
@@ -52,11 +52,11 @@ public class ZooLockAspect {
     }
 
     /**
-     * 环绕操作
+     * Wrap operation
      *
-     * @param point 切入点
-     * @return 原方法返回值
-     * @throws Throwable 异常信息
+     * @param point pointcut
+     * @return Original method return value
+     * @throws Throwable exception information
      */
     @Around("doLock()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
@@ -70,7 +70,7 @@ public class ZooLockAspect {
         String lockKey = buildLockKey(zooLock, method, args);
         InterProcessMutex lock = new InterProcessMutex(zkClient, lockKey);
         try {
-            // 假设上锁成功，以后拿到的都是 false
+            Assuming that the lock is successful, everything you get later is false
             if (lock.acquire(zooLock.timeout(), zooLock.timeUnit())) {
                 return point.proceed();
             } else {
@@ -82,11 +82,11 @@ public class ZooLockAspect {
     }
 
     /**
-     * 构造分布式锁的键
+     * The key to construct a distributed lock
      *
-     * @param lock   注解
-     * @param method 注解标记的方法
-     * @param args   方法上的参数
+     * @param lock annotation
+     * @param method annotates the method of markup
+     * @param parameters on the args method
      * @return
      * @throws NoSuchFieldException
      * @throws IllegalAccessException
@@ -94,27 +94,27 @@ public class ZooLockAspect {
     private String buildLockKey(ZooLock lock, Method method, Object[] args) throws NoSuchFieldException, IllegalAccessException {
         StringBuilder key = new StringBuilder(KEY_SEPARATOR + KEY_PREFIX + lock.key());
 
-        // 迭代全部参数的注解，根据使用LockKeyParam的注解的参数所在的下标，来获取args中对应下标的参数值拼接到前半部分key上
+        Iteration of the annotation of all parameters, according to the subscript of the parameter of the annotation using LockKeyParam, to obtain the parameter value of the corresponding subscript in args and spliced to the first half of the key
         Annotation[][] parameterAnnotations = method.getParameterAnnotations();
 
         for (int i = 0; i < parameterAnnotations.length; i++) {
-            // 循环该参数全部注解
+            Loop through all annotations for this parameter
             for (Annotation annotation : parameterAnnotations[i]) {
-                // 注解不是 @LockKeyParam
+                The annotation is not @LockKeyParam
                 if (!annotation.annotationType().isInstance(LockKeyParam.class)) {
                     continue;
                 }
 
-                // 获取所有fields
+                Get all fields
                 String[] fields = ((LockKeyParam) annotation).fields();
                 if (ArrayUtil.isEmpty(fields)) {
-                    // 普通数据类型直接拼接
+                    Normal data types are directly stitched
                     if (ObjectUtil.isNull(args[i])) {
                         throw new RuntimeException("动态参数不能为null");
                     }
                     key.append(KEY_SEPARATOR).append(args[i]);
                 } else {
-                    // @LockKeyParam的fields值不为null，所以当前参数应该是对象类型
+                    The fields value of the @LockKeyParam is not null, so the current parameter should be the object type
                     for (String field : fields) {
                         Class<?> clazz = args[i].getClass();
                         Field declaredField = clazz.getDeclaredField(field);

@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * <p>
- * 手动操作 xxl-job
+ * Manual operation xxl-job
  * </p>
  *
  * @author yangkai.shen
@@ -33,7 +33,7 @@ public class ManualOperateController {
     private final static String JOB_GROUP_URI = "/jobgroup";
 
     /**
-     * 任务组列表，xxl-job叫做触发器列表
+     * Task group list, xxl-job is called trigger list
      */
     @GetMapping("/group")
     public String xxlJobGroup() {
@@ -43,11 +43,11 @@ public class ManualOperateController {
     }
 
     /**
-     * 分页任务列表
+     * Pagination task list
      *
-     * @param page 当前页，第一页 -> 0
-     * @param size 每页条数，默认10
-     * @return 分页任务列表
+     * @param page current page, first page -> 0
+     * @param size per page, default 10
+     * @return Pagination task list
      */
     @GetMapping("/list")
     public String xxlJobList(Integer page, Integer size) {
@@ -63,7 +63,7 @@ public class ManualOperateController {
     }
 
     /**
-     * 测试手动保存任务
+     * Test saving tasks manually
      */
     @GetMapping("/add")
     public String xxlJobAdd() {
@@ -84,7 +84,7 @@ public class ManualOperateController {
     }
 
     /**
-     * 测试手动触发一次任务
+     * Test manually triggering a task
      */
     @GetMapping("/trigger")
     public String xxlJobTrigger() {
@@ -98,7 +98,7 @@ public class ManualOperateController {
     }
 
     /**
-     * 测试手动删除任务
+     * Test manual deletion of tasks
      */
     @GetMapping("/remove")
     public String xxlJobRemove() {
@@ -111,7 +111,7 @@ public class ManualOperateController {
     }
 
     /**
-     * 测试手动停止任务
+     * Test manually stop the task
      */
     @GetMapping("/stop")
     public String xxlJobStop() {
@@ -124,7 +124,7 @@ public class ManualOperateController {
     }
 
     /**
-     * 测试手动启动任务
+     * Test manual start task
      */
     @GetMapping("/start")
     public String xxlJobStart() {

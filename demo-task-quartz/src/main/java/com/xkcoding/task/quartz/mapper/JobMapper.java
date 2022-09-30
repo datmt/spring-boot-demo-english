@@ -16,9 +16,9 @@ import java.util.List;
 @Component
 public interface JobMapper {
     /**
-     * 查询定时作业和触发器列表
+     * Query the list of scheduled jobs and triggers
      *
-     * @return 定时作业和触发器列表
+     * @return list of scheduled jobs and triggers
      */
     List<JobAndTrigger> list();
 }

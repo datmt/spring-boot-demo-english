@@ -1,6 +1,6 @@
 # spring-boot-demo-orm-mybatis
 
-> 此 demo 演示了 Spring Boot 如何与原生的 mybatis 整合，使用了 mybatis 官方提供的脚手架 `mybatis-spring-boot-starter `可以很容易的和 Spring Boot 整合。
+> this demo demonstrates how Spring Boot integrates with native mybatis, using the scaffolding 'mybatis-spring-boot-starter' provided by mybatis to easily integrate with Spring Boot.
 
 ## pom.xml
 
@@ -83,7 +83,7 @@
 ```java
 /**
  * <p>
- * 启动类
+ * Startup class
  * </p>
  *
  * @author yangkai.shen
@@ -130,7 +130,7 @@ logging:
     com.xkcoding.orm.mybatis.mapper: trace
 mybatis:
   configuration:
-    # 下划线转驼峰
+    # Underline to hump
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mappers/*.xml
   type-aliases-package: com.xkcoding.orm.mybatis.entity
@@ -152,35 +152,35 @@ mybatis:
 public interface UserMapper {
 
     /**
-     * 查询所有用户
+     * Query all users
      *
-     * @return 用户列表
+     * @return User list
      */
     @Select("SELECT * FROM orm_user")
     List<User> selectAllUser();
 
     /**
-     * 根据id查询用户
+     * Query users based on id
      *
-     * @param id 主键id
-     * @return 当前id的用户，不存在则是 {@code null}
+     * @param id primary key id
+     * @return user with current id, if not present, {@code null}
      */
     @Select("SELECT * FROM orm_user WHERE id = #{id}")
     User selectUserById(@Param("id") Long id);
 
     /**
-     * 保存用户
+     * Save users
      *
-     * @param user 用户
-     * @return 成功 - {@code 1} 失败 - {@code 0}
+     * @param user user
+     * @return Success - {@code 1} Failed - {@code 0}
      */
     int saveUser(@Param("user") User user);
 
     /**
-     * 删除用户
+     * Delete users
      *
-     * @param id 主键id
-     * @return 成功 - {@code 1} 失败 - {@code 0}
+     * @param id primary key id
+     * @return Success - {@code 1} Failed - {@code 0}
      */
     int deleteById(@Param("id") Long id);
 
@@ -228,7 +228,7 @@ public interface UserMapper {
 ```java
 /**
  * <p>
- * UserMapper 测试类
+ * UserMapper test class
  * </p>
  *
  * @author yangkai.shen
@@ -256,7 +256,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisApplicationTests {
     @Test
     public void saveUser() {
         String salt = IdUtil.fastSimpleUUID();
-        User user = User.builder().name("testSave3").password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave3@xkcoding.com").phoneNumber("17300000003").status(1).lastLoginTime(new DateTime()).createTime(new DateTime()).lastUpdateTime(new DateTime()).build();
+        User user = User.builder().name("testSave3").password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave3@xkcoding.com").phoneNumber("17300000003").status(1). lastLoginTime(new DateTime()).createTime(new DateTime()).lastUpdateTime(new DateTime()).build();
         int i = userMapper.saveUser(user);
         Assert.assertEquals(1, i);
     }
@@ -269,10 +269,10 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisApplicationTests {
 }
 ```
 
-## 参考
+## Reference
 
-- Mybatis官方文档：http://www.mybatis.org/mybatis-3/zh/index.html
+- Mybatis Official Documentation: http://www.mybatis.org/mybatis-3/zh/index.html
 
-- Mybatis官方脚手架文档：http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
+- Mybatis Official Scaffolding Document: http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
 
-- Mybatis整合Spring Boot官方demo：https://github.com/mybatis/spring-boot-starter/tree/master/mybatis-spring-boot-samples
+- Mybatis integrates Spring Boot's official demo: https://github.com/mybatis/spring-boot-starter/tree/master/mybatis-spring-boot-samples

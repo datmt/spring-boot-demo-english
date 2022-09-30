@@ -24,32 +24,32 @@ public class Person implements Serializable {
     private static final long serialVersionUID = 8510634155374943623L;
 
     /**
-     * 主键
+     * Primary key
      */
     private Long id;
 
     /**
-     * 名字
+     * First name
      */
     private String name;
 
     /**
-     * 国家
+     * Country
      */
     private String country;
 
     /**
-     * 年龄
+     * Age
      */
     private Integer age;
 
     /**
-     * 生日
+     * Birthday
      */
     private Date birthday;
 
     /**
-     * 介绍
+     * Introduction
      */
     private String remark;
 

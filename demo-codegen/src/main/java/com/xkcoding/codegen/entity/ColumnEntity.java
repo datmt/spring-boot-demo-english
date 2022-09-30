@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 列属性： https://blog.csdn.net/lkforce/article/details/79557482
+ * Column Properties: https://blog.csdn.net/lkforce/article/details/79557482
  * </p>
  *
  * @author yangkai.shen
@@ -13,35 +13,35 @@ import lombok.Data;
 @Data
 public class ColumnEntity {
     /**
-     * 列表
+     * List
      */
     private String columnName;
     /**
-     * 数据类型
+     * Data type
      */
     private String dataType;
     /**
-     * 备注
+     * Remarks
      */
     private String comments;
     /**
-     * 驼峰属性
+     * Hump properties
      */
     private String caseAttrName;
     /**
-     * 普通属性
+     * Normal properties
      */
     private String lowerAttrName;
     /**
-     * 属性类型
+     * Attribute type
      */
     private String attrType;
     /**
-     * jdbc类型
+     * JDBC type
      */
     private String jdbcType;
     /**
-     * 其他信息
+     * Additional information
      */
     private String extra;
 }

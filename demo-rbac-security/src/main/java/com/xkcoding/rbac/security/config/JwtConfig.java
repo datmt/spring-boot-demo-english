@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * <p>
- * JWT 配置
+ * JWT configuration
  * </p>
  *
  * @author yangkai.shen
@@ -15,17 +15,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class JwtConfig {
     /**
-     * jwt 加密 key，默认值：xkcoding.
+     * jwt encryption key, default: xkcoding.
      */
     private String key = "xkcoding";
 
     /**
-     * jwt 过期时间，默认值：600000 {@code 10 分钟}.
+     * jwt expiration time, default: 600000 {@code 10 minutes}.
      */
     private Long ttl = 600000L;
 
     /**
-     * 开启 记住我 之后 jwt 过期时间，默认值 604800000 {@code 7 天}
+     * On Remember me after jwt expires, default 604800000 {@code 7 days}
      */
     private Long remember = 604800000L;
 }

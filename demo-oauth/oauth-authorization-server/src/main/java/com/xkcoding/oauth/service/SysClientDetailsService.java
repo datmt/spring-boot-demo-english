@@ -9,8 +9,8 @@ import org.springframework.security.oauth2.provider.NoSuchClientException;
 import java.util.List;
 
 /**
- * 声明自己的实现.
- * 参见 {@link ClientRegistrationService}
+ * Declare your own implementation.
+ * See {@link ClientRegistrationService}
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 13:39
@@ -18,50 +18,50 @@ import java.util.List;
 public interface SysClientDetailsService extends ClientDetailsService {
 
     /**
-     * 通过客户端 id 查询
+     * Query by client id
      *
-     * @param clientId 客户端 id
-     * @return 结果
+     * @param clientId client ID
+     * @return Results
      */
     SysClientDetails findByClientId(String clientId);
 
     /**
-     * 添加客户端信息.
+     * Add client information.
      *
-     * @param clientDetails 客户端信息
-     * @throws ClientAlreadyExistsException 客户端已存在
+     * @param clientDetails client information
+     * @throws The ClientAlreadyExistsException client already exists
      */
     void addClientDetails(SysClientDetails clientDetails) throws ClientAlreadyExistsException;
 
     /**
-     * 更新客户端信息，不包括 clientSecret.
+     * Updated client information, excluding clientSecret.
      *
-     * @param clientDetails 客户端信息
-     * @throws NoSuchClientException 找不到客户端异常
+     * @param clientDetails client information
+     * @throws NoSuchClientException could not find client exception
      */
     void updateClientDetails(SysClientDetails clientDetails) throws NoSuchClientException;
 
     /**
-     * 更新客户端密钥.
+     * Update client secret.
      *
-     * @param clientId     客户端 id
-     * @param clientSecret 客户端密钥
-     * @throws NoSuchClientException 找不到客户端异常
+     * @param clientId client ID
+     * @param clientSecret client secret
+     * @throws NoSuchClientException could not find client exception
      */
     void updateClientSecret(String clientId, String clientSecret) throws NoSuchClientException;
 
     /**
-     * 删除客户端信息.
+     * Delete client information.
      *
-     * @param clientId 客户端 id
-     * @throws NoSuchClientException 找不到客户端异常
+     * @param clientId client ID
+     * @throws NoSuchClientException could not find client exception
      */
     void removeClientDetails(String clientId) throws NoSuchClientException;
 
     /**
-     * 查询所有
+     * Enquire all
      *
-     * @return 结果
+     * @return Results
      */
     List<SysClientDetails> findAll();
 }

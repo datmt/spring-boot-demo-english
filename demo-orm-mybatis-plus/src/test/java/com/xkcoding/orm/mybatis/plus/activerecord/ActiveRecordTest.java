@@ -21,19 +21,19 @@ import java.util.List;
 @Slf4j
 public class ActiveRecordTest extends SpringBootDemoOrmMybatisPlusApplicationTests {
     /**
-     * 测试 ActiveRecord 插入数据
+     * Test ActiveRecord insertion data
      */
     @Test
     public void testActiveRecordInsert() {
         Role role = new Role();
         role.setName("VIP");
         Assert.assertTrue(role.insert());
-        // 成功直接拿会写的 ID
+        Successfully get the ID that can be written directly
         log.debug("【role】= {}", role);
     }
 
     /**
-     * 测试 ActiveRecord 更新数据
+     * Test ActiveRecord update data
      */
     @Test
     public void testActiveRecordUpdate() {
@@ -42,7 +42,7 @@ public class ActiveRecordTest extends SpringBootDemoOrmMybatisPlusApplicationTes
     }
 
     /**
-     * 测试 ActiveRecord 查询数据
+     * Test ActiveRecord query data
      */
     @Test
     public void testActiveRecordSelect() {
@@ -55,7 +55,7 @@ public class ActiveRecordTest extends SpringBootDemoOrmMybatisPlusApplicationTes
     }
 
     /**
-     * 测试 ActiveRecord 删除数据
+     * Test ActiveRecord deletes data
      */
     @Test
     public void testActiveRecordDelete() {

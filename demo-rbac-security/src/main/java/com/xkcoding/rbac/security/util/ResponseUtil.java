@@ -12,7 +12,7 @@ import java.io.IOException;
 
 /**
  * <p>
- * Response 通用工具类
+ * Response generic tool class
  * </p>
  *
  * @author yangkai.shen
@@ -22,11 +22,11 @@ import java.io.IOException;
 public class ResponseUtil {
 
     /**
-     * 往 response 写出 json
+     * Write json to Response
      *
-     * @param response 响应
-     * @param status   状态
-     * @param data     返回数据
+     * @param response response
+     * @param status status
+     * @param data returns data
      */
     public static void renderJson(HttpServletResponse response, IStatus status, Object data) {
         try {
@@ -35,8 +35,8 @@ public class ResponseUtil {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(200);
 
-            // FIXME: hutool 的 BUG：JSONUtil.toJsonStr()
-            //  将JSON转为String的时候，忽略null值的时候转成的String存在错误
+            FIXME: BUG for hutool: JSONUtil.toJsonStr()
+            When converting JSON to String, there is an error in the String converted to String when null values are ignored
             response.getWriter().write(JSONUtil.toJsonStr(new JSONObject(ApiResponse.ofStatus(status, data), false)));
         } catch (IOException e) {
             log.error("Response写出JSON异常，", e);
@@ -44,10 +44,10 @@ public class ResponseUtil {
     }
 
     /**
-     * 往 response 写出 json
+     * Write json to Response
      *
-     * @param response  响应
-     * @param exception 异常
+     * @param response response
+     * @param exception exception
      */
     public static void renderJson(HttpServletResponse response, BaseException exception) {
         try {
@@ -56,8 +56,8 @@ public class ResponseUtil {
             response.setContentType("application/json;charset=UTF-8");
             response.setStatus(200);
 
-            // FIXME: hutool 的 BUG：JSONUtil.toJsonStr()
-            //  将JSON转为String的时候，忽略null值的时候转成的String存在错误
+            FIXME: BUG for hutool: JSONUtil.toJsonStr()
+            When converting JSON to String, there is an error in the String converted to String when null values are ignored
             response.getWriter().write(JSONUtil.toJsonStr(new JSONObject(ApiResponse.ofException(exception), false)));
         } catch (IOException e) {
             log.error("Response写出JSON异常，", e);

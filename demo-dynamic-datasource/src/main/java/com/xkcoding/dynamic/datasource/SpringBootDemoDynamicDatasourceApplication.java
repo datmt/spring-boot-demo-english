@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen
@@ -31,12 +31,12 @@ public class SpringBootDemoDynamicDatasourceApplication implements CommandLineRu
 
     @Override
     public void run(String... args) {
-        // 设置默认的数据源
+        Sets the default data source
         DatasourceConfigContextHolder.setDefaultDatasource();
-        // 查询所有数据库配置列表
+        Query the list of all database configurations
         List<DatasourceConfig> datasourceConfigs = configMapper.selectAll();
         System.out.println("加载其余数据源配置列表: " + datasourceConfigs);
-        // 将数据库配置加入缓存
+        Join the database configuration to the cache
         datasourceConfigs.forEach(config -> DatasourceConfigCache.INSTANCE.addConfig(config.getId(), config));
     }
 }

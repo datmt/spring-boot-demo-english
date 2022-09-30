@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * <p>
- * 首页Controller
+ * HomeController
  * </p>
  *
  * @author yangkai.shen

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 测试Neo4j
+ * Test Neo4j
  * </p>
  *
  * @author yangkai.shen
@@ -27,7 +27,7 @@ public class Neo4jTest extends SpringBootDemoNeo4jApplicationTests {
     private NeoService neoService;
 
     /**
-     * 测试保存
+     * Test save
      */
     @Test
     public void testSave() {
@@ -35,7 +35,7 @@ public class Neo4jTest extends SpringBootDemoNeo4jApplicationTests {
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void testDelete() {
@@ -43,19 +43,19 @@ public class Neo4jTest extends SpringBootDemoNeo4jApplicationTests {
     }
 
     /**
-     * 测试查询 鸣人 学了哪些课程
+     * Test to find out which courses Naruto has taken
      */
     @Test
     public void testFindLessonsByStudent() {
-        // 深度为1，则课程的任教老师的属性为null
-        // 深度为2，则会把课程的任教老师的属性赋值
+        If the depth is 1, the attribute of the teacher of the course is null
+        A depth of 2 assigns a value to the instructor of the course
         List<Lesson> lessons = neoService.findLessonsFromStudent("漩涡鸣人", 2);
 
         lessons.forEach(lesson -> log.info("【lesson】= {}", JSONUtil.toJsonStr(lesson)));
     }
 
     /**
-     * 测试查询班级人数
+     * Test check class size
      */
     @Test
     public void testCountStudent() {
@@ -66,7 +66,7 @@ public class Neo4jTest extends SpringBootDemoNeo4jApplicationTests {
     }
 
     /**
-     * 测试根据课程查询同学关系
+     * Test to query classmate relationships according to the course
      */
     @Test
     public void testFindClassmates() {
@@ -75,7 +75,7 @@ public class Neo4jTest extends SpringBootDemoNeo4jApplicationTests {
     }
 
     /**
-     * 查询所有师生关系，包括班主任/学生，任课老师/学生
+     * Enquire about all teacher-student relationships, including homeroom teacher/student, classroom teacher/student
      */
     @Test
     public void testFindTeacherStudent() {

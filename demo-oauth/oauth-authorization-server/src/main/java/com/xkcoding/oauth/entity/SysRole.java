@@ -8,9 +8,9 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * 这里完全可以只用一个字段代替的
- * 但是想了想还是模拟实际的情况来把
- * 角色信息.
+ * Here it is completely possible to replace it with only one field
+ * But after thinking about it, I will simulate the actual situation to put it
+ * Character information.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 12:44
@@ -23,25 +23,25 @@ import java.util.Set;
 public class SysRole {
 
     /**
-     * 主键.
+     * Primary key.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * 角色名称，按照 spring security 规范
-     * 需要以 ROLE_ 开头.
+     * Role name, according to the spring security specification
+     * Requires a start with ROLE_.
      */
     private String name;
 
     /**
-     * 角色描述.
+     * Character description.
      */
     private String description;
 
     /**
-     * 当前角色所有用户.
+     * Current role for all users.
      */
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<SysUser> users;

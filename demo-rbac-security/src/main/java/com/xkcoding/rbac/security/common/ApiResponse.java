@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 通用的 API 接口封装
+ * Generic API interface encapsulation
  * </p>
  *
  * @author yangkai.shen
@@ -17,33 +17,33 @@ public class ApiResponse implements Serializable {
     private static final long serialVersionUID = 8993485788201922830L;
 
     /**
-     * 状态码
+     * Status code
      */
     private Integer code;
 
     /**
-     * 返回内容
+     * Back to content
      */
     private String message;
 
     /**
-     * 返回数据
+     * Returns data
      */
     private Object data;
 
     /**
-     * 无参构造函数
+     * No parameter constructor
      */
     private ApiResponse() {
 
     }
 
     /**
-     * 全参构造函数
+     * Full parameter constructor
      *
-     * @param code    状态码
-     * @param message 返回内容
-     * @param data    返回数据
+     * @param code status code
+     * @param message returns content
+     * @param data returns data
      */
     private ApiResponse(Integer code, String message, Object data) {
         this.code = code;
@@ -52,11 +52,11 @@ public class ApiResponse implements Serializable {
     }
 
     /**
-     * 构造一个自定义的API返回
+     * Construct a custom API to return
      *
-     * @param code    状态码
-     * @param message 返回内容
-     * @param data    返回数据
+     * @param code status code
+     * @param message returns content
+     * @param data returns data
      * @return ApiResponse
      */
     public static ApiResponse of(Integer code, String message, Object data) {
@@ -64,7 +64,7 @@ public class ApiResponse implements Serializable {
     }
 
     /**
-     * 构造一个成功且不带数据的API返回
+     * Construct a successful API return without data
      *
      * @return ApiResponse
      */
@@ -73,9 +73,9 @@ public class ApiResponse implements Serializable {
     }
 
     /**
-     * 构造一个成功且带数据的API返回
+     * Construct a successful API return with data
      *
-     * @param data 返回数据
+     * @param data returns data
      * @return ApiResponse
      */
     public static ApiResponse ofSuccess(Object data) {
@@ -83,9 +83,9 @@ public class ApiResponse implements Serializable {
     }
 
     /**
-     * 构造一个成功且自定义消息的API返回
+     * Construct an API return for a successful and custom message
      *
-     * @param message 返回内容
+     * @param message returns content
      * @return ApiResponse
      */
     public static ApiResponse ofMessage(String message) {
@@ -93,9 +93,9 @@ public class ApiResponse implements Serializable {
     }
 
     /**
-     * 构造一个有状态的API返回
+     * Construct a stateful API to return
      *
-     * @param status 状态 {@link Status}
+     * @param status status {@link Status}
      * @return ApiResponse
      */
     public static ApiResponse ofStatus(Status status) {
@@ -103,10 +103,10 @@ public class ApiResponse implements Serializable {
     }
 
     /**
-     * 构造一个有状态且带数据的API返回
+     * Construct a stateful API return with data
      *
-     * @param status 状态 {@link IStatus}
-     * @param data   返回数据
+     * @param status status {@link IStatus}
+     * @param data returns data
      * @return ApiResponse
      */
     public static ApiResponse ofStatus(IStatus status, Object data) {
@@ -114,10 +114,10 @@ public class ApiResponse implements Serializable {
     }
 
     /**
-     * 构造一个异常的API返回
+     * Construct an exception API to return
      *
-     * @param t   异常
-     * @param <T> {@link BaseException} 的子类
+     * @param t exception
+     * @param <T> a subclass of {@link BaseException}
      * @return ApiResponse
      */
     public static <T extends BaseException> ApiResponse ofException(T t) {

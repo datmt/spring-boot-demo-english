@@ -21,7 +21,7 @@ public class ElasticsearchApplicationTests {
     private PersonService personService;
 
     /**
-     * 测试删除索引
+     * Test to drop indexes
      */
     @Test
     public void deleteIndexTest() {
@@ -29,7 +29,7 @@ public class ElasticsearchApplicationTests {
     }
 
     /**
-     * 测试创建索引
+     * Test index creation
      */
     @Test
     public void createIndexTest() {
@@ -37,7 +37,7 @@ public class ElasticsearchApplicationTests {
     }
 
     /**
-     * 测试新增
+     * New to testing
      */
     @Test
     public void insertTest() {
@@ -50,7 +50,7 @@ public class ElasticsearchApplicationTests {
     }
 
     /**
-     * 测试更新
+     * Test updates
      */
     @Test
     public void updateTest() {
@@ -61,7 +61,7 @@ public class ElasticsearchApplicationTests {
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void deleteTest() {
@@ -69,7 +69,7 @@ public class ElasticsearchApplicationTests {
     }
 
     /**
-     * 测试查询
+     * Test query
      */
     @Test
     public void searchListTest() {

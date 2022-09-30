@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
- * 数据源配置 Mapper
+ * Data source configuration Mapper
  * </p>
  *
  * @author yangkai.shen

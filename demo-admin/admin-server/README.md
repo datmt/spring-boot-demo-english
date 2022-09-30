@@ -1,6 +1,6 @@
 # spring-boot-demo-admin-server
 
-> 本 demo 主要演示了如何搭建一个 Spring Boot Admin 的服务端项目，可视化展示自己客户端项目的运行状态。
+> This demo mainly demonstrates how to build a Spring Boot Admin server-side project and visualize the running status of your client project.
 
 ## pom.xml
 
@@ -65,7 +65,7 @@
 ```java
 /**
  * <p>
- * 启动类
+ * Startup class
  * </p>
  *
  * @author yangkai.shen

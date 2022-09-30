@@ -1,22 +1,22 @@
 # spring-boot-demo-codegen
 
-> 此 demo 主要演示了 Spring Boot 使用**模板技术**生成代码，并提供前端页面，可生成 Entity/Mapper/Service/Controller 等代码。
+> This demo mainly demonstrates Spring Boot's use of Template Technology to generate code and provides front-end pages that generate code such as Entity/Mapper/Service/Controller.
 
-## 1. 主要功能
+## 1. Key features
 
-1. 使用 `velocity` 代码生成
-2. 暂时支持mysql数据库的代码生成
-3. 提供前端页面展示，并下载代码压缩包
+1. Use the 'velocity' code generation
+2. Code generation for mysql database is temporarily supported
+3. Provide a front-end page display and download the code package
 
-> 注意：① Entity里使用lombok，简化代码 ② Mapper 和 Service 层集成 Mybatis-Plus 简化代码
+> Note: (1) use lombok in Entity to simplify code (2) Mapper and service layer integration Mybatis-Plus simplify code
 
-## 2. 运行
+## 2. run
 
-1. 运行 `SpringBootDemoCodegenApplication` 启动项目
-2. 打开浏览器，输入 http://localhost:8080/demo/index.html
-3. 输入查询条件，生成代码
+1. Run the 'SpringBootDemoCodegenApplication' to start the project
+2. Open a browser and enter http://localhost:8080/demo/index.html
+3. Enter the query criteria to generate the code
 
-## 3. 关键代码
+## 3. Critical code
 
 ### 3.1. pom.xml
 
@@ -73,7 +73,7 @@
             <artifactId>HikariCP</artifactId>
         </dependency>
 
-        <!--velocity代码生成使用模板 -->
+        <!-- velocity code generation uses the template -->
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
@@ -121,19 +121,19 @@
 </project>
 ```
 
-### 3.2. 代码生成器配置
+### 3.2. Code generator configuration
 
 ```properties
-#代码生成器，配置信息
+#代码生成器, configuration information
 mainPath=com.xkcoding
 #包名
 package=com.xkcoding
 moduleName=generator
 #作者
 author=Yangkai.Shen
-#表前缀(类名不会包含表前缀)
+#表前缀 (class name does not contain table prefix)
 tablePrefix=tb_
-#类型转换，配置信息
+#类型转换, configuration information
 tinyint=Integer
 smallint=Integer
 mediumint=Integer
@@ -160,7 +160,7 @@ timestamp=LocalDateTime
 ```java
 /**
  * <p>
- * 代码生成器   工具类
+ * Code generator tool class
  * </p>
  *
  * @author yangkai.shen
@@ -192,13 +192,13 @@ public class CodeGenUtil {
     }
 
     /**
-     * 生成代码
+     * Generate code
      */
     public void generatorCode(GenConfig genConfig, Entity table, List<Entity> columns, ZipOutputStream zip) {
-        //配置信息
+        Configuration information
         Props props = getConfig();
         boolean hasBigDecimal = false;
-        //表信息
+        Table information
         TableEntity tableEntity = new TableEntity();
         tableEntity.setTableName(table.getStr("tableName"));
 
@@ -215,12 +215,12 @@ public class CodeGenUtil {
             tablePrefix = props.getStr("tablePrefix");
         }
 
-        //表名转换成Java类名
+        Table names are converted to Java class names
         String className = tableToJava(tableEntity.getTableName(), tablePrefix);
         tableEntity.setCaseClassName(className);
         tableEntity.setLowerClassName(StrUtil.lowerFirst(className));
 
-        //列信息
+        Column information
         List<ColumnEntity> columnList = Lists.newArrayList();
         for (Entity column : columns) {
             ColumnEntity columnEntity = new ColumnEntity();
@@ -229,18 +229,18 @@ public class CodeGenUtil {
             columnEntity.setComments(column.getStr("columnComment"));
             columnEntity.setExtra(column.getStr("extra"));
 
-            //列名转换成Java属性名
+            The column names are converted to Java property names
             String attrName = columnToJava(columnEntity.getColumnName());
             columnEntity.setCaseAttrName(attrName);
             columnEntity.setLowerAttrName(StrUtil.lowerFirst(attrName));
 
-            //列的数据类型，转换成Java类型
+            The data type of the column, converted to Java type
             String attrType = props.getStr(columnEntity.getDataType(), "unknownType");
             columnEntity.setAttrType(attrType);
             if (!hasBigDecimal && "BigDecimal".equals(attrType)) {
                 hasBigDecimal = true;
             }
-            //是否主键
+            Whether the primary key
             if ("PRI".equalsIgnoreCase(column.getStr("columnKey")) && tableEntity.getPk() == null) {
                 tableEntity.setPk(columnEntity);
             }
@@ -249,16 +249,16 @@ public class CodeGenUtil {
         }
         tableEntity.setColumns(columnList);
 
-        //没主键，则第一个字段为主键
+        If there is no primary key, the first field is the primary key
         if (tableEntity.getPk() == null) {
             tableEntity.setPk(tableEntity.getColumns().get(0));
         }
 
-        //设置velocity资源加载器
+        Set the velocity resource loader
         Properties prop = new Properties();
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
-        //封装模板数据
+        Encapsulate template data
         Map<String, Object> map = new HashMap<>(16);
         map.put("tableName", tableEntity.getTableName());
         map.put("pk", tableEntity.getPk());
@@ -297,16 +297,16 @@ public class CodeGenUtil {
         }
         VelocityContext context = new VelocityContext(map);
 
-        //获取模板列表
+        Gets a list of templates
         List<String> templates = getTemplates();
         for (String template : templates) {
-            //渲染模板
+            Render the template
             StringWriter sw = new StringWriter();
             Template tpl = Velocity.getTemplate(template, CharsetUtil.UTF_8);
             tpl.merge(context, sw);
 
             try {
-                //添加到zip
+                Add to zip
                 zip.putNextEntry(new ZipEntry(Objects.requireNonNull(getFileName(template, tableEntity.getCaseClassName(), map
                         .get("package")
                         .toString(), map.get("moduleName").toString()))));
@@ -314,21 +314,21 @@ public class CodeGenUtil {
                 IoUtil.close(sw);
                 zip.closeEntry();
             } catch (IOException e) {
-                throw new RuntimeException("渲染模板失败，表名：" + tableEntity.getTableName(), e);
+                throw new RuntimeException("Render template failed, table name:" + tableEntity.getTableName(), e);
             }
         }
     }
 
 
     /**
-     * 列名转换成Java属性名
+     * Column names are converted to Java property names
      */
     private String columnToJava(String columnName) {
         return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "");
     }
 
     /**
-     * 表名转换成Java类名
+     * Table name converted to Java class name
      */
     private String tableToJava(String tableName, String tablePrefix) {
         if (StrUtil.isNotBlank(tablePrefix)) {
@@ -338,7 +338,7 @@ public class CodeGenUtil {
     }
 
     /**
-     * 获取配置信息
+     * Get configuration information
      */
     private Props getConfig() {
         Props props = new Props("generator.properties");
@@ -347,14 +347,14 @@ public class CodeGenUtil {
     }
 
     /**
-     * 获取文件名
+     * Get the file name
      */
     private String getFileName(String template, String className, String packageName, String moduleName) {
-        // 包路径
+        The package path
         String packagePath = GenConstants.SIGNATURE + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
-        // 资源路径
+        The resource path
         String resourcePath = GenConstants.SIGNATURE + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
-        // api路径
+        APIs
         String apiPath = GenConstants.SIGNATURE + File.separator + "api" + File.separator;
 
         if (StrUtil.isNotBlank(packageName)) {
@@ -394,17 +394,17 @@ public class CodeGenUtil {
 }
 ```
 
-### 3.4. 其余代码参见demo
+### 3.4. See demo for the rest of the code
 
-## 4. 演示
+## 4. demo
 
 <video id="video" controls="" preload="none">
       <source id="mp4" src="https://static.xkcoding.com/code/spring-boot-demo/codegen/codegen.mp4" type="video/mp4">
-      <p>您的浏览器版本过低，不支持播放视频演示，可下载演示视频观看，https://static.xkcoding.com/code/spring-boot-demo/codegen/codegen.mp4</p>
+      <p>Your browser version is too low to support playing video presentations, you can download demo videos to watch and https://static.xkcoding.com/code/spring-boot-demo/codegen/codegen.mp4</p>
     </video>
 
-## 5. 参考
+## 5. reference
 
-- [基于人人开源 自动构建项目_V1](https://qq343509740.gitee.io/2018/12/20/%E7%AC%94%E8%AE%B0/%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE/%E5%9F%BA%E4%BA%8E%E4%BA%BA%E4%BA%BA%E5%BC%80%E6%BA%90%20%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE_V1/)
+- [Open source for everyone.]  Build project _V1 automatically] ( https://qq343509740.gitee.io/2018/12/20/%E7%AC%94%E8%AE%B0/%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE/%E5%9F%BA%E4%BA%8E%E4%BA%BA%E4%BA%BA%E5%BC%80%E6%BA%90%20%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE_V1/)
 
-- [Mybatis-Plus代码生成器](https://mybatis.plus/guide/generator.html#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96)
+- [Mybatis-Plus Code Generator] (https://mybatis.plus/guide/generator.html#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96)

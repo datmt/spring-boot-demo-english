@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * <p>
- * UserMapper 测试类
+ * UserMapper test class
  * </p>
  *
  * @author yangkai.shen
@@ -27,7 +27,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisApplicationTests {
     private UserMapper userMapper;
 
     /**
-     * 测试查询所有
+     * Test query all
      */
     @Test
     public void selectAllUser() {
@@ -37,7 +37,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisApplicationTests {
     }
 
     /**
-     * 测试根据主键查询单个
+     * Test queries single based on primary key
      */
     @Test
     public void selectUserById() {
@@ -47,7 +47,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisApplicationTests {
     }
 
     /**
-     * 测试保存
+     * Test save
      */
     @Test
     public void saveUser() {
@@ -58,7 +58,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisApplicationTests {
     }
 
     /**
-     * 测试根据主键删除
+     * Test deletion based on primary key
      */
     @Test
     public void deleteById() {

@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 /**
  * <p>
- * JPA多数据源配置 - 主数据源
+ * JPA Multiple Data Source Configuration - Primary Data Source
  * </p>
  *
  * @author yangkai.shen
@@ -22,9 +22,9 @@ import javax.sql.DataSource;
 public class PrimaryDataSourceConfig {
 
     /**
-     * 扫描spring.datasource.primary开头的配置信息
+     * Scan configuration information starting with spring.datasource.primary
      *
-     * @return 数据源配置信息
+     * @return data source configuration information
      */
     @Primary
     @Bean(name = "primaryDataSourceProperties")
@@ -34,10 +34,10 @@ public class PrimaryDataSourceConfig {
     }
 
     /**
-     * 获取主库数据源对象
+     * Get the main library data source object
      *
-     * @param dataSourceProperties 注入名为primaryDataSourceProperties的bean
-     * @return 数据源对象
+     * @param dataSourceProperties injects a bean called primaryDataSourceProperties
+     * @return data source object
      */
     @Primary
     @Bean(name = "primaryDataSource")
@@ -46,10 +46,10 @@ public class PrimaryDataSourceConfig {
     }
 
     /**
-     * 该方法仅在需要使用JdbcTemplate对象时选用
+     * This method is only used when a JdbcTemplate object is required
      *
-     * @param dataSource 注入名为primaryDataSource的bean
-     * @return 数据源JdbcTemplate对象
+     * @param dataSource injects a bean called primaryDataSource
+     * @return data source JdbcTemplate object
      */
     @Primary
     @Bean(name = "primaryJdbcTemplate")

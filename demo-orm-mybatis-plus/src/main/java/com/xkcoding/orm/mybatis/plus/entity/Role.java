@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 角色实体类
+ * Role entity class
  * </p>
  *
  * @author yangkai.shen
@@ -22,18 +22,18 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class Role extends Model<Role> {
     /**
-     * 主键
+     * Primary key
      */
     private Long id;
 
     /**
-     * 角色名
+     * Role name
      */
     private String name;
 
     /**
-     * 主键值，ActiveRecord 模式这个必须有，否则 xxById 的方法都将失效！
-     * 即使使用 ActiveRecord 不会用到 RoleMapper，RoleMapper 这个接口也必须创建
+     * Primary key value, ActiveRecord mode this must have, otherwise xxById method will be invalidated!
+     * Even if RoleMapper is not used with ActiveRecord, the RoleMapper interface must be created
      */
     @Override
     protected Serializable pkVal() {

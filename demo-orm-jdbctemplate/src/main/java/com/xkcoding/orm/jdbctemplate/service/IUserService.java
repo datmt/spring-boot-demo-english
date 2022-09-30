@@ -14,43 +14,43 @@ import java.util.List;
  */
 public interface IUserService {
     /**
-     * 保存用户
+     * Save users
      *
-     * @param user 用户实体
-     * @return 保存成功 {@code true} 保存失败 {@code false}
+     * @param user user entity
+     * @return Save successfully {@code true} Save failed {@code false}
      */
     Boolean save(User user);
 
     /**
-     * 删除用户
+     * Delete users
      *
-     * @param id 主键id
-     * @return 删除成功 {@code true} 删除失败 {@code false}
+     * @param id primary key id
+     * @return Delete successful {@code true} Delete failed {@code false}
      */
     Boolean delete(Long id);
 
     /**
-     * 更新用户
+     * Update users
      *
-     * @param user 用户实体
-     * @param id   主键id
-     * @return 更新成功 {@code true} 更新失败 {@code false}
+     * @param user user entity
+     * @param id primary key id
+     * @return update successful {@code true} Update failed {@code false}
      */
     Boolean update(User user, Long id);
 
     /**
-     * 获取单个用户
+     * Get a single user
      *
-     * @param id 主键id
-     * @return 单个用户对象
+     * @param id primary key id
+     * @return Single user object
      */
     User getUser(Long id);
 
     /**
-     * 获取用户列表
+     * Get a list of users
      *
-     * @param user 用户实体
-     * @return 用户列表
+     * @param user user entity
+     * @return User list
      */
     List<User> getUser(User user);
 

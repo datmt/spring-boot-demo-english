@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>
- * 数据源配置缓存
+ * Data source configuration cache
  * </p>
  *
  * @author yangkai.shen
@@ -15,30 +15,30 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public enum DatasourceConfigCache {
     /**
-     * 当前实例
+     * Current instance
      */
     INSTANCE;
 
     /**
-     * 管理动态数据源列表。
+     * Manage dynamic data source lists.
      */
     private static final Map<Long, DatasourceConfig> CONFIG_CACHE = new ConcurrentHashMap<>();
 
     /**
-     * 添加数据源配置
+     * Add data source configuration
      *
-     * @param id     数据源配置id
-     * @param config 数据源配置
+     * @param id data source configuration ID
+     * @param config data source configuration
      */
     public synchronized void addConfig(Long id, DatasourceConfig config) {
         CONFIG_CACHE.put(id, config);
     }
 
     /**
-     * 查询数据源配置
+     * Query data source configuration
      *
-     * @param id 数据源配置id
-     * @return 数据源配置
+     * @param id data source configuration ID
+     * @return data source configuration
      */
     public synchronized DatasourceConfig getConfig(Long id) {
         if (CONFIG_CACHE.containsKey(id)) {
@@ -48,11 +48,11 @@ public enum DatasourceConfigCache {
     }
 
     /**
-     * 清除数据源配置
+     * Clear the data source configuration
      */
     public synchronized void removeConfig(Long id) {
         CONFIG_CACHE.remove(id);
-        // 同步清除 DatasourceHolder 对应的数据源
+        Synchronously clears the data source corresponding to the DatasourceHolder
         DatasourceHolder.INSTANCE.removeDatasource(id);
     }
 }

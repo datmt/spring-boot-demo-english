@@ -15,7 +15,7 @@ public class SpringBootDemoMqKafkaApplicationTests {
     private KafkaTemplate<String, String> kafkaTemplate;
 
     /**
-     * 测试发送消息
+     * Test sending messages
      */
     @Test
     public void testSend() {

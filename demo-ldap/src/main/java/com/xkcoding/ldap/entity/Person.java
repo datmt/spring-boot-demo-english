@@ -26,60 +26,60 @@ public class Person implements Serializable {
     private Name id;
 
     /**
-     * 用户id
+     * User ID
      */
     private String uidNumber;
 
     /**
-     * 用户名
+     * Username
      */
     @DnAttribute(value = "uid", index = 1)
     private String uid;
 
     /**
-     * 姓名
+     * Name
      */
     @Attribute(name = "cn")
     private String personName;
 
     /**
-     * 密码
+     * Password
      */
     private String userPassword;
 
     /**
-     * 名字
+     * First name
      */
     private String givenName;
 
     /**
-     * 姓氏
+     * Last name
      */
     @Attribute(name = "sn")
     private String surname;
 
     /**
-     * 邮箱
+     * Email
      */
     private String mail;
 
     /**
-     * 职位
+     * Position
      */
     private String title;
 
     /**
-     * 部门
+     * Department
      */
     private String departmentNumber;
 
     /**
-     * 部门id
+     * Department ID
      */
     private String gidNumber;
 
     /**
-     * 根目录
+     * Root directory
      */
     private String homeDirectory;
 

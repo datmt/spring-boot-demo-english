@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>
- * websocket服务器配置
+ * Websocket server configuration
  * </p>
  *
  * @author yangkai.shen
@@ -25,13 +25,13 @@ public class ServerConfig {
         config.setHostname(wsConfig.getHost());
         config.setPort(wsConfig.getPort());
 
-        //这个listener可以用来进行身份验证
+        This listener can be used for authentication
         config.setAuthorizationListener(data -> {
-            // http://localhost:8081?token=xxxxxxx
-            // 例如果使用上面的链接进行connect，可以使用如下代码获取用户密码信息，本文不做身份验证
+             http://localhost:8081?token=xxxxxxx
+            For example, if you use the above link for connect, you can use the following code to obtain the user password information, this document does not do authentication
             String token = data.getSingleUrlParam("token");
-            // 校验token的合法性，实际业务需要校验token是否过期等等，参考 spring-boot-demo-rbac-security 里的 JwtUtil
-            // 如果认证不通过会返回一个 Socket.EVENT_CONNECT_ERROR 事件
+            To verify the legitimacy of the token, the actual business needs to verify whether the token has expired, etc., refer to JwtUtil in spring-boot-demo-rbac-security
+            If the authentication fails, a Socket.EVENT_CONNECT_ERROR event is returned
             return StrUtil.isNotBlank(token);
         });
 
@@ -39,7 +39,7 @@ public class ServerConfig {
     }
 
     /**
-     * Spring 扫描自定义注解
+     * Spring scans custom annotations
      */
     @Bean
     public SpringAnnotationScanner springAnnotationScanner(SocketIOServer server) {

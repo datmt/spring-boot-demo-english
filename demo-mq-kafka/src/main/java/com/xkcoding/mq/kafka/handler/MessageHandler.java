@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p>
- * 消息处理器
+ * Message processor
  * </p>
  *
  * @author yangkai.shen
@@ -27,7 +27,7 @@ public class MessageHandler {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         } finally {
-            // 手动提交 offset
+            Manually commit offset
             acknowledgment.acknowledge();
         }
     }

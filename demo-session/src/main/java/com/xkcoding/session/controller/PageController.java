@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * <p>
- * 页面跳转 Controller
+ * Page jump to Controller
  * </p>
  *
  * @author yangkai.shen
@@ -23,9 +23,9 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/page")
 public class PageController {
     /**
-     * 跳转到 首页
+     * Jump to Home
      *
-     * @param request 请求
+     * @param request request
      */
     @GetMapping("/index")
     public ModelAndView index(HttpServletRequest request) {
@@ -38,9 +38,9 @@ public class PageController {
     }
 
     /**
-     * 跳转到 登录页
+     * Jump to Login page
      *
-     * @param redirect 是否是跳转回来的
+     * @param whether redirect is redirecting back
      */
     @GetMapping("/login")
     public ModelAndView login(Boolean redirect) {

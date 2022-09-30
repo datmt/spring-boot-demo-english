@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>
- * xxl-job 自动装配
+ * xxl-job automatic assembly
  * </p>
  *
  * @author yangkai.shen

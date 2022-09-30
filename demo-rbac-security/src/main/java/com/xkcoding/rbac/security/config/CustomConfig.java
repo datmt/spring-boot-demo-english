@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * <p>
- * 自定义配置
+ * Custom configuration
  * </p>
  *
  * @author yangkai.shen
@@ -15,7 +15,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class CustomConfig {
     /**
-     * 不需要拦截的地址
+     * Addresses that do not require interception
      */
     private IgnoreConfig ignores;
 }

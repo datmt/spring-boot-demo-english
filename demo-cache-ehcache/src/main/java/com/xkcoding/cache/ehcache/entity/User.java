@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 用户实体
+ * User entity
  * </p>
  *
  * @author yangkai.shen
@@ -20,11 +20,11 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static final long serialVersionUID = 2892248514883451461L;
     /**
-     * 主键id
+     * Primary key id
      */
     private Long id;
     /**
-     * 姓名
+     * Name
      */
     private String name;
 }

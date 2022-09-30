@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>
- * CPU相关信息实体VO
+ * CPU-related entity VO
  * </p>
  *
  * @author yangkai.shen

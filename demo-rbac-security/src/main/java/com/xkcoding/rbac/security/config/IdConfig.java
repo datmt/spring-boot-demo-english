@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>
- * 雪花主键生成器
+ * Snowflake primary key generator
  * </p>
  *
  * @author yangkai.shen
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class IdConfig {
     /**
-     * 雪花生成器
+     * Snowflake generator
      */
     @Bean
     public Snowflake snowflake() {

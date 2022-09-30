@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * <p>
- * 学生节点
+ * Student node
  * </p>
  *
  * @author yangkai.shen
@@ -26,27 +26,27 @@ import java.util.List;
 @NodeEntity
 public class Student {
     /**
-     * 主键，自定义主键策略，使用UUID生成
+     * Primary key, custom primary key strategy, generated using UUID
      */
     @Id
     @GeneratedValue(strategy = CustomIdStrategy.class)
     private String id;
 
     /**
-     * 学生姓名
+     * Student name
      */
     @NonNull
     private String name;
 
     /**
-     * 学生选的所有课程
+     * All courses selected by the student
      */
     @Relationship(NeoConsts.R_LESSON_OF_STUDENT)
     @NonNull
     private List<Lesson> lessons;
 
     /**
-     * 学生所在班级
+     * The student's class
      */
     @Relationship(NeoConsts.R_STUDENT_OF_CLASS)
     @NonNull

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * <p>
- * 测试RedisUtil
+ * Test RedisUtil
  * </p>
  *
  * @author yangkai.shen

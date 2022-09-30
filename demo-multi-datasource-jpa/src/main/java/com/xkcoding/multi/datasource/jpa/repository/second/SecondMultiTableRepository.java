@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * <p>
- * 多数据源测试 repo
+ * Multi-data source testing repo
  * </p>
  *
  * @author yangkai.shen

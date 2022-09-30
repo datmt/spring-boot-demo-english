@@ -1,23 +1,23 @@
 ---
-name: 请求新功能
-about: 提出你期待的功能特性
+name: Request a new feature
+about: Propose the features you expect
 title: "[FEATURE]"
 labels: feature
 assignees: xkcoding
 ---
 
-### 你在什么场景下需要该功能？
+### In what scenarios do you need this feature?
 
-请尽量清晰精准地描述你碰到的问题。
+Please try to describe the problem you are experiencing as clearly and accurately as possible.
 
-### 描述可能的解决方案
+### Describe possible solutions
 
-请尽量清晰精准地描述你期待我们要做的，描述你想到的实现方案。
+Please try to describe as clearly and accurately as possible what you expect us to do, and describe the implementation you have in mind.
 
-### 描述你认为的候选方案
+### Describe what you think is a candidate
 
-请尽量清晰精准地描述你能接受的候选解决方案。
+Please try to describe as clearly and accurately as possible the candidate solutions that you can accept.
 
-### 其他信息
+### Additional information
 
-请提供关于该功能建议的其他附加信息。
+Please provide additional information about the feature recommendations.

@@ -7,7 +7,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * <p>
- * 启动类
+ * Startup class
  * </p>
  *
  * @author yangkai.shen

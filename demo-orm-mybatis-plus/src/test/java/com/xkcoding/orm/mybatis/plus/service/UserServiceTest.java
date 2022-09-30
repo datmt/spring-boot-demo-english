@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * User Service 测试
+ * User Service test
  * </p>
  *
  * @author yangkai.shen
@@ -32,7 +32,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     private UserService userService;
 
     /**
-     * 测试Mybatis-Plus 新增
+     * Test Mybatis-Plus new
      */
     @Test
     public void testSave() {
@@ -44,7 +44,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 批量新增
+     * Test Mybatis-Plus batch added
      */
     @Test
     public void testSaveList() {
@@ -61,7 +61,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 删除
+     * Test Mybatis-Plus delete
      */
     @Test
     public void testDelete() {
@@ -72,7 +72,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 修改
+     * Test Mybatis-Plus modifications
      */
     @Test
     public void testUpdate() {
@@ -87,7 +87,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 查询单个
+     * Test Mybatis-Plus query single
      */
     @Test
     public void testQueryOne() {
@@ -97,7 +97,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 查询全部
+     * Test Mybatis-Plus query all
      */
     @Test
     public void testQueryAll() {
@@ -107,7 +107,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 分页排序查询
+     * Test Mybatis-Plus paginated sort query
      */
     @Test
     public void testQueryByPageAndSort() {
@@ -122,7 +122,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 自定义查询
+     * Test Mybatis-Plus custom queries
      */
     @Test
     public void testQueryByCondition() {
@@ -138,7 +138,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 初始化数据
+     * Initialize data
      */
     private void initData() {
         testSaveList();

@@ -14,7 +14,7 @@ import java.net.URL;
 
 /**
  * <p>
- * 邮件测试
+ * Mail test
  * </p>
  *
  * @author yangkai.shen
@@ -29,7 +29,7 @@ public class MailServiceTest extends SpringBootDemoEmailApplicationTests {
     private ApplicationContext context;
 
     /**
-     * 测试简单邮件
+     * Test simple mail
      */
     @Test
     public void sendSimpleMail() {
@@ -37,9 +37,9 @@ public class MailServiceTest extends SpringBootDemoEmailApplicationTests {
     }
 
     /**
-     * 测试HTML邮件
+     * Test HTML emails
      *
-     * @throws MessagingException 邮件异常
+     * @throws MessagingException Email Exception
      */
     @Test
     public void sendHtmlMail() throws MessagingException {
@@ -53,9 +53,9 @@ public class MailServiceTest extends SpringBootDemoEmailApplicationTests {
     }
 
     /**
-     * 测试HTML邮件，自定义模板目录
+     * Test HTML mail, custom template directory
      *
-     * @throws MessagingException 邮件异常
+     * @throws MessagingException Email Exception
      */
     @Test
     public void sendHtmlMail2() throws MessagingException {
@@ -78,9 +78,9 @@ public class MailServiceTest extends SpringBootDemoEmailApplicationTests {
     }
 
     /**
-     * 测试附件邮件
+     * Test attachment mail
      *
-     * @throws MessagingException 邮件异常
+     * @throws MessagingException Email Exception
      */
     @Test
     public void sendAttachmentsMail() throws MessagingException {
@@ -89,9 +89,9 @@ public class MailServiceTest extends SpringBootDemoEmailApplicationTests {
     }
 
     /**
-     * 测试静态资源邮件
+     * Test static resource mail
      *
-     * @throws MessagingException 邮件异常
+     * @throws MessagingException Email Exception
      */
     @Test
     public void sendResourceMail() throws MessagingException {

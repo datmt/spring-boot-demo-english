@@ -31,9 +31,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 新增用户
+     * New users
      *
-     * @param user 用户
+     * @param user user
      */
     @Override
     public User saveUser(User user) {
@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 批量插入用户
+     * Batch insert users
      *
-     * @param users 用户列表
+     * @param users user list
      */
     @Override
     public void saveUserList(List<User> users) {
@@ -52,9 +52,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 根据主键删除用户
+     * Delete users based on primary keys
      *
-     * @param id 主键
+     * @param id primary key
      */
     @Override
     public void deleteUser(Long id) {
@@ -62,10 +62,10 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 更新用户
+     * Update users
      *
-     * @param user 用户
-     * @return 更新后的用户
+     * @param user user
+     * @return updated users
      */
     @Override
     public User updateUser(User user) {
@@ -77,10 +77,10 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 查询单个用户
+     * Query for a single user
      *
-     * @param id 主键id
-     * @return 用户信息
+     * @param id primary key id
+     * @return User information
      */
     @Override
     public User getUser(Long id) {
@@ -88,9 +88,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 查询用户列表
+     * Query the list of users
      *
-     * @return 用户列表
+     * @return User list
      */
     @Override
     public List<User> getUserList() {
@@ -98,11 +98,11 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 分页查询
+     * Paginated queries
      *
-     * @param currentPage 当前页
-     * @param pageSize    每页条数
-     * @return 分页用户列表
+     * @param currentPage current page
+     * @param pageSize per page
+     * @return Paginated user list
      */
     @Override
     public PageQuery<User> getUserByPage(Integer currentPage, Integer pageSize) {

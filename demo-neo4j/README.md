@@ -1,16 +1,16 @@
 # spring-boot-demo-neo4j
 
-> 此 demo 主要演示了 Spring Boot 如何集成Neo4j操作图数据库，实现一个校园人物关系网。
+> This demo demonstrates how Spring Boot integrates with the Neo4j Operational Graph database to implement a campus network of people.
 
-## 注意
+## Note
 
-作者编写本demo时，Neo4j 版本为 `3.5.0`，使用 docker 运行，下面是所有步骤：
+When the author wrote this demo, the Neo4j version is '3.5.0' and runs using docker, here are all the steps:
 
-1. 下载镜像：`docker pull neo4j:3.5.0`
-2. 运行容器：`docker run -d -p 7474:7474 -p 7687:7687 --name neo4j-3.5.0 neo4j:3.5.0`
-3. 停止容器：`docker stop neo4j-3.5.0`
-4. 启动容器：`docker start neo4j-3.5.0`
-5. 浏览器 http://localhost:7474/ 访问 neo4j 管理后台，初始账号/密码 neo4j/neo4j，会要求修改初始化密码，我们修改为 neo4j/admin
+1. Download the image: 'docker pull neo4j:3.5.0'
+2. Run the container: 'docker run -d -p 7474:7474 -p 7687:7687 --name neo4j-3.5.0 neo4j:3.5.0'
+3. Stop container: 'docker stop neo4j-3.5.0'
+4. Start container: 'docker start neo4j-3.5.0'
+5. Browser http://localhost:7474/ access neo4j management background, initial account / password neo4j/neo4j, will ask to modify the initialization password, we modify it to neo4j/admin
 
 ## pom.xml
 
@@ -103,7 +103,7 @@ spring:
 ```java
 /**
  * <p>
- * 自定义主键策略
+ * Custom primary key policy
  * </p>
  *
  * @author yangkai.shen
@@ -117,14 +117,14 @@ public class CustomIdStrategy implements IdStrategy {
 }
 ```
 
-## 部分Model代码
+## Part of the Model code
 
 ### Student.java
 
 ```java
 /**
  * <p>
- * 学生节点
+ * Student node
  * </p>
  *
  * @author yangkai.shen
@@ -138,27 +138,27 @@ public class CustomIdStrategy implements IdStrategy {
 @NodeEntity
 public class Student {
     /**
-     * 主键，自定义主键策略，使用UUID生成
+     * Primary key, custom primary key strategy, generated using UUID
      */
     @Id
     @GeneratedValue(strategy = CustomIdStrategy.class)
     private String id;
 
     /**
-     * 学生姓名
+     * Student name
      */
     @NonNull
     private String name;
 
     /**
-     * 学生选的所有课程
+     * All courses selected by the student
      */
     @Relationship(NeoConsts.R_LESSON_OF_STUDENT)
     @NonNull
     private List<Lesson> lessons;
 
     /**
-     * 学生所在班级
+     * The student's class
      */
     @Relationship(NeoConsts.R_STUDENT_OF_CLASS)
     @NonNull
@@ -167,14 +167,14 @@ public class Student {
 }
 ```
 
-## 部分Repository代码
+## Part of the Repository code
 
 ### StudentRepository.java
 
 ```java
 /**
  * <p>
- * 学生节点Repository
+ * Student node Repository
  * </p>
  *
  * @author yangkai.shen
@@ -182,46 +182,46 @@ public class Student {
  */
 public interface StudentRepository extends Neo4jRepository<Student, String> {
     /**
-     * 根据名称查找学生
+     * Find students by name
      *
-     * @param name  姓名
-     * @param depth 深度
-     * @return 学生信息
+     * @param name name
+     * @param depth depth
+     * @return Student information
      */
     Optional<Student> findByName(String name, @Depth int depth);
 
     /**
-     * 根据班级查询班级人数
+     * Check class size by class
      *
-     * @param className 班级名称
-     * @return 班级人数
+     * @param className class name
+     * @return Class size
      */
     @Query("MATCH (s:Student)-[r:R_STUDENT_OF_CLASS]->(c:Class{name:{className}}) return count(s)")
     Long countByClassName(@Param("className") String className);
 
 
     /**
-     * 查询满足 (学生)-[选课关系]-(课程)-[选课关系]-(学生) 关系的 同学
+     * Enquire about students who meet the (student)-[course selection relationship]-(course)-[course selection relationship]-(student) relationship
      *
-     * @return 返回同学关系
+     * @return Return to classmate relationships
      */
-    @Query("match (s:Student)-[:R_LESSON_OF_STUDENT]->(l:Lesson)<-[:R_LESSON_OF_STUDENT]-(:Student) with l.name as lessonName,collect(distinct s) as students return lessonName,students")
+    @Query("match (s:Student)-[:R_LESSON_OF_STUDENT]->(l:Lesson)<-[:R_LESSON_OF_STUDENT]-(:Student) with l.name as lessonName,collect(distinct s) as students return lessonName, students")
     List<ClassmateInfoGroupByLesson> findByClassmateGroupByLesson();
 
     /**
-     * 查询师生关系，(学生)-[班级学生关系]-(班级)-[班主任关系]-(教师)
+     * Enquire about teacher-student relationship, (student)-[class-student relationship]-(class)-[class teacher relationship]-(teacher)
      *
-     * @return 返回师生关系
+     * @return Return to teacher-student relationship
      */
-    @Query("match (s:Student)-[:R_STUDENT_OF_CLASS]->(:Class)-[:R_BOSS_OF_CLASS]->(t:Teacher) with t.name as teacherName,collect(distinct s) as students return teacherName,students")
+    @Query("match (s:Student)-[:R_STUDENT_OF_CLASS]->(:Class)-[:R_BOSS_OF_CLASS]->(t:Teacher) with t.name as teacherName,collect(distinct s) as students return teacherName,students ")
     List<TeacherStudent> findTeacherStudentByClass();
 
     /**
-     * 查询师生关系，(学生)-[选课关系]-(课程)-[任教老师关系]-(教师)
+     * Enquire about teacher-student relationship, (student)-[course selection relationship]-(curriculum)-[teacher-teacher relationship]-(teacher)
      *
-     * @return 返回师生关系
+     * @return Return to teacher-student relationship
      */
-    @Query("match ((s:Student)-[:R_LESSON_OF_STUDENT]->(:Lesson)-[:R_TEACHER_OF_LESSON]->(t:Teacher))with t.name as teacherName,collect(distinct s) as students return teacherName,students")
+    @Query("match ((s:Student)-[:R_LESSON_OF_STUDENT]->(:Lesson)-[:R_TEACHER_OF_LESSON]->(t:Teacher))with t.name as teacherName,collect(distinct s) as students return teacherName, students")
     List<TeacherStudent> findTeacherStudentByLesson();
 }
 ```
@@ -231,7 +231,7 @@ public interface StudentRepository extends Neo4jRepository<Student, String> {
 ```java
 /**
  * <p>
- * 测试Neo4j
+ * Test Neo4j
  * </p>
  *
  * @author yangkai.shen
@@ -243,7 +243,7 @@ public class Neo4jTest extends SpringBootDemoNeo4jApplicationTests {
     private NeoService neoService;
 
     /**
-     * 测试保存
+     * Test save
      */
     @Test
     public void testSave() {
@@ -251,7 +251,7 @@ public class Neo4jTest extends SpringBootDemoNeo4jApplicationTests {
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void testDelete() {
@@ -259,61 +259,61 @@ public class Neo4jTest extends SpringBootDemoNeo4jApplicationTests {
     }
 
     /**
-     * 测试查询 鸣人 学了哪些课程
+     * Test to find out which courses Naruto has taken
      */
     @Test
     public void testFindLessonsByStudent() {
-        // 深度为1，则课程的任教老师的属性为null
-        // 深度为2，则会把课程的任教老师的属性赋值
-        List<Lesson> lessons = neoService.findLessonsFromStudent("漩涡鸣人", 2);
+        If the depth is 1, the attribute of the teacher of the course is null
+        A depth of 2 assigns a value to the instructor of the course
+        List<Lesson> lessons = neoService.findLessonsFromStudent ("Naruto Uzumaki", 2);
 
         lessons.forEach(lesson -> log.info("【lesson】= {}", JSONUtil.toJsonStr(lesson)));
     }
 
     /**
-     * 测试查询班级人数
+     * Test check class size
      */
     @Test
     public void testCountStudent() {
         Long all = neoService.studentCount(null);
-        log.info("【全校人数】= {}", all);
-        Long seven = neoService.studentCount("第七班");
-        log.info("【第七班人数】= {}", seven);
+        log.info ("[Total School Attendance] = {}", all);
+        Long seven = neoService.studentCount ("Class VII");
+        log.info ("[Seventh Class] = {}", seven);
     }
 
     /**
-     * 测试根据课程查询同学关系
+     * Test to query classmate relationships according to the course
      */
     @Test
     public void testFindClassmates() {
         Map<String, List<Student>> classmates = neoService.findClassmatesGroupByLesson();
-        classmates.forEach((k, v) -> log.info("因为一起上了【{}】这门课，成为同学关系的有：{}", k, JSONUtil.toJsonStr(v.stream()
+        classmates.forEach((k, v) -> log.info("Because we took [{}] class together, the relationship that became classmates was:{}", k, JSONUtil.toJsonStr(v.stream()
                 .map(Student::getName)
                 .collect(Collectors.toList()))));
     }
 
     /**
-     * 查询所有师生关系，包括班主任/学生，任课老师/学生
+     * Enquire about all teacher-student relationships, including homeroom teacher/student, classroom teacher/student
      */
     @Test
     public void testFindTeacherStudent() {
         Map<String, Set<Student>> teacherStudent = neoService.findTeacherStudent();
-        teacherStudent.forEach((k, v) -> log.info("【{}】教的学生有 {}", k, JSONUtil.toJsonStr(v.stream()
+        teacherStudent.forEach((k, v) -> log.info("[{}]Students taught have {}", k, JSONUtil.toJsonStr(v.stream()
                 .map(Student::getName)
                 .collect(Collectors.toList()))));
     }
 }
 ```
 
-## 截图
+## Screenshots
 
-运行测试类之后，可以通过访问 http://localhost:7474 ，查看neo里所有节点和关系
+After running the test class, you can view all the nodes and relationships in the neo by visiting the http://localhost:7474 
 
-![image-20181225150513101](http://static.xkcoding.com/spring-boot-demo/neo4j/063605.jpg)
+! [image-20181225150513101] (http://static.xkcoding.com/spring-boot-demo/neo4j/063605.jpg)
 
 
 
-## 参考
+## Reference
 
-- spring-data-neo4j 官方文档：https://docs.spring.io/spring-data/neo4j/docs/5.1.2.RELEASE/reference/html/
-- neo4j 官方文档：https://neo4j.com/docs/getting-started/3.5/
+- spring-data-neo4j Official Document: https://docs.spring.io/spring-data/neo4j/docs/5.1.2.RELEASE/reference/html/
+- neo4j Official Documentation: https://neo4j.com/docs/getting-started/3.5/

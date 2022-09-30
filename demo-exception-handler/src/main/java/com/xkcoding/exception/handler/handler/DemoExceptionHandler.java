@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * <p>
- * 统一异常处理
+ * Unified exception handling
  * </p>
  *
  * @author yangkai.shen
@@ -23,10 +23,10 @@ public class DemoExceptionHandler {
     private static final String DEFAULT_ERROR_VIEW = "error";
 
     /**
-     * 统一 json 异常处理
+     * Unified json exception handling
      *
      * @param exception JsonException
-     * @return 统一返回 json 格式
+     * @return Returns json format uniformly
      */
     @ExceptionHandler(value = JsonException.class)
     @ResponseBody
@@ -36,10 +36,10 @@ public class DemoExceptionHandler {
     }
 
     /**
-     * 统一 页面 异常处理
+     * Unified page exception handling
      *
      * @param exception PageException
-     * @return 统一跳转到异常页面
+     * @return Unified jump to exception page
      */
     @ExceptionHandler(value = PageException.class)
     public ModelAndView pageErrorHandler(PageException exception) {

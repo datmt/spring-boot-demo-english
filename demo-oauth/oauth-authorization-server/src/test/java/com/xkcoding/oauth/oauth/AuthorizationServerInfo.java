@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 /**
- * 授权服务器工具类.
+ * Authorization server tool class.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 20:44

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 监控 Service
+ * Monitor Service
  * </p>
  *
  * @author yangkai.shen
@@ -35,22 +35,22 @@ public class MonitorService {
     private UserDao userDao;
 
     /**
-     * 在线用户分页列表
+     * Pagination list of online users
      *
-     * @param pageCondition 分页参数
-     * @return 在线用户分页列表
+     * @param pageCondition paging parameter
+     * @return Pagination list of online users
      */
     public PageResult<OnlineUser> onlineUser(PageCondition pageCondition) {
         PageResult<String> keys = redisUtil.findKeysForPage(Consts.REDIS_JWT_KEY_PREFIX + Consts.SYMBOL_STAR, pageCondition.getCurrentPage(), pageCondition.getPageSize());
         List<String> rows = keys.getRows();
         Long total = keys.getTotal();
 
-        // 根据 redis 中键获取用户名列表
+        Gets a list of user names based on the redis middle key
         List<String> usernameList = rows.stream().map(s -> StrUtil.subAfter(s, Consts.REDIS_JWT_KEY_PREFIX, true)).collect(Collectors.toList());
-        // 根据用户名查询用户信息
+        Query user information based on user name
         List<User> userList = userDao.findByUsernameIn(usernameList);
 
-        // 封装在线用户信息
+        Encapsulate online user information
         List<OnlineUser> onlineUserList = Lists.newArrayList();
         userList.forEach(user -> onlineUserList.add(OnlineUser.create(user)));
 
@@ -58,21 +58,21 @@ public class MonitorService {
     }
 
     /**
-     * 踢出在线用户
+     * Kick out online users
      *
-     * @param names 用户名列表
+     * @param names list of usernames
      */
     public void kickout(List<String> names) {
-        // 清除 Redis 中的 JWT 信息
+        Clear the JWT information in Redis
         List<String> redisKeys = names.parallelStream().map(s -> Consts.REDIS_JWT_KEY_PREFIX + s).collect(Collectors.toList());
         redisUtil.delete(redisKeys);
 
-        // 获取当前用户名
+        Gets the current user name
         String currentUsername = SecurityUtil.getCurrentUsername();
         names.parallelStream().forEach(name -> {
-            // TODO: 通知被踢出的用户已被当前登录用户踢出，
-            //  后期考虑使用 websocket 实现，具体伪代码实现如下。
-            //  String message = "您已被用户【" + currentUsername + "】手动下线！";
+            TODO: Notifies the user who has been kicked out has been kicked out by the currently logged-in user,
+            Later considerations are to use the websocket implementation, and the specific pseudocode implementation is as follows.
+            String message = "You have been manually offline by a user [" + currentUsername + "]!";
             log.debug("用户【{}】被用户【{}】手动下线！", name, currentUsername);
         });
     }

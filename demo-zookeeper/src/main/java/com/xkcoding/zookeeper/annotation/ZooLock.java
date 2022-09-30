@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- * 基于Zookeeper的分布式锁注解
- * 在需要加锁的方法上打上该注解后，AOP会帮助你统一管理这个方法的锁
+ * Zookeeper-based distributed lock annotations
+ * After you make this note on the method that needs to be locked, AOP will help you manage the lock of that method uniformly
  * </p>
  *
  * @author yangkai.shen
@@ -18,17 +18,17 @@ import java.util.concurrent.TimeUnit;
 @Inherited
 public @interface ZooLock {
     /**
-     * 分布式锁的键
+     * Distributed lock key
      */
     String key();
 
     /**
-     * 锁释放时间，默认五秒
+     * Lock release time, default 5 seconds
      */
     long timeout() default 5 * 1000;
 
     /**
-     * 时间格式，默认：毫秒
+     * Time format, default: milliseconds
      */
     TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
 }

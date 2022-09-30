@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Base64;
 
 /**
- * token 相关配置，jwt 相关.
+ * token related configuration, jwt related.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-09  14:39
@@ -32,8 +32,8 @@ public class OauthResourceTokenConfig {
     private final ResourceServerProperties resourceServerProperties;
 
     /**
-     * 这里并不是对令牌的存储,他将访问令牌与身份验证进行转换
-     * 在需要 {@link TokenStore} 的任何地方可以使用此方法
+     * This is not a store of tokens, he converts the access token with authentication
+     * This method can be used anywhere {@link TokenStore} is required
      *
      * @return TokenStore
      */
@@ -43,7 +43,7 @@ public class OauthResourceTokenConfig {
     }
 
     /**
-     * jwt 令牌转换
+     * jwt token conversion
      *
      * @return jwt
      */
@@ -55,19 +55,19 @@ public class OauthResourceTokenConfig {
     }
 
     /**
-     * 非对称密钥加密，获取 public key。
-     * 自动选择加载方式。
+     * Asymmetric key encryption, get the public key.
+     * Automatic selection of loading method.
      *
      * @return public key
      */
     private String getPubKey() {
-        // 如果本地没有密钥，就从授权服务器中获取
+        If the key is not available locally, it is obtained from the authorization server
         return StringUtils.isEmpty(resourceServerProperties.getJwt().getKeyValue()) ? getKeyFromAuthorizationServer() : resourceServerProperties.getJwt().getKeyValue();
     }
 
     /**
-     * 本地没有公钥的时候，从服务器上获取
-     * 需要进行 Basic 认证
+     * When there is no public key locally, get it from the server
+     * Basic certification required
      *
      * @return public key
      */
@@ -88,7 +88,7 @@ public class OauthResourceTokenConfig {
     }
 
     /**
-     * 客户端信息
+     * Client information
      *
      * @return basic
      */

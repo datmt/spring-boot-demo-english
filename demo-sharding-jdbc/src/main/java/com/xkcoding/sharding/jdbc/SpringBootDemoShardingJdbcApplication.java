@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen

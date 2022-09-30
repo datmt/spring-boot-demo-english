@@ -24,7 +24,7 @@ import java.util.UUID;
 
 /**
  * <p>
- * 消息事件处理
+ * Message event handling
  * </p>
  *
  * @author yangkai.shen
@@ -40,15 +40,15 @@ public class MessageEventHandler {
     private DbTemplate dbTemplate;
 
     /**
-     * 添加connect事件，当客户端发起连接时调用
+     * Add the connect event, which is called when the client initiates a connection
      *
-     * @param client 客户端对象
+     * @param client object
      */
     @OnConnect
     public void onConnect(SocketIOClient client) {
         if (client != null) {
             String token = client.getHandshakeData().getSingleUrlParam("token");
-            // 模拟用户id 和token一致
+            The impersonated user id and token are consistent
             String userId = client.getHandshakeData().getSingleUrlParam("token");
             UUID sessionId = client.getSessionId();
 
@@ -60,15 +60,15 @@ public class MessageEventHandler {
     }
 
     /**
-     * 添加disconnect事件，客户端断开连接时调用，刷新客户端信息
+     * Add disconnect event, called when the client disconnects, refresh client information
      *
-     * @param client 客户端对象
+     * @param client object
      */
     @OnDisconnect
     public void onDisconnect(SocketIOClient client) {
         if (client != null) {
             String token = client.getHandshakeData().getSingleUrlParam("token");
-            // 模拟用户id 和token一致
+            The impersonated user id and token are consistent
             String userId = client.getHandshakeData().getSingleUrlParam("token");
             UUID sessionId = client.getSessionId();
 
@@ -81,11 +81,11 @@ public class MessageEventHandler {
     }
 
     /**
-     * 加入群聊
+     * Join a group chat
      *
-     * @param client  客户端
-     * @param request 请求
-     * @param data    群聊
+     * @param client client
+     * @param request request
+     * @param data group chat
      */
     @OnEvent(value = Event.JOIN)
     public void onJoinEvent(SocketIOClient client, AckRequest request, JoinRequest data) {
@@ -128,14 +128,14 @@ public class MessageEventHandler {
     }
 
     /**
-     * 单聊
+     * Single chat
      */
     public void sendToSingle(UUID sessionId, SingleMessageRequest message) {
         server.getClient(sessionId).sendEvent(Event.CHAT, message);
     }
 
     /**
-     * 广播
+     * Broadcast
      */
     public void sendToBroadcast(BroadcastMessageRequest message) {
         log.info("系统紧急广播一条通知：{}", message.getMessage());
@@ -148,7 +148,7 @@ public class MessageEventHandler {
     }
 
     /**
-     * 群聊
+     * Group chat
      */
     public void sendToGroup(GroupMessageRequest message) {
         server.getRoomOperations(message.getGroupId()).sendEvent(Event.GROUP, message);

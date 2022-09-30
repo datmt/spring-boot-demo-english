@@ -4,7 +4,7 @@ import com.xkcoding.task.quartz.job.base.BaseJob;
 
 /**
  * <p>
- * 定时任务反射工具类
+ * Timed task reflection tool class
  * </p>
  *
  * @author yangkai.shen
@@ -12,11 +12,11 @@ import com.xkcoding.task.quartz.job.base.BaseJob;
  */
 public class JobUtil {
     /**
-     * 根据全类名获取Job实例
+     * Get the Job instance based on the full class name
      *
-     * @param classname Job全类名
-     * @return {@link BaseJob} 实例
-     * @throws Exception 泛型获取异常
+     * @param classname Job full class name
+     * @return {@link BaseJob} instance
+     * @throws Exception generics get exceptions
      */
     public static BaseJob getClass(String classname) throws Exception {
         Class<?> clazz = Class.forName(classname);

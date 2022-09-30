@@ -12,7 +12,7 @@ import java.security.Principal;
 import java.util.Objects;
 
 /**
- * 页面控制器.
+ * Page controller.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 16:30
@@ -23,7 +23,7 @@ import java.util.Objects;
 public class Oauth2Controller {
 
     /**
-     * 授权码模式跳转到登录页面
+     * Authorization code mode jumps to the login page
      *
      * @return view
      */
@@ -33,11 +33,11 @@ public class Oauth2Controller {
     }
 
     /**
-     * 退出登录
+     * Sign out
      *
-     * @param redirectUrl 退出完成后的回调地址
-     * @param principal   用户信息
-     * @return 结果
+     * @param the callback address after the redirectUrl exit is complete
+     * @param principal user information
+     * @return Results
      */
     @GetMapping("/logout")
     public ModelAndView logoutView(@RequestParam("redirect_url") String redirectUrl, Principal principal) {

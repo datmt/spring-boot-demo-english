@@ -6,7 +6,7 @@ import com.xkcoding.websocket.payload.ServerVO;
 
 /**
  * <p>
- * 服务器转换工具类
+ * Server conversion tool class
  * </p>
  *
  * @author yangkai.shen
@@ -14,7 +14,7 @@ import com.xkcoding.websocket.payload.ServerVO;
  */
 public class ServerUtil {
     /**
-     * 包装成 ServerVO
+     * Packaged as ServerVO
      *
      * @param server server
      * @return ServerVO
@@ -26,7 +26,7 @@ public class ServerUtil {
     }
 
     /**
-     * 包装成 Dict
+     * Packaged as Dict
      *
      * @param serverVO serverVO
      * @return Dict

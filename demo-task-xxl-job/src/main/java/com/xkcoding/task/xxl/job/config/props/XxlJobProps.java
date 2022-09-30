@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * <p>
- * xxl-job 配置
+ * xxl-job configuration
  * </p>
  *
  * @author yangkai.shen
@@ -15,24 +15,24 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "xxl.job")
 public class XxlJobProps {
     /**
-     * 调度中心配置
+     * Dispatch center configuration
      */
     private XxlJobAdminProps admin;
 
     /**
-     * 执行器配置
+     * Actuator configuration
      */
     private XxlJobExecutorProps executor;
 
     /**
-     * 与调度中心交互的accessToken
+     * Access token for interacting with the dispatch center
      */
     private String accessToken;
 
     @Data
     public static class XxlJobAdminProps {
         /**
-         * 调度中心地址
+         * Dispatch center address
          */
         private String address;
     }
@@ -40,27 +40,27 @@ public class XxlJobProps {
     @Data
     public static class XxlJobExecutorProps {
         /**
-         * 执行器名称
+         * Actuator name
          */
         private String appName;
 
         /**
-         * 执行器 IP
+         * Actuator IP
          */
         private String ip;
 
         /**
-         * 执行器端口
+         * Actuator port
          */
         private int port;
 
         /**
-         * 执行器日志
+         * Actuator logs
          */
         private String logPath;
 
         /**
-         * 执行器日志保留天数，-1
+         * Number of days executor log retention, -1
          */
         private int logRetentionDays;
     }

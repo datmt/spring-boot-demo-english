@@ -33,7 +33,7 @@ public class SpringBootDemoZookeeperApplicationTests {
     private CuratorFramework zkClient;
 
     /**
-     * 不使用分布式锁，程序结束查看count的值是否为0
+     * Without using a distributed lock, the program ends to see if the value of count is 0
      */
     @Test
     public void test() throws InterruptedException {
@@ -43,11 +43,11 @@ public class SpringBootDemoZookeeperApplicationTests {
     }
 
     /**
-     * 测试AOP分布式锁
+     * Test AOP distributed locks
      */
     @Test
     public void testAopLock() throws InterruptedException {
-        // 测试类中使用AOP需要手动代理
+        Using AOP in the test class requires a manual proxy
         SpringBootDemoZookeeperApplicationTests target = new SpringBootDemoZookeeperApplicationTests();
         AspectJProxyFactory factory = new AspectJProxyFactory(target);
         ZooLockAspect aspect = new ZooLockAspect(zkClient);
@@ -59,7 +59,7 @@ public class SpringBootDemoZookeeperApplicationTests {
     }
 
     /**
-     * 测试手动加锁
+     * Test manual locking
      */
     @Test
     public void testManualLock() throws InterruptedException {

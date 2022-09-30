@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p>
- * 开发人员配置信息
+ * Developer configuration information
  * </p>
  *
  * @author yangkai.shen

@@ -17,9 +17,9 @@ import javax.naming.Name;
 public interface PersonRepository extends CrudRepository<Person, Name> {
 
     /**
-     * 根据用户名查找
+     * Find based on username
      *
-     * @param uid 用户名
+     * @param uid username
      * @return com.xkcoding.ldap.entity.Person
      */
     Person findByUid(String uid);

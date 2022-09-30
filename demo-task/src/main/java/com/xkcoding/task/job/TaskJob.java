@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 定时任务
+ * Scheduled tasks
  * </p>
  *
  * @author yangkai.shen
@@ -20,7 +20,7 @@ import java.util.Date;
 public class TaskJob {
 
     /**
-     * 按照标准时间来算，每隔 10s 执行一次
+     * Executes every 10s in standard time
      */
     @Scheduled(cron = "0/10 * * * * ?")
     public void job1() {
@@ -28,8 +28,8 @@ public class TaskJob {
     }
 
     /**
-     * 从启动时间开始，间隔 2s 执行
-     * 固定间隔时间
+     * Performed at intervals of 2s from the start time
+     * Fixed intervals
      */
     @Scheduled(fixedRate = 2000)
     public void job2() {
@@ -37,8 +37,8 @@ public class TaskJob {
     }
 
     /**
-     * 从启动时间开始，延迟 5s 后间隔 4s 执行
-     * 固定等待时间
+     * Starts at startup time and is performed at 4s intervals after a delay of 5s
+     * Fixed waiting time
      */
     @Scheduled(fixedDelay = 4000, initialDelay = 5000)
     public void job3() {

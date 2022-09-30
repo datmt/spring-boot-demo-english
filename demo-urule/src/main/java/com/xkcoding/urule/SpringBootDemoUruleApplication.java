@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen

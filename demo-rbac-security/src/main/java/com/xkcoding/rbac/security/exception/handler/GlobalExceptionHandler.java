@@ -21,7 +21,7 @@ import javax.validation.ConstraintViolationException;
 
 /**
  * <p>
- * 全局统一异常处理
+ * Globally unified exception handling
  * </p>
  *
  * @author yangkai.shen

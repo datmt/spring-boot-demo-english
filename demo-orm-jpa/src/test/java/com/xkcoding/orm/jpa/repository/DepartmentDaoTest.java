@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * <p>
- * jpa 测试类
+ * jpa test class
  * </p>
  *
  * @author 76peter
@@ -29,7 +29,7 @@ public class DepartmentDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     private UserDao userDao;
 
     /**
-     * 测试保存 ,根节点
+     * Test save, root node
      */
     @Test
     @Transactional
@@ -64,7 +64,7 @@ public class DepartmentDaoTest extends SpringBootDemoOrmJpaApplicationTests {
 
         departmentDao.findById(2L).ifPresent(dept -> {
             Collection<User> userlist = dept.getUserList();
-            //关联关系由user维护中间表，department userlist不会发生变化，可以增加查询方法来处理  重写getUserList方法
+            The association relationship is maintained by the user intermediate table, the department userlist does not change, and the query method can be added to handle the override getUserList method
             log.debug("部门下用户={}", JSONUtil.toJsonStr(userlist));
         });
 

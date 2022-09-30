@@ -1,14 +1,14 @@
 # spring-boot-demo-dynamic-datasource
 
-> 此 demo 主要演示了 Spring Boot 项目如何通过接口`动态添加/删除`数据源，添加数据源之后如何`动态切换`数据源，然后使用 mybatis 查询切换后的数据源的数据。
+> This demo mainly demonstrates how a Spring Boot project can 'dynamically add/remove' data sources through the interface, how to 'dynamically switch' data sources after adding data sources, and then use mybatis to query the data of the switched data sources.
 
-## 1. 环境准备
+## 1. Environment preparation
 
-1. 执行 db 目录下的SQL脚本
-2. 在默认数据源下执行 `init.sql`
-3. 在所有数据源分别执行 `user.sql`
+1. Execute the SQL script in the db directory
+2. Execute 'init.sql' under the default data source
+3. Execute 'user.sql' separately across all data sources
 
-## 2. 主要代码
+## 2. Primary code
 
 ### 2.1.pom.xml
 
@@ -86,16 +86,16 @@
 </project>
 ```
 
-### 2.2. 基础配置类
+### 2.2. The underlying configuration class
 
 - DatasourceConfiguration.java
 
-> 这个类主要是通过 `DataSourceBuilder` 去构建一个我们自定义的数据源，将其放入 Spring 容器里
+> This class is mainly used by 'DataSourceBuilder' to build a data source that we customize and put into a Spring container
 
 ```java
 /**
  * <p>
- * 数据源配置
+ * Data source configuration
  * </p>
  *
  * @author yangkai.shen
@@ -116,12 +116,12 @@ public class DatasourceConfiguration {
 
 - MybatisConfiguration.java
 
-> 这个类主要是将我们上一步构建出来的数据源配置到 Mybatis 的 `SqlSessionFactory` 里
+> This class is mainly to configure the data source we built in the previous step into Mybatis's 'SqlSessionFactory'
 
 ```java
 /**
  * <p>
- * mybatis配置
+ * Mybatis configuration
  * </p>
  *
  * @author yangkai.shen
@@ -131,10 +131,10 @@ public class DatasourceConfiguration {
 @MapperScan(basePackages = "com.xkcoding.dynamicdatasource.mapper", sqlSessionFactoryRef = "sqlSessionFactory")
 public class MybatisConfiguration {
     /**
-     * 创建会话工厂。
+     * Create a session factory.
      *
-     * @param dataSource 数据源
-     * @return 会话工厂
+     * @param dataSource data source
+     * @return Session factory
      */
     @Bean(name = "sqlSessionFactory")
     @SneakyThrows
@@ -146,16 +146,16 @@ public class MybatisConfiguration {
 }
 ```
 
-### 2.3. 动态数据源主要逻辑
+### 2.3. Dynamic data source main logic
 
 - DatasourceConfigContextHolder.java
 
-> 该类主要用于绑定当前线程所使用的数据源 id，通过 ThreadLocal 保证同一线程内不可被修改
+> This class is mainly used to bind the data source id used by the current thread, and ensures that it cannot be modified within the same thread through ThreadLocal
 
 ```java
 /**
  * <p>
- * 数据源标识管理
+ * Data source identity management
  * </p>
  *
  * @author yangkai.shen
@@ -165,7 +165,7 @@ public class DatasourceConfigContextHolder {
     private static final ThreadLocal<Long> DATASOURCE_HOLDER = ThreadLocal.withInitial(() -> DatasourceHolder.DEFAULT_ID);
 
     /**
-     * 设置默认数据源
+     * Set the default data source
      */
     public static void setDefaultDatasource() {
         DATASOURCE_HOLDER.remove();
@@ -173,18 +173,18 @@ public class DatasourceConfigContextHolder {
     }
 
     /**
-     * 获取当前数据源配置id
+     * Get the current data source configuration ID
      *
-     * @return 数据源配置id
+     * @return Data source configuration ID
      */
     public static Long getCurrentDatasourceConfig() {
         return DATASOURCE_HOLDER.get();
     }
 
     /**
-     * 设置当前数据源配置id
+     * Set the current data source configuration ID
      *
-     * @param id 数据源配置id
+     * @param id data source configuration ID
      */
     public static void setCurrentDatasourceConfig(Long id) {
         DATASOURCE_HOLDER.set(id);
@@ -195,12 +195,12 @@ public class DatasourceConfigContextHolder {
 
 - DynamicDataSource.java
 
-> 该类继承 `com.zaxxer.hikari.HikariDataSource`，主要用于动态切换数据源连接。
+> This class inherits 'com.zaxxer.hikari.HikariDataSource' and is primarily used to dynamically switch data source connections.
 
 ```java
 /**
  * <p>
- * 动态数据源
+ * Dynamic data sources
  * </p>
  *
  * @author yangkai.shen
@@ -210,9 +210,9 @@ public class DatasourceConfigContextHolder {
 public class DynamicDataSource extends HikariDataSource {
     @Override
     public Connection getConnection() throws SQLException {
-        // 获取当前数据源 id
+        Gets the current data source ID
         Long id = DatasourceConfigContextHolder.getCurrentDatasourceConfig();
-        // 根据当前id获取数据源
+        Get the data source based on the current id
         HikariDataSource datasource = DatasourceHolder.INSTANCE.getDatasource(id);
 
         if (null == datasource) {
@@ -223,27 +223,27 @@ public class DynamicDataSource extends HikariDataSource {
     }
 
     /**
-     * 初始化数据源
-     * @param id 数据源id
-     * @return 数据源
+     * Initialize the data source
+     * @param id data source id
+     * @return Data source
      */
     private HikariDataSource initDatasource(Long id) {
         HikariDataSource dataSource = new HikariDataSource();
 
-        // 判断是否是默认数据源
+        Determine whether it is the default data source
         if (DatasourceHolder.DEFAULT_ID.equals(id)) {
-            // 默认数据源根据 application.yml 配置的生成
+            The default data source is generated according to the application.yml configuration
             DataSourceProperties properties = SpringUtil.getBean(DataSourceProperties.class);
             dataSource.setJdbcUrl(properties.getUrl());
             dataSource.setUsername(properties.getUsername());
             dataSource.setPassword(properties.getPassword());
             dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         } else {
-            // 不是默认数据源，通过缓存获取对应id的数据源的配置
+            If it is not the default data source, the configuration of the data source corresponding to the id is obtained through the cache
             DatasourceConfig datasourceConfig = DatasourceConfigCache.INSTANCE.getConfig(id);
 
             if (datasourceConfig == null) {
-                throw new RuntimeException("无此数据源");
+                throw new RuntimeException("No such data source");
             }
 
             dataSource.setJdbcUrl(datasourceConfig.buildJdbcUrl());
@@ -251,7 +251,7 @@ public class DynamicDataSource extends HikariDataSource {
             dataSource.setPassword(datasourceConfig.getPassword());
             dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         }
-        // 将创建的数据源添加到数据源管理器中，绑定当前线程
+        Adds the created data source to the Data Source Manager and binds the current thread
         DatasourceHolder.INSTANCE.addDatasource(id, dataSource);
         return dataSource;
     }
@@ -260,12 +260,12 @@ public class DynamicDataSource extends HikariDataSource {
 
 - DatasourceScheduler.java
 
-> 该类主要用于调度任务
+> This class is primarily used to schedule tasks
 
 ```java
 /**
  * <p>
- * 数据源缓存释放调度器
+ * Data source cache release scheduler
  * </p>
  *
  * @author yangkai.shen
@@ -273,7 +273,7 @@ public class DynamicDataSource extends HikariDataSource {
  */
 public enum DatasourceScheduler {
     /**
-     * 当前实例
+     * Current instance
      */
     INSTANCE;
 
@@ -304,12 +304,12 @@ public enum DatasourceScheduler {
 
 - DatasourceManager.java
 
-> 该类主要用于管理数据源，记录数据源最后使用时间，同时判断是否长时间未使用，超过一定时间未使用，会被释放连接
+> This class is mainly used to manage data sources, record the last use time of data sources, and determine whether they have not been used for a long time, and if they have not been used for more than a certain period of time, the connection will be released
 
 ```java
 /**
  * <p>
- * 数据源管理类
+ * Data source management class
  * </p>
  *
  * @author yangkai.shen
@@ -317,18 +317,18 @@ public enum DatasourceScheduler {
  */
 public class DatasourceManager {
     /**
-     * 默认释放时间
+     * Default release time
      */
     private static final Long DEFAULT_RELEASE = 10L;
 
     /**
-     * 数据源
+     * Data source
      */
     @Getter
     private HikariDataSource dataSource;
 
     /**
-     * 上一次使用时间
+     * Last use time
      */
     private LocalDateTime lastUseTime;
 
@@ -338,9 +338,9 @@ public class DatasourceManager {
     }
 
     /**
-     * 是否已过期，如果过期则关闭数据源
+     * Whether it has expired, and if so, close the data source
      *
-     * @return 是否过期，{@code true} 过期，{@code false} 未过期
+     * @return whether expired, {@code true} expired, {@code false} did not expire
      */
     public boolean isExpired() {
         if (LocalDateTime.now().isBefore(this.lastUseTime.plusMinutes(DEFAULT_RELEASE))) {
@@ -351,7 +351,7 @@ public class DatasourceManager {
     }
 
     /**
-     * 刷新上次使用时间
+     * Refresh last use time
      */
     public void refreshTime() {
         this.lastUseTime = LocalDateTime.now();
@@ -361,12 +361,12 @@ public class DatasourceManager {
 
 - DatasourceHolder.java
 
-> 该类主要用于管理数据源，同时通过 `DatasourceScheduler` 定时检查数据源是否长时间未使用，超时则释放连接
+> This class is mainly used to manage data sources, and at the same time, the data source is checked by 'DatasourceScheduler' to check whether the data source has not been used for a long time, and the connection is released when it times out
 
 ```java
 /**
  * <p>
- * 数据源管理
+ * Data source management
  * </p>
  *
  * @author yangkai.shen
@@ -374,32 +374,32 @@ public class DatasourceManager {
  */
 public enum DatasourceHolder {
     /**
-     * 当前实例
+     * Current instance
      */
     INSTANCE;
 
     /**
-     * 启动执行，定时5分钟清理一次
+     * Start execution, timed 5 minutes to clean up
      */
     DatasourceHolder() {
         DatasourceScheduler.INSTANCE.schedule(this::clearExpiredDatasource, 5 * 60 * 1000);
     }
 
     /**
-     * 默认数据源的id
+     * The id of the default data source
      */
     public static final Long DEFAULT_ID = -1L;
 
     /**
-     * 管理动态数据源列表。
+     * Manage dynamic data source lists.
      */
     private static final Map<Long, DatasourceManager> DATASOURCE_CACHE = new ConcurrentHashMap<>();
 
     /**
-     * 添加动态数据源
+     * Add dynamic data source
      *
-     * @param id         数据源id
-     * @param dataSource 数据源
+     * @param id data source id
+     * @param dataSource data source
      */
     public synchronized void addDatasource(Long id, HikariDataSource dataSource) {
         DatasourceManager datasourceManager = new DatasourceManager(dataSource);
@@ -407,10 +407,10 @@ public enum DatasourceHolder {
     }
 
     /**
-     * 查询动态数据源
+     * Query dynamic data sources
      *
-     * @param id 数据源id
-     * @return 数据源
+     * @param id data source id
+     * @return Data source
      */
     public synchronized HikariDataSource getDatasource(Long id) {
         if (DATASOURCE_CACHE.containsKey(id)) {
@@ -422,12 +422,12 @@ public enum DatasourceHolder {
     }
 
     /**
-     * 清除超时的数据源
+     * Clear the timed out data source
      */
     public synchronized void clearExpiredDatasource() {
         DATASOURCE_CACHE.forEach((k, v) -> {
-            // 排除默认数据源
-            if (!DEFAULT_ID.equals(k)) {
+            Excludes the default data source
+            if (! DEFAULT_ID.equals(k)) {
                 if (v.isExpired()) {
                     DATASOURCE_CACHE.remove(k);
                 }
@@ -436,14 +436,14 @@ public enum DatasourceHolder {
     }
 
     /**
-     * 清除动态数据源
-     * @param id 数据源id
+     * Clear dynamic data sources
+     * @param id data source id
      */
     public synchronized void removeDatasource(Long id) {
         if (DATASOURCE_CACHE.containsKey(id)) {
-            // 关闭数据源
+            Close the data source
             DATASOURCE_CACHE.get(id).getDataSource().close();
-            // 移除缓存
+            Remove the cache
             DATASOURCE_CACHE.remove(id);
         }
     }
@@ -452,12 +452,12 @@ public enum DatasourceHolder {
 
 - DatasourceConfigCache.java
 
-> 该类主要用于缓存数据源的配置，用户生成数据源时，获取数据源连接参数
+> This class is mainly used to cache the configuration of a data source, and when a user generates a data source, gets the data source connection parameters
 
 ```java
 /**
  * <p>
- * 数据源配置缓存
+ * Data source configuration cache
  * </p>
  *
  * @author yangkai.shen
@@ -465,30 +465,30 @@ public enum DatasourceHolder {
  */
 public enum DatasourceConfigCache {
     /**
-     * 当前实例
+     * Current instance
      */
     INSTANCE;
 
     /**
-     * 管理动态数据源列表。
+     * Manage dynamic data source lists.
      */
     private static final Map<Long, DatasourceConfig> CONFIG_CACHE = new ConcurrentHashMap<>();
 
     /**
-     * 添加数据源配置
+     * Add data source configuration
      *
-     * @param id     数据源配置id
-     * @param config 数据源配置
+     * @param id data source configuration ID
+     * @param config data source configuration
      */
     public synchronized void addConfig(Long id, DatasourceConfig config) {
         CONFIG_CACHE.put(id, config);
     }
 
     /**
-     * 查询数据源配置
+     * Query data source configuration
      *
-     * @param id 数据源配置id
-     * @return 数据源配置
+     * @param id data source configuration ID
+     * @return data source configuration
      */
     public synchronized DatasourceConfig getConfig(Long id) {
         if (CONFIG_CACHE.containsKey(id)) {
@@ -498,24 +498,24 @@ public enum DatasourceConfigCache {
     }
 
     /**
-     * 清除数据源配置
+     * Clear the data source configuration
      */
     public synchronized void removeConfig(Long id) {
         CONFIG_CACHE.remove(id);
-        // 同步清除 DatasourceHolder 对应的数据源
+        Synchronously clears the data source corresponding to the DatasourceHolder
         DatasourceHolder.INSTANCE.removeDatasource(id);
     }
 }
 ```
 
-### 2.4. 启动类
+### 2.4. Start the class
 
-> 启动后，使用默认数据源查询数据源配置列表，将其缓存到 `DatasourceConfigCache` 里，以供后续使用
+After > starts, query the list of data source configurations using the default data source and cache it into the 'DatasourceConfigCache' for subsequent use
 
 ```java
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen
@@ -532,71 +532,71 @@ public class SpringBootDemoDynamicDatasourceApplication implements CommandLineRu
 
     @Override
     public void run(String... args) {
-        // 设置默认的数据源
+        Sets the default data source
         DatasourceConfigContextHolder.setDefaultDatasource();
-        // 查询所有数据库配置列表
+        Query the list of all database configurations
         List<DatasourceConfig> datasourceConfigs = configMapper.selectAll();
-        System.out.println("加载其余数据源配置列表: " + datasourceConfigs);
-        // 将数据库配置加入缓存
+        System.out.println("Load the rest of the data source configuration list: " + datasourceConfigs);
+        Join the database configuration to the cache
         datasourceConfigs.forEach(config -> DatasourceConfigCache.INSTANCE.addConfig(config.getId(), config));
     }
 }
 ```
 
-### 2.5. 其余代码参考 demo
+### 2.5. For the rest of the code, refer to demo
 
-## 3. 测试
+## 3. Test
 
-启动项目，可以看到控制台读取到数据库已配置的数据源信息
+Start the project and you can see that the console reads the data source information that has been configured in the database
 
-![image-20190905164824155](http://static.xkcoding.com/spring-boot-demo/dynamic-datasource/062351.png)
+! [image-20190905164824155] (http://static.xkcoding.com/spring-boot-demo/dynamic-datasource/062351.png)
 
-通过 PostMan 等工具测试
+Test with tools like PostMan
 
-- 默认数据源查询
+- Default data source query
 
-![image-20190905165240373](http://static.xkcoding.com/spring-boot-demo/dynamic-datasource/062353.png)
+! [image-20190905165240373] (http://static.xkcoding.com/spring-boot-demo/dynamic-datasource/062353.png)
 
-- 根据数据源id为1的数据源查询
+- Query according to the data source with data source id 1
 
-![image-20190905165323097](http://static.xkcoding.com/spring-boot-demo/dynamic-datasource/062354.png)
+! [image-20190905165323097] (http://static.xkcoding.com/spring-boot-demo/dynamic-datasource/062354.png)
 
-- 根据数据源id为2的数据源查询
+- Query according to the data source with data source id 2
 
-![image-20190905165350355](http://static.xkcoding.com/spring-boot-demo/dynamic-datasource/062355.png)
+! [image-20190905165350355] (http://static.xkcoding.com/spring-boot-demo/dynamic-datasource/062355.png)
 
-- 可以通过测试数据源的`增加/删除`，再去查询对应数据源的数据
+- You can test the 'add/delete' of the data source and then query the data of the corresponding data source
 
-> 删除数据源：
+> Delete a data source:
 >
 > - DELETE http://localhost:8080/config/{id}
 >
-> 新增数据源:
+> Add a data source:
 >
 > - POST http://localhost:8080/config
 >
-> - 参数：
+> - Parameters:
 >
 > ```json
 > {
->     "host": "数据库IP",
+> "host": "Database IP",
 >     "port": 3306,
->     "username": "用户名",
->     "password": "密码",
->     "database": "数据库"
+> "username": "username",
+> "password": "password",
+> "database": "Database"
 > }
 > ```
 
-## 4. 优化
+## 4. optimize
 
-如上测试，我们只需要通过在 header 里传递数据源的参数，即可做到动态切换数据源，怎么做到的呢？
+As in the above test, we only need to pass the parameters of the data source in the header to dynamically switch the data source, how to do it?
 
-答案就是 `AOP`
+The answer is 'AOP'.
 
 ```java
 /**
  * <p>
- * 数据源选择器切面
+ * Data source selector slice
  * </p>
  *
  * @author yangkai.shen
@@ -611,7 +611,7 @@ public class DatasourceSelectorAspect {
     }
 
     /**
-     * 前置操作，拦截具体请求，获取header里的数据源id，设置线程变量里，用于后续切换数据源
+     * Front-end operation, intercept specific requests, get the data source id in the header, set the thread variable, and use it for subsequent switching data sources
      */
     @Before("datasourcePointcut()")
     public void doBefore(JoinPoint joinPoint) {
@@ -619,7 +619,7 @@ public class DatasourceSelectorAspect {
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
 
-        // 排除不可切换数据源的方法
+        Excludes methods that do not switch data sources
         DefaultDatasource annotation = method.getAnnotation(DefaultDatasource.class);
         if (null != annotation) {
             DatasourceConfigContextHolder.setDefaultDatasource();
@@ -638,7 +638,7 @@ public class DatasourceSelectorAspect {
     }
 
     /**
-     * 后置操作，设置回默认的数据源id
+     * Post-operation, set back to the default data source id
      */
     @AfterReturning("datasourcePointcut()")
     public void doAfter() {
@@ -648,12 +648,12 @@ public class DatasourceSelectorAspect {
 }
 ```
 
-此时需要考虑，我们是否每个方法都允许用户去切换数据源呢？答案肯定是不行的，所以我们定义了一个注解去标识，当前方法仅可以使用默认数据源。
+At this point, we need to consider, do we allow users to switch data sources in each method? The answer is definitely no, so we have defined a note to identify that the current method can only use the default data source.
 
 ```java
 /**
  * <p>
- * 用户标识仅可以使用默认数据源
+ * The user ID can only use the default data source
  * </p>
  *
  * @author yangkai.shen
@@ -666,4 +666,4 @@ public @interface DefaultDatasource {
 }
 ```
 
-完结，撒花✿✿ヽ(°▽°)ノ✿
+When finished, sprinkle flowers ✿✿ヽ(°▽°)ノ✿

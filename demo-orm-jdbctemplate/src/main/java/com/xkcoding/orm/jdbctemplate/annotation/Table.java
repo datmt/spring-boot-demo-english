@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * 表注解
+ * Table annotations
  * </p>
  *
  * @author yangkai.shen
@@ -17,9 +17,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 public @interface Table {
     /**
-     * 表名
+     * Table name
      *
-     * @return 表名
+     * @return Table name
      */
     String name();
 }

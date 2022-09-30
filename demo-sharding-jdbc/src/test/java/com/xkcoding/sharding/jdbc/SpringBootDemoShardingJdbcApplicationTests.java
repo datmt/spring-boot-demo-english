@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * <p>
- * 测试sharding-jdbc分库分表
+ * Test sharding-jdbc sharding table
  * </p>
  *
  * @author yangkai.shen
@@ -31,7 +31,7 @@ public class SpringBootDemoShardingJdbcApplicationTests {
     private OrderMapper orderMapper;
 
     /**
-     * 测试新增
+     * New to testing
      */
     @Test
     public void testInsert() {
@@ -44,7 +44,7 @@ public class SpringBootDemoShardingJdbcApplicationTests {
     }
 
     /**
-     * 测试更新
+     * Test updates
      */
     @Test
     public void testUpdate() {
@@ -54,7 +54,7 @@ public class SpringBootDemoShardingJdbcApplicationTests {
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void testDelete() {
@@ -62,7 +62,7 @@ public class SpringBootDemoShardingJdbcApplicationTests {
     }
 
     /**
-     * 测试查询
+     * Test query
      */
     @Test
     public void testSelect() {

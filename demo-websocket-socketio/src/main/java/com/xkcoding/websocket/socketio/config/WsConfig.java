@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * <p>
- * WebSocket配置类
+ * WebSocket configuration class
  * </p>
  *
  * @author yangkai.shen
@@ -15,7 +15,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class WsConfig {
     /**
-     * 端口号
+     * Port number
      */
     private Integer port;
 

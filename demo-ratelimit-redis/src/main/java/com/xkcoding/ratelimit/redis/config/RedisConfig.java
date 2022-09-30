@@ -9,7 +9,7 @@ import org.springframework.scripting.support.ResourceScriptSource;
 
 /**
  * <p>
- * Redis 配置
+ * Redis configuration
  * </p>
  *
  * @author yangkai.shen

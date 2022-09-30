@@ -35,24 +35,24 @@ public class JobServiceImpl implements JobService {
     }
 
     /**
-     * 添加并启动定时任务
+     * Add and start scheduled tasks
      *
-     * @param form 表单参数 {@link JobForm}
+     * @param form form parameter {@link JobForm}
      * @return {@link JobDetail}
-     * @throws Exception 异常
+     * @throws Exception exception
      */
     @Override
     public void addJob(JobForm form) throws Exception {
-        // 启动调度器
+        Start the scheduler
         scheduler.start();
 
-        // 构建Job信息
+        Build Job information
         JobDetail jobDetail = JobBuilder.newJob(JobUtil.getClass(form.getJobClassName()).getClass()).withIdentity(form.getJobClassName(), form.getJobGroupName()).build();
 
-        // Cron表达式调度构建器(即任务执行的时间)
+        Cron Expression Dispatcher Builder (i.e. when the task executes)
         CronScheduleBuilder cron = CronScheduleBuilder.cronSchedule(form.getCronExpression());
 
-        //根据Cron表达式构建一个Trigger
+        Build a Trigger from a Cron expression
         CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(form.getJobClassName(), form.getJobGroupName()).withSchedule(cron).build();
 
         try {
@@ -65,10 +65,10 @@ public class JobServiceImpl implements JobService {
     }
 
     /**
-     * 删除定时任务
+     * Delete scheduled tasks
      *
-     * @param form 表单参数 {@link JobForm}
-     * @throws SchedulerException 异常
+     * @param form form parameter {@link JobForm}
+     * @throws SchedulerException exception
      */
     @Override
     public void deleteJob(JobForm form) throws SchedulerException {
@@ -78,10 +78,10 @@ public class JobServiceImpl implements JobService {
     }
 
     /**
-     * 暂停定时任务
+     * Pause scheduled tasks
      *
-     * @param form 表单参数 {@link JobForm}
-     * @throws SchedulerException 异常
+     * @param form form parameter {@link JobForm}
+     * @throws SchedulerException exception
      */
     @Override
     public void pauseJob(JobForm form) throws SchedulerException {
@@ -89,10 +89,10 @@ public class JobServiceImpl implements JobService {
     }
 
     /**
-     * 恢复定时任务
+     * Resume scheduled tasks
      *
-     * @param form 表单参数 {@link JobForm}
-     * @throws SchedulerException 异常
+     * @param form form parameter {@link JobForm}
+     * @throws SchedulerException exception
      */
     @Override
     public void resumeJob(JobForm form) throws SchedulerException {
@@ -100,24 +100,24 @@ public class JobServiceImpl implements JobService {
     }
 
     /**
-     * 重新配置定时任务
+     * Reconfigure scheduled tasks
      *
-     * @param form 表单参数 {@link JobForm}
-     * @throws Exception 异常
+     * @param form form parameter {@link JobForm}
+     * @throws Exception exception
      */
     @Override
     public void cronJob(JobForm form) throws Exception {
         try {
             TriggerKey triggerKey = TriggerKey.triggerKey(form.getJobClassName(), form.getJobGroupName());
-            // 表达式调度构建器
+            Expression dispatch builder
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(form.getCronExpression());
 
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
 
-            // 根据Cron表达式构建一个Trigger
+            Build a Trigger from a Cron expression
             trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
 
-            // 按新的trigger重新设置job执行
+            Reset the job execution with the new trigger
             scheduler.rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException e) {
             log.error("【定时任务】更新失败！", e);
@@ -126,11 +126,11 @@ public class JobServiceImpl implements JobService {
     }
 
     /**
-     * 查询定时任务列表
+     * Query the list of scheduled tasks
      *
-     * @param currentPage 当前页
-     * @param pageSize    每页条数
-     * @return 定时任务列表
+     * @param currentPage current page
+     * @param pageSize per page
+     * @return Scheduled task list
      */
     @Override
     public PageInfo<JobAndTrigger> list(Integer currentPage, Integer pageSize) {

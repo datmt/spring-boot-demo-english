@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- * 限流切面
+ * Flow restriction slices
  * </p>
  *
  * @author yangkai.shen
@@ -48,16 +48,16 @@ public class RateLimiterAspect {
     public Object pointcut(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
-        // 通过 AnnotationUtils.findAnnotation 获取 RateLimiter 注解
+        Get RateLimiter annotations via AnnotationUtils.findAnnotation
         RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
         if (rateLimiter != null) {
             String key = rateLimiter.key();
-            // 默认用类名+方法名做限流的 key 前缀
+            By default, the class name + method name is used as the key prefix for throttling
             if (StrUtil.isBlank(key)) {
                 key = method.getDeclaringClass().getName() + StrUtil.DOT + method.getName();
             }
-            // 最终限流的 key 为 前缀 + IP地址
-            // TODO: 此时需要考虑局域网多用户访问的情况，因此 key 后续需要加上方法参数更加合理
+            The key of the final throttling is prefix + IP address
+            TODO: At this time, you need to consider the case of multi-user access on the local area network, so it is more reasonable for key to add method parameters later
             key = key + SEPARATOR + IpUtil.getIpAddr();
 
             long max = rateLimiter.max();
@@ -73,16 +73,16 @@ public class RateLimiterAspect {
     }
 
     private boolean shouldLimited(String key, long max, long timeout, TimeUnit timeUnit) {
-        // 最终的 key 格式为：
-        // limit:自定义key:IP
-        // limit:类名.方法名:IP
+        The final key format is:
+        limit:custom key:IP
+        limit:class name. Method name: IP
         key = REDIS_LIMIT_KEY_PREFIX + key;
-        // 统一使用单位毫秒
+        Use units milliseconds uniformly
         long ttl = timeUnit.toMillis(timeout);
-        // 当前时间毫秒数
+        The number of milliseconds at the current time
         long now = Instant.now().toEpochMilli();
         long expired = now - ttl;
-        // 注意这里必须转为 String,否则会报错 java.lang.Long cannot be cast to java.lang.String
+        Note that you must switch to String here, otherwise you will report an error java.lang.Long cannot be cast to java.lang.String
         Long executeTimes = stringRedisTemplate.execute(limitRedisScript, Collections.singletonList(key), now + "", ttl + "", expired + "", max + "");
         if (executeTimes != null) {
             if (executeTimes == 0) {

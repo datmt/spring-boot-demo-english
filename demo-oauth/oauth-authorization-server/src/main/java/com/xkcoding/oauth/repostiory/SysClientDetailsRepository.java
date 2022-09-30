@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import java.util.Optional;
 
 /**
- * 客户端信息.
+ * Client information.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 13:09
@@ -15,17 +15,17 @@ import java.util.Optional;
 public interface SysClientDetailsRepository extends JpaRepository<SysClientDetails, Long> {
 
     /**
-     * 通过 clientId 查找客户端信息.
+     * Find client information via clientId.
      *
      * @param clientId clientId
-     * @return 结果
+     * @return Results
      */
     Optional<SysClientDetails> findFirstByClientId(String clientId);
 
     /**
-     * 根据客户端 id 删除客户端
+     * Remove the client based on the client ID
      *
-     * @param clientId 客户端id
+     * @param clientId client ID
      */
     @Modifying
     void deleteByClientId(String clientId);

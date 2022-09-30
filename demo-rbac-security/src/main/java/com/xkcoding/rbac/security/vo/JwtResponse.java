@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * JWT 响应返回
+ * JWT response returns
  * </p>
  *
  * @author yangkai.shen
@@ -17,11 +17,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JwtResponse {
     /**
-     * token 字段
+     * token field
      */
     private String token;
     /**
-     * token类型
+     * Token type
      */
     private String tokenType = "Bearer";
 

@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * <p>
- * 数据初始化测试
+ * Data initialization test
  * </p>
  *
  * @author yangkai.shen
@@ -56,9 +56,9 @@ public class DataInitTest extends SpringBootDemoRbacSecurityApplicationTests {
         createUserRoleRelation(admin.getId(), roleAdmin.getId());
         createUserRoleRelation(user.getId(), roleUser.getId());
 
-        // 页面权限
+        Page permissions
         Permission testPagePerm = createPermission("/test", "测试页面", 1, "page:test", null, 1, 0L);
-        // 按钮权限
+        Button permissions
         Permission testBtnQueryPerm = createPermission("/**/test", "测试页面-查询", 2, "btn:test:query", "GET", 1, testPagePerm.getId());
         Permission testBtnPermInsert = createPermission("/**/test", "测试页面-添加", 2, "btn:test:insert", "POST", 2, testPagePerm.getId());
 

@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 /**
  * <p>
- * mybatis配置
+ * Mybatis configuration
  * </p>
  *
  * @author yangkai.shen
@@ -22,10 +22,10 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = "com.xkcoding.dynamic.datasource.mapper", sqlSessionFactoryRef = "sqlSessionFactory")
 public class MybatisConfiguration {
     /**
-     * 创建会话工厂。
+     * Create a session factory.
      *
-     * @param dataSource 数据源
-     * @return 会话工厂
+     * @param dataSource data source
+     * @return Session factory
      */
     @Bean(name = "sqlSessionFactory")
     @SneakyThrows

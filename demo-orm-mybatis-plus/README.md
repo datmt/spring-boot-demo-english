@@ -1,8 +1,8 @@
 # spring-boot-demo-orm-mybatis-plus
 
-> 此 demo 演示了 Spring Boot 如何集成 mybatis-plus，简化Mybatis开发，带给你难以置信的开发体验。
+> This demo demonstrates how Spring Boot integrates with mybatis-plus, simplifying Mybatis development and giving you an incredible development experience.
 >
-> - 2019-09-14 新增：ActiveRecord 模式操作
+> - 2019-09-14 New: ActiveRecord mode operation
 
 ## pom.xml
 
@@ -90,7 +90,7 @@
 ```java
 /**
  * <p>
- * mybatis-plus 配置
+ * mybatis-plus configuration
  * </p>
  *
  * @author yangkai.shen
@@ -101,7 +101,7 @@
 @EnableTransactionManagement
 public class MybatisPlusConfig {
     /**
-     * 性能分析拦截器，不建议生产使用
+     * Performance analysis interceptor, not recommended for production
      */
     @Bean
     public PerformanceInterceptor performanceInterceptor(){
@@ -109,7 +109,7 @@ public class MybatisPlusConfig {
     }
 
     /**
-     * 分页插件
+     * Pagination plugin
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
@@ -132,7 +132,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 通用字段填充
+ * Common field population
  * </p>
  *
  * @author yangkai.shen
@@ -188,26 +188,26 @@ logging:
     com.xkcoding.orm.mybatis.plus.mapper: trace
 mybatis-plus:
   mapper-locations: classpath:mappers/*.xml
-  #实体扫描，多个package用逗号或者分号分隔
+  #实体扫描, multiple packages are separated by commas or semicolons
   typeAliasesPackage: com.xkcoding.orm.mybatis.plus.entity
   global-config:
-    # 数据库相关配置
+    # Database-related configuration
     db-config:
-      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      #主键类型 AUTO: "Database ID auto-increment", INPUT: "User input ID", ID_WORKER: "Globally unique ID (unique ID of numeric type)", UUID: "Globally unique ID UUID";
       id-type: auto
-      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      #字段策略 IGNORED: "Ignore Judgment", NOT_NULL: "Non-NULL Judgment"), NOT_EMPTY: "Non-Null Judgment"
       field-strategy: not_empty
       #驼峰下划线转换
       table-underline: true
-      #是否开启大写命名，默认不开启
+      #是否开启大写命名, it is not turned on by default
       #capital-mode: true
       #逻辑删除配置
       #logic-delete-value: 1
       #logic-not-delete-value: 0
       db-type: mysql
-    #刷新mapper 调试神器
+    #刷新mapper Debugging artifacts
     refresh: true
-  # 原生配置
+  # Native configuration
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: true
@@ -265,7 +265,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 ```java
 /**
  * <p>
- * User Service 测试
+ * User Service test
  * </p>
  *
  * @author yangkai.shen
@@ -277,26 +277,26 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     private UserService userService;
 
     /**
-     * 测试Mybatis-Plus 新增
+     * Test Mybatis-Plus new
      */
     @Test
     public void testSave() {
         String salt = IdUtil.fastSimpleUUID();
-        User testSave3 = User.builder().name("testSave3").password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave3@xkcoding.com").phoneNumber("17300000003").status(1).lastLoginTime(new DateTime()).build();
+        User testSave3 = User.builder().name("testSave3").password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave3@xkcoding.com").phoneNumber("17300000003").status(1) .lastLoginTime(new DateTime()).build();
         boolean save = userService.save(testSave3);
         Assert.assertTrue(save);
-        log.debug("【测试id回显#testSave3.getId()】= {}", testSave3.getId());
+        log.debug("[testid echo #testSave3.getId()] = {}", testSave3.getId());
     }
 
     /**
-     * 测试Mybatis-Plus 批量新增
+     * Test Mybatis-Plus batch added
      */
     @Test
     public void testSaveList() {
         List<User> userList = Lists.newArrayList();
         for (int i = 4; i < 14; i++) {
             String salt = IdUtil.fastSimpleUUID();
-            User user = User.builder().name("testSave" + i).password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave" + i + "@xkcoding.com").phoneNumber("1730000000" + i).status(1).lastLoginTime(new DateTime()).build();
+            User user = User.builder().name("testSave" + i).password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave" + i + "@xkcoding.com").phoneNumber("1730000000" + i).status(1 ).lastLoginTime(new DateTime()).build();
             userList.add(user);
         }
         boolean batch = userService.saveBatch(userList);
@@ -306,7 +306,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 删除
+     * Test Mybatis-Plus delete
      */
     @Test
     public void testDelete() {
@@ -317,22 +317,22 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 修改
+     * Test Mybatis-Plus modifications
      */
     @Test
     public void testUpdate() {
         User user = userService.getById(1L);
         Assert.assertNotNull(user);
-        user.setName("MybatisPlus修改名字");
+        user.setName ("MybatisPlus Modified Name");
         boolean b = userService.updateById(user);
         Assert.assertTrue(b);
         User update = userService.getById(1L);
-        Assert.assertEquals("MybatisPlus修改名字", update.getName());
+        Assert.assertEquals ("MybatisPlus name modified", update.getName());
         log.debug("【update】= {}", update);
     }
 
     /**
-     * 测试Mybatis-Plus 查询单个
+     * Test Mybatis-Plus query single
      */
     @Test
     public void testQueryOne() {
@@ -342,7 +342,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 查询全部
+     * Test Mybatis-Plus query all
      */
     @Test
     public void testQueryAll() {
@@ -352,7 +352,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 分页排序查询
+     * Test Mybatis-Plus paginated sort query
      */
     @Test
     public void testQueryByPageAndSort() {
@@ -367,7 +367,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 测试Mybatis-Plus 自定义查询
+     * Test Mybatis-Plus custom queries
      */
     @Test
     public void testQueryByCondition() {
@@ -383,7 +383,7 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
     }
 
     /**
-     * 初始化数据
+     * Initialize data
      */
     private void initData() {
         testSaveList();
@@ -392,16 +392,16 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
 }
 ```
 
-## 2019-09-14新增
+## Added on 2019-09-14
 
-### ActiveRecord 模式
+### ActiveRecord mode
 
 - Role.java
 
 ```java
 /**
  * <p>
- * 角色实体类
+ * Role entity class
  * </p>
  *
  * @author yangkai.shen
@@ -413,18 +413,18 @@ public class UserServiceTest extends SpringBootDemoOrmMybatisPlusApplicationTest
 @EqualsAndHashCode(callSuper = true)
 public class Role extends Model<Role> {
     /**
-     * 主键
+     * Primary key
      */
     private Long id;
 
     /**
-     * 角色名
+     * Role name
      */
     private String name;
 
     /**
-     * 主键值，ActiveRecord 模式这个必须有，否则 xxById 的方法都将失效！
-     * 即使使用 ActiveRecord 不会用到 RoleMapper，RoleMapper 这个接口也必须创建
+     * Primary key value, ActiveRecord mode this must have, otherwise xxById method will be invalidated!
+     * Even if RoleMapper is not used with ActiveRecord, the RoleMapper interface must be created
      */
     @Override
     protected Serializable pkVal() {
@@ -463,51 +463,51 @@ public interface RoleMapper extends BaseMapper<Role> {
 @Slf4j
 public class ActiveRecordTest extends SpringBootDemoOrmMybatisPlusApplicationTests {
     /**
-     * 测试 ActiveRecord 插入数据
+     * Test ActiveRecord insertion data
      */
     @Test
     public void testActiveRecordInsert() {
         Role role = new Role();
         role.setName("VIP");
         Assert.assertTrue(role.insert());
-        // 成功直接拿会写的 ID
+        Successfully get the ID that can be written directly
         log.debug("【role】= {}", role);
     }
 
     /**
-     * 测试 ActiveRecord 更新数据
+     * Test ActiveRecord update data
      */
     @Test
     public void testActiveRecordUpdate() {
-        Assert.assertTrue(new Role().setId(1L).setName("管理员-1").updateById());
-        Assert.assertTrue(new Role().update(new UpdateWrapper<Role>().lambda().set(Role::getName, "普通用户-1").eq(Role::getId, 2)));
+        Assert.assertTrue (new Role().setId(1L).setName("Admin-1").updateById());
+        Assert.assertTrue (new Role().update(new UpdateWrapper().lambda().set(Role::<Role>getName, "normal user-1").eq(Role::getId, 2)));
     }
 
     /**
-     * 测试 ActiveRecord 查询数据
+     * Test ActiveRecord query data
      */
     @Test
     public void testActiveRecordSelect() {
-        Assert.assertEquals("管理员", new Role().setId(1L).selectById().getName());
+        Assert.assertEquals("Administrator", new Role().setId(1L).selectById().getName());
         Role role = new Role().selectOne(new QueryWrapper<Role>().lambda().eq(Role::getId, 2));
-        Assert.assertEquals("普通用户", role.getName());
+        Assert.assertEquals ("Ordinary User", role.getName());
         List<Role> roles = new Role().selectAll();
         Assert.assertTrue(roles.size() > 0);
         log.debug("【roles】= {}", roles);
     }
 
     /**
-     * 测试 ActiveRecord 删除数据
+     * Test ActiveRecord deletes data
      */
     @Test
     public void testActiveRecordDelete() {
         Assert.assertTrue(new Role().setId(1L).deleteById());
-        Assert.assertTrue(new Role().delete(new QueryWrapper<Role>().lambda().eq(Role::getName, "普通用户")));
+        Assert.assertTrue (new Role().delete(new QueryWrapper().<Role>lambda().eq(Role::getName, "Regular User")));
     }
 }
 ```
 
-## 参考
+## Reference
 
-- mybatis-plus官方文档：http://mp.baomidou.com/
+- mybatis-plus Official Documentation: http://mp.baomidou.com/
 

@@ -23,12 +23,12 @@ import java.util.Map;
 @Slf4j
 public class UserServiceImpl implements UserService {
     /**
-     * 模拟数据库
+     * Simulated database
      */
     private static final Map<Long, User> DATABASES = Maps.newConcurrentMap();
 
     /**
-     * 初始化数据
+     * Initialize data
      */
     static {
         DATABASES.put(1L, new User(1L, "user1"));
@@ -37,10 +37,10 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 保存或修改用户
+     * Save or modify users
      *
-     * @param user 用户对象
-     * @return 操作结果
+     * @param user user object
+     * @return Operation result
      */
     @CachePut(value = "user", key = "#user.id")
     @Override
@@ -51,23 +51,23 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 获取用户
+     * Get users
      *
-     * @param id key值
-     * @return 返回结果
+     * @param id key value
+     * @return Returns results
      */
     @Cacheable(value = "user", key = "#id")
     @Override
     public User get(Long id) {
-        // 我们假设从数据库读取
+        We assume that a read is made from a database
         log.info("查询用户【id】= {}", id);
         return DATABASES.get(id);
     }
 
     /**
-     * 删除
+     * Delete
      *
-     * @param id key值
+     * @param id key value
      */
     @CacheEvict(value = "user", key = "#id")
     @Override

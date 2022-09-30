@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 第三方登录 Controller
+ * A third party logs in to the Controller
  * </p>
  *
  * @author yangkai.shen
@@ -38,7 +38,7 @@ public class OauthController {
     private final AuthRequestFactory factory;
 
     /**
-     * 登录类型
+     * Login type
      */
     @GetMapping
     public Map<String, String> loginType() {
@@ -47,9 +47,9 @@ public class OauthController {
     }
 
     /**
-     * 登录
+     * Login
      *
-     * @param oauthType 第三方登录类型
+     * @param oauthType third-party login type
      * @param response  response
      * @throws IOException
      */
@@ -60,11 +60,11 @@ public class OauthController {
     }
 
     /**
-     * 登录成功后的回调
+     * Callback after successful login
      *
-     * @param oauthType 第三方登录类型
-     * @param callback  携带返回的信息
-     * @return 登录成功后的信息
+     * @param oauthType third-party login type
+     * @param callback carries back the information
+     * @return Information after successful login
      */
     @RequestMapping("/{oauthType}/callback")
     public AuthResponse login(@PathVariable String oauthType, AuthCallback callback) {

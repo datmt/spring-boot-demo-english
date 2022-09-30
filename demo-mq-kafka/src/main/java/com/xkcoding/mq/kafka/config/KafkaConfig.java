@@ -13,7 +13,7 @@ import org.springframework.kafka.listener.ContainerProperties;
 
 /**
  * <p>
- * kafka配置类
+ * Kafka configuration class
  * </p>
  *
  * @author yangkai.shen

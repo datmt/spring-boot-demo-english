@@ -1,6 +1,6 @@
 # spring-boot-demo-async
 
-> 此 demo 主要演示了 Spring Boot 如何使用原生提供的异步任务支持，实现异步执行任务。
+> This demo primarily demonstrates how Spring Boott can use natively provided support for asynchronous tasks to perform tasks asynchronously.
 
 ## pom.xml
 
@@ -68,17 +68,17 @@ spring:
   task:
     execution:
       pool:
-        # 最大线程数
+        # Maximum number of threads
         max-size: 16
-        # 核心线程数
+        # Number of core threads
         core-size: 16
-        # 存活时间
+        # Time to live
         keep-alive: 10s
-        # 队列大小
+        # Queue size
         queue-capacity: 100
-        # 是否允许核心线程超时
+        # Whether to allow core threads to time out
         allow-core-thread-timeout: true
-      # 线程名称前缀
+      # Thread name prefix
       thread-name-prefix: async-task-
 ```
 
@@ -87,7 +87,7 @@ spring:
 ```java
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen
@@ -109,7 +109,7 @@ public class SpringBootDemoAsyncApplication {
 ```java
 /**
  * <p>
- * 任务工厂
+ * Mission Factory
  * </p>
  *
  * @author yangkai.shen
@@ -120,7 +120,7 @@ public class SpringBootDemoAsyncApplication {
 public class TaskFactory {
 
     /**
-     * 模拟5秒的异步任务
+     * Simulate an asynchronous mission for 5 seconds
      */
     @Async
     public Future<Boolean> asyncTask1() throws InterruptedException {
@@ -129,7 +129,7 @@ public class TaskFactory {
     }
 
     /**
-     * 模拟2秒的异步任务
+     * Simulate an asynchronous task for 2 seconds
      */
     @Async
     public Future<Boolean> asyncTask2() throws InterruptedException {
@@ -138,7 +138,7 @@ public class TaskFactory {
     }
 
     /**
-     * 模拟3秒的异步任务
+     * Simulate an asynchronous task for 3 seconds
      */
     @Async
     public Future<Boolean> asyncTask3() throws InterruptedException {
@@ -147,30 +147,30 @@ public class TaskFactory {
     }
 
     /**
-     * 模拟5秒的同步任务
+     * Simulate 5 seconds of synchronous tasks
      */
     public void task1() throws InterruptedException {
         doTask("task1", 5);
     }
 
     /**
-     * 模拟2秒的同步任务
+     * Simulate a 2-second sync task
      */
     public void task2() throws InterruptedException {
         doTask("task2", 2);
     }
 
     /**
-     * 模拟3秒的同步任务
+     * Simulate 3 seconds of synchronous tasks
      */
     public void task3() throws InterruptedException {
         doTask("task3", 3);
     }
 
     private void doTask(String taskName, Integer time) throws InterruptedException {
-        log.info("{}开始执行，当前线程名称【{}】", taskName, Thread.currentThread().getName());
+        log.info("{}Start execution, current thread name [{}]", taskName, Thread.currentThread().getName());
         TimeUnit.SECONDS.sleep(time);
-        log.info("{}执行成功，当前线程名称【{}】", taskName, Thread.currentThread().getName());
+        log.info("{} execution successful, current thread name [{}] ", taskName, Thread.currentThread().getName());
     }
 }
 ```
@@ -180,7 +180,7 @@ public class TaskFactory {
 ```java
 /**
  * <p>
- * 测试任务
+ * Test tasks
  * </p>
  *
  * @author yangkai.shen
@@ -192,7 +192,7 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
     private TaskFactory task;
 
     /**
-     * 测试异步任务
+     * Test asynchronous tasks
      */
     @Test
     public void asyncTaskTest() throws InterruptedException, ExecutionException {
@@ -201,17 +201,17 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
         Future<Boolean> asyncTask2 = task.asyncTask2();
         Future<Boolean> asyncTask3 = task.asyncTask3();
 
-        // 调用 get() 阻塞主线程
+        Calling get() blocks the main thread
         asyncTask1.get();
         asyncTask2.get();
         asyncTask3.get();
         long end = System.currentTimeMillis();
 
-        log.info("异步任务全部执行结束，总耗时：{} 毫秒", (end - start));
+        log.info ("Asynchronous task is all executed, total time: {} ms", (end - start));
     }
 
     /**
-     * 测试同步任务
+     * Test synchronization tasks
      */
     @Test
     public void taskTest() throws InterruptedException {
@@ -221,37 +221,37 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
         task.task3();
         long end = System.currentTimeMillis();
 
-        log.info("同步任务全部执行结束，总耗时：{} 毫秒", (end - start));
+        log.info ("Synchronization task is all executed, total time: {} ms", (end - start));
     }
 }
 ```
 
-## 运行结果
+## Run the result
 
-### 异步任务
-
-```bash
-2018-12-29 10:57:28.511  INFO 3134 --- [   async-task-3] com.xkcoding.async.task.TaskFactory      : asyncTask3开始执行，当前线程名称【async-task-3】
-2018-12-29 10:57:28.511  INFO 3134 --- [   async-task-1] com.xkcoding.async.task.TaskFactory      : asyncTask1开始执行，当前线程名称【async-task-1】
-2018-12-29 10:57:28.511  INFO 3134 --- [   async-task-2] com.xkcoding.async.task.TaskFactory      : asyncTask2开始执行，当前线程名称【async-task-2】
-2018-12-29 10:57:30.514  INFO 3134 --- [   async-task-2] com.xkcoding.async.task.TaskFactory      : asyncTask2执行成功，当前线程名称【async-task-2】
-2018-12-29 10:57:31.516  INFO 3134 --- [   async-task-3] com.xkcoding.async.task.TaskFactory      : asyncTask3执行成功，当前线程名称【async-task-3】
-2018-12-29 10:57:33.517  INFO 3134 --- [   async-task-1] com.xkcoding.async.task.TaskFactory      : asyncTask1执行成功，当前线程名称【async-task-1】
-2018-12-29 10:57:33.517  INFO 3134 --- [           main] com.xkcoding.async.task.TaskFactoryTest  : 异步任务全部执行结束，总耗时：5015 毫秒
-```
-
-### 同步任务
+### Asynchronous tasks
 
 ```bash
-2018-12-29 10:55:49.830  INFO 3079 --- [           main] com.xkcoding.async.task.TaskFactory      : task1开始执行，当前线程名称【main】
-2018-12-29 10:55:54.834  INFO 3079 --- [           main] com.xkcoding.async.task.TaskFactory      : task1执行成功，当前线程名称【main】
-2018-12-29 10:55:54.835  INFO 3079 --- [           main] com.xkcoding.async.task.TaskFactory      : task2开始执行，当前线程名称【main】
-2018-12-29 10:55:56.839  INFO 3079 --- [           main] com.xkcoding.async.task.TaskFactory      : task2执行成功，当前线程名称【main】
-2018-12-29 10:55:56.839  INFO 3079 --- [           main] com.xkcoding.async.task.TaskFactory      : task3开始执行，当前线程名称【main】
-2018-12-29 10:55:59.843  INFO 3079 --- [           main] com.xkcoding.async.task.TaskFactory      : task3执行成功，当前线程名称【main】
-2018-12-29 10:55:59.843  INFO 3079 --- [           main] com.xkcoding.async.task.TaskFactoryTest  : 同步任务全部执行结束，总耗时：10023 毫秒
+2018-12-29 10:57:28.511 INFO 3134 --- [ async-task-3] com.xkcoding.async.task.TaskFactory : asyncTask3 starts executing, current thread name [async-task-3]
+2018-12-29 10:57:28.511 INFO 3134 --- [ async-task-1] com.xkcoding.async.task.TaskFactory : asyncTask1 starts executing, current thread name [async-task-1]
+2018-12-29 10:57:28.511 INFO 3134 --- [ async-task-2] com.xkcoding.async.task.TaskFactory : asyncTask2 starts executing, current thread name [async-task-2]
+2018-12-29 10:57:30.514 INFO 3134 --- [ async-task-2] com.xkcoding.async.task.TaskFactory : asyncTask2 executed successfully, current thread name [async-task-2]
+2018-12-29 10:57:31.516 INFO 3134 --- [ async-task-3] com.xkcoding.async.task.TaskFactory : asyncTask3 executed successfully, current thread name [async-task-3]
+2018-12-29 10:57:33.517 INFO 3134 --- [ async-task-1] com.xkcoding.async.task.TaskFactory : asyncTask1 executed successfully, current thread name [async-task-1]
+2018-12-29 10:57:33.517 INFO 3134 --- [ main] com.xkcoding.async.task.TaskFactoryTest : The asynchronous task has all finished executing, total time: 5015 milliseconds
 ```
 
-## 参考
+### Sync tasks
 
-- Spring Boot 异步任务线程池的配置 参考官方文档：https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#boot-features-task-execution-scheduling
+```bash
+2018-12-29 10:55:49.830 INFO 3079 --- [ main] com.xkcoding.async.task.TaskFactory : task1 starts executing, current thread name [main]
+2018-12-29 10:55:54.834 INFO 3079 --- [ main] com.xkcoding.async.task.TaskFactory : task1 executed successfully, current thread name [main]
+2018-12-29 10:55:54.835 INFO 3079 --- [ main] com.xkcoding.async.task.TaskFactory : task2 starts executing, current thread name [main]
+2018-12-29 10:55:56.839 INFO 3079 --- [ main] com.xkcoding.async.task.TaskFactory : task2 executed successfully, current thread name [main]
+2018-12-29 10:55:56.839 INFO 3079 --- [ main] com.xkcoding.async.task.TaskFactory : task3 starts executing, current thread name [main]
+2018-12-29 10:55:59.843 INFO 3079 --- [ main] com.xkcoding.async.task.TaskFactory : task3 executed successfully, current thread name [main]
+2018-12-29 10:55:59.843 INFO 3079 --- [ main] com.xkcoding.async.task.TaskFactoryTest : The synchronization task is all executed, total time: 10023 ms
+```
+
+## Reference
+
+- Configuration of the Spring Boot asynchronous task thread pool Refer to the official documentation: https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#boot-features-task-execution-scheduling

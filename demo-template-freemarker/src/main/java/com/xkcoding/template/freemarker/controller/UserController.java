@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * 用户页面
+ * User page
  * </p>
  *
  * @author yangkai.shen

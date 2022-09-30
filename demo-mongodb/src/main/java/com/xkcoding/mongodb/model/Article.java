@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 文章实体类
+ * Article entity class
  * </p>
  *
  * @author yangkai.shen
@@ -22,38 +22,38 @@ import java.util.Date;
 @AllArgsConstructor
 public class Article {
     /**
-     * 文章id
+     * Article id
      */
     @Id
     private Long id;
 
     /**
-     * 文章标题
+     * Article title
      */
     private String title;
 
     /**
-     * 文章内容
+     * Article content
      */
     private String content;
 
     /**
-     * 创建时间
+     * Creation time
      */
     private Date createTime;
 
     /**
-     * 更新时间
+     * Update time
      */
     private Date updateTime;
 
     /**
-     * 点赞数量
+     * Number of likes
      */
     private Long thumbUp;
 
     /**
-     * 访客数量
+     * Number of visitors
      */
     private Long visits;
 

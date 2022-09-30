@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 服务器监控Controller
+ * Server monitoring Controller
  * </p>
  *
  * @author yangkai.shen

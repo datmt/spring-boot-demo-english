@@ -44,7 +44,7 @@ public abstract class BaseElasticsearchService {
     static {
         RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
 
-        // 默认缓冲限制为100MB，此处修改为30MB。
+        The default buffering limit is 100MB, which is modified here to 30MB.
         builder.setHttpAsyncResponseConsumerFactory(new HttpAsyncResponseConsumerFactory.HeapBufferedResponseConsumerFactory(30 * 1024 * 1024));
         COMMON_OPTIONS = builder.build();
     }
@@ -58,7 +58,7 @@ public abstract class BaseElasticsearchService {
     protected void createIndexRequest(String index) {
         try {
             CreateIndexRequest request = new CreateIndexRequest(index);
-            // Settings for this index
+             Settings for this index
             request.settings(Settings.builder().put("index.number_of_shards", elasticsearchProperties.getIndex().getNumberOfShards()).put("index.number_of_replicas", elasticsearchProperties.getIndex().getNumberOfReplicas()));
 
             CreateIndexResponse createIndexResponse = client.indices().create(request, COMMON_OPTIONS);

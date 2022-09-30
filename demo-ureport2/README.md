@@ -1,16 +1,16 @@
 # spring-boot-demo-ureport2
 
-> 本 demo 主要演示了 Spring Boot 项目如何快速集成 ureport2 实现任意复杂的中国式报表功能。
+> This demo demonstrates how the Spring Boot project can quickly integrate ureport2 to implement arbitrarily complex Chinese-style reporting functions.
 
-UReport2 是一款基于架构在 Spring 之上纯 Java 的高性能报表引擎，通过迭代单元格可以实现任意复杂的中国式报表。 在 UReport2 中，提供了全新的基于网页的报表设计器，可以在 Chrome、Firefox、Edge 等各种主流浏览器运行（IE 浏览器除外）。使用 UReport2，打开浏览器即可完成各种复杂报表的设计制作。
+UReport2 is a high-performance reporting engine based on pure Java based on the architecture of Spring, and arbitrarily complex Chinese-style reports can be implemented by iterating on cells. In UReport2, a new web-based report designer is available that can run in a variety of major browsers such as Chrome, Firefox, Edge, and more (except IE). With UReport2, you can open a browser to design and produce a variety of complex reports.
 
-## 1. 主要代码
+## 1. Primary code
 
-因为官方没有提供一个 starter 包，需要自己集成，这里使用 [pig](https://github.com/pig-mesh/pig) 作者 [冷冷同学](https://github.com/lltx) 开发的 starter 偷懒实现，这个 starter 不仅支持单机环境的配置，同时支持集群环境。
+Because the official does not provide a starter package, you need to integrate yourself, here use [pig] (https://github.com/pig-mesh/pig) author [cold and cold classmate] (https://github.com/lltx) developed the starter lazy implementation, this starter not only supports the configuration of a stand-alone environment, but also supports the cluster environment.
 
-### 1.1. 单机使用
+### 1.1. Stand-alone use
 
-#### 1.1.1. `pom.xml` 新增依赖
+#### 1.1.1. 'pom.xml' new dependencies
 
 ```xml
 <dependency>
@@ -20,7 +20,7 @@ UReport2 是一款基于架构在 Spring 之上纯 Java 的高性能报表引擎
 </dependency>
 ```
 
-#### 1.1.2. `application.yml` 修改配置文件
+#### 1.1.2. 'application.yml' modifies the configuration file
 
 ```yaml
 server:
@@ -37,10 +37,10 @@ ureport:
   debug: false
   disableFileProvider: false
   disableHttpSessionReportCache: true
-  # 单机模式，本地路径需要提前创建
+  # In stand-alone mode, the local path needs to be created in advance
   fileStoreDir: '/Users/yk.shen/Desktop/ureport2'
 ```
-#### 1.1.3. 新增一个内部数据源
+#### 1.1.3. Add an internal data source
 
 ```java
 @Component
@@ -50,7 +50,7 @@ public class InnerDatasource implements BuildinDatasource {
 
     @Override
     public String name() {
-        return "内部数据源";
+        return "Internal data source";
     }
 
     @SneakyThrows
@@ -61,166 +61,166 @@ public class InnerDatasource implements BuildinDatasource {
 }
 ```
 
-#### 1.1.4. 使用 `doc/sql/t_user_ureport2.sql` 初始化数据
+#### 1.1.4. Initialize the data using 'doc/sql/t_user_ureport2.sql'
 
 ```mysql
 DROP TABLE IF EXISTS `t_user_ureport2`;
 CREATE TABLE `t_user_ureport2` (
-  `id` bigint(13) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '姓名',
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `status` tinyint(4) NOT NULL COMMENT '是否禁用',
+  'id' bigint(13) unsigned NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+  'name' varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'name',
+  'create_time' timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Creation Time',
+  'status' tinyint(4) NOT NULL COMMENT 'is disabled',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 BEGIN;
-INSERT INTO `t_user_ureport2` VALUES (1, '测试人员 1', '2020-10-22 09:01:58', 1);
-INSERT INTO `t_user_ureport2` VALUES (2, '测试人员 2', '2020-10-22 09:02:00', 0);
-INSERT INTO `t_user_ureport2` VALUES (3, '测试人员 3', '2020-10-23 03:02:00', 1);
-INSERT INTO `t_user_ureport2` VALUES (4, '测试人员 4', '2020-10-23 23:02:00', 1);
-INSERT INTO `t_user_ureport2` VALUES (5, '测试人员 5', '2020-10-23 23:02:00', 1);
-INSERT INTO `t_user_ureport2` VALUES (6, '测试人员 6', '2020-10-24 11:02:00', 0);
-INSERT INTO `t_user_ureport2` VALUES (7, '测试人员 7', '2020-10-24 20:02:00', 0);
-INSERT INTO `t_user_ureport2` VALUES (8, '测试人员 8', '2020-10-25 08:02:00', 1);
-INSERT INTO `t_user_ureport2` VALUES (9, '测试人员 9', '2020-10-25 09:02:00', 1);
-INSERT INTO `t_user_ureport2` VALUES (10, '测试人员 10', '2020-10-25 13:02:00', 1);
-INSERT INTO `t_user_ureport2` VALUES (11, '测试人员 11', '2020-10-26 21:02:00', 0);
-INSERT INTO `t_user_ureport2` VALUES (12, '测试人员 12', '2020-10-26 23:02:00', 1);
-INSERT INTO `t_user_ureport2` VALUES (13, '测试人员 13', '2020-10-26 23:02:00', 1);
+INSERT INTO 't_user_ureport2' VALUES (1, 'Tester 1', '2020-10-22 09:01:58', 1);
+INSERT INTO 't_user_ureport2' VALUES (2, 'Tester 2', '2020-10-22 09:02:00', 0);
+INSERT INTO 't_user_ureport2' VALUES (3, 'Tester 3', '2020-10-23 03:02:00', 1);
+INSERT INTO 't_user_ureport2' VALUES (4, 'Tester 4', '2020-10-23 23:02:00', 1);
+INSERT INTO 't_user_ureport2' VALUES (5, 'Tester 5', '2020-10-23 23:02:00', 1);
+INSERT INTO 't_user_ureport2' VALUES (6, 'Tester 6', '2020-10-24 11:02:00', 0);
+INSERT INTO 't_user_ureport2' VALUES (7, 'Tester 7', '2020-10-24 20:02:00', 0);
+INSERT INTO 't_user_ureport2' VALUES (8, 'Tester 8', '2020-10-25 08:02:00', 1);
+INSERT INTO 't_user_ureport2' VALUES (9, 'Tester 9', '2020-10-25 09:02:00', 1);
+INSERT INTO 't_user_ureport2' VALUES (10, 'Tester 10', '2020-10-25 13:02:00', 1);
+INSERT INTO 't_user_ureport2' VALUES (11, 'Tester 11', '2020-10-26 21:02:00', 0);
+INSERT INTO 't_user_ureport2' VALUES (12, 'Tester 12', '2020-10-26 23:02:00', 1);
+INSERT INTO 't_user_ureport2' VALUES (13, 'Tester 13', '2020-10-26 23:02:00', 1);
 COMMIT;
 ```
 
-#### 1.1.5. 访问报表设计器
+#### 1.1.5. Access Report Designer
 
 http://127.0.0.1:8080/demo/ureport/designer
 
-![报表设计页](http://static.xkcoding.com/spring-boot-demo/ureport2/035330.png)
+! [Report Design Page] (http://static.xkcoding.com/spring-boot-demo/ureport2/035330.png)
 
-#### 1.1.6. 开始设计
+#### 1.1.6. Start designing
 
-##### 1.1.6.1. 选择数据源
+##### 1.1.6.1. Select a data source
 
-这里就需要使用到上面步骤 1.1.3 创建的内部数据源如图
+Here you need to use the internal data source created in step 1.1.3 above, as shown in the figure
 
-![选择数据源](http://static.xkcoding.com/spring-boot-demo/ureport2/040032.png)
+! [Select Data Source] (http://static.xkcoding.com/spring-boot-demo/ureport2/040032.png)
 
-选择数据源
+Select a data source
 
-![选择数据源](http://static.xkcoding.com/spring-boot-demo/ureport2/040117.png)
+! [Select Data Source] (http://static.xkcoding.com/spring-boot-demo/ureport2/040117.png)
 
-此时列表里就会出现数据源
+The data source appears in the list
 
-![数据源列表](http://static.xkcoding.com/spring-boot-demo/ureport2/040237.png)
+! [Data Source List] (http://static.xkcoding.com/spring-boot-demo/ureport2/040237.png)
 
-##### 1.1.6.2. 选择数据集
+##### 1.1.6.2. Select the dataset
 
-在刚才选中的数据源右键，选择添加数据集
+Right-click the data source you just selected and select Add Dataset
 
-![选中数据源右键](http://static.xkcoding.com/spring-boot-demo/ureport2/063315.png)
+! [Right-click the selected data source] (http://static.xkcoding.com/spring-boot-demo/ureport2/063315.png)
 
-这里选择上面步骤 1.1.4 中初始化的用户表
+Here select the user table initialized in step 1.1.4 above
 
-![创建用户报表](http://static.xkcoding.com/spring-boot-demo/ureport2/063845.png)
+! [Create User Report] (http://static.xkcoding.com/spring-boot-demo/ureport2/063845.png)
 
-预览数据看一下
+Preview the data for a look
 
-![预览数据集数据](http://static.xkcoding.com/spring-boot-demo/ureport2/063955.png)
+! [Preview Dataset Data] (http://static.xkcoding.com/spring-boot-demo/ureport2/063955.png)
 
-点击确定，保存数据集
+Click OK to save the dataset
 
-![保存数据集](http://static.xkcoding.com/spring-boot-demo/ureport2/064049.png)
+! [Save Dataset] (http://static.xkcoding.com/spring-boot-demo/ureport2/064049.png)
 
-##### 1.1.6.3. 报表设计
+##### 1.1.6.3. Report design
 
-创建报表表头的位置
+The location where the report header was created
 
-![合并单元格](http://static.xkcoding.com/spring-boot-demo/ureport2/064425.png)
+! [Merge cells] (http://static.xkcoding.com/spring-boot-demo/ureport2/064425.png)
 
-表头内容
+Header contents
 
-![image-20201124144752390](http://static.xkcoding.com/spring-boot-demo/ureport2/064752.png)
+! [image-20201124144752390] (http://static.xkcoding.com/spring-boot-demo/ureport2/064752.png)
 
-操作完成之后，长这样~
+After the operation is completed, grow like this~
 
-![表头美化](http://static.xkcoding.com/spring-boot-demo/ureport2/064916.png)
+! [Table head beautification] (http://static.xkcoding.com/spring-boot-demo/ureport2/064916.png)
 
 
 
-然后设置数据的标题行，跟表头设置一样，效果如下图
+Then set the header row of the data, just like the header setting, the effect is as follows
 
-![数据的标题行](http://static.xkcoding.com/spring-boot-demo/ureport2/065125.png)
+! [Header row of data] (http://static.xkcoding.com/spring-boot-demo/ureport2/065125.png)
 
-接下来设置数据
+Next set up the data
 
-![id字段配置](http://static.xkcoding.com/spring-boot-demo/ureport2/065658.png)
+! [id field configuration] (http://static.xkcoding.com/spring-boot-demo/ureport2/065658.png)
 
-其他字段同理，完成之后如下
+The same is true for the other fields, which are as follows when completed
 
-![数据配置](http://static.xkcoding.com/spring-boot-demo/ureport2/070440.png)
+! [Data Configuration] (http://static.xkcoding.com/spring-boot-demo/ureport2/070440.png)
 
-此时你可以尝试预览一下数据了
+Now you can try previewing the data
 
-![预览数据](http://static.xkcoding.com/spring-boot-demo/ureport2/070634.png)
+! [Preview Data] (http://static.xkcoding.com/spring-boot-demo/ureport2/070634.png)
 
-![预览数据](http://static.xkcoding.com/spring-boot-demo/ureport2/070813.png)
+! [Preview Data] (http://static.xkcoding.com/spring-boot-demo/ureport2/070813.png)
 
-关掉，稍微美化一下
+Turn it off and beautify it a little
 
-![美化后的预览数据](http://static.xkcoding.com/spring-boot-demo/ureport2/070910.png)
+! [Preview data after beautification] (http://static.xkcoding.com/spring-boot-demo/ureport2/070910.png)
 
-此时数据虽然正常显示了，但是「是否可用」这一列显示0/1 是否可以支持自定义呢？
+At this point, although the data is displayed normally, can the "Is it available" column display 0/1 support customization?
 
-![映射数据集](http://static.xkcoding.com/spring-boot-demo/ureport2/071352.png)
+! [Map Dataset] (http://static.xkcoding.com/spring-boot-demo/ureport2/071352.png)
 
-再次预览一下
+Preview it again
 
-![字典映射预览数据](http://static.xkcoding.com/spring-boot-demo/ureport2/071428.png)
+! [Dictionary Mapping Preview Data] (http://static.xkcoding.com/spring-boot-demo/ureport2/071428.png)
 
-顺带再把创建时间的数据格式也改一下
+Incidentally, the data format of the creation time is also changed
 
-![时间格式修改](http://static.xkcoding.com/spring-boot-demo/ureport2/072725.png)
+! [Time Format Modification] (http://static.xkcoding.com/spring-boot-demo/ureport2/072725.png)
 
-修改后，预览数据如下
+After modification, the preview data is as follows
 
-![预览数据](http://static.xkcoding.com/spring-boot-demo/ureport2/072753.png)
+! [Preview Data] (http://static.xkcoding.com/spring-boot-demo/ureport2/072753.png)
 
-##### 1.1.6.4. 保存报表设计文件
+##### 1.1.6.4. Save the report design file
 
-![image-20201124153244035](http://static.xkcoding.com/spring-boot-demo/ureport2/073244.png)
+! [image-20201124153244035] (http://static.xkcoding.com/spring-boot-demo/ureport2/073244.png)
 
-![保存](http://static.xkcoding.com/spring-boot-demo/ureport2/074228.png)
+! [Save] (http://static.xkcoding.com/spring-boot-demo/ureport2/074228.png)
 
-点击保存之后，你本地在 `application.yml` 文件中配置的地址就会出现一个 `demo.ureport.xml` 文件
+After clicking Save, a 'demo.ureport' file will appear at the address you configured locally in .xml the 'application.yml' file
 
-下次可以直接通过 http://localhost:8080/demo/ureport/preview?_u=file:demo.ureport.xml 这个地址预览报表了
+Next time, you can preview the report directly from the address of http://localhost:8080/demo/ureport/preview?_u=file:demo.ureport.xml
 
-##### 1.1.6.5. 增加报表查询条件
+##### 1.1.6.5. Add report query criteria
 
-还记得我们上面新增数据集的时候，加的条件吗？现在用起来
+Remember when we added a dataset above, the conditions were added? Use it now
 
-![查询表单设计器](http://static.xkcoding.com/spring-boot-demo/ureport2/074641.png)
+! [Query Form Designer] (http://static.xkcoding.com/spring-boot-demo/ureport2/074641.png)
 
-查询表单设计
+Query form design
 
-![拖动元素设计表单查询](http://static.xkcoding.com/spring-boot-demo/ureport2/074936.png)
+! [Drag Element Design Form Query] (http://static.xkcoding.com/spring-boot-demo/ureport2/074936.png)
 
-配置查询参数
+Configure query parameters
 
-![完善查询表单](http://static.xkcoding.com/spring-boot-demo/ureport2/075248.png)
+! [Improve the inquiry form] (http://static.xkcoding.com/spring-boot-demo/ureport2/075248.png)
 
-美化按钮
+Beautify the buttons
 
-![按钮样式美化](http://static.xkcoding.com/spring-boot-demo/ureport2/075410.png)
+! [Button style beautification] (http://static.xkcoding.com/spring-boot-demo/ureport2/075410.png)
 
-在预览一下~
+In the preview ~
 
-![预览数据-查询条件](http://static.xkcoding.com/spring-boot-demo/ureport2/075640.png)
+! [Preview Data - Query Criteria] (http://static.xkcoding.com/spring-boot-demo/ureport2/075640.png)
 
-### 1.2. 集群使用
+### 1.2. Cluster use
 
-如上文设计好的模板是保存在服务本机的，在集群环境中需要使用统一的文件系统存储。
+The template designed above is saved natively in the service and requires unified file system storage in a clustered environment.
 
-#### 1.2.1. 新增依赖
+#### 1.2.1. Added dependencies
 
 ```xml
 <dependency>
@@ -230,7 +230,7 @@ http://127.0.0.1:8080/demo/ureport/designer
 </dependency>
 ```
 
-#### 1.2.2. 仅需配置云存储相关参数, 演示为minio
+#### 1.2.2. Only the cloud storage related parameters need to be configured, and the demonstration is minio
 
 ```yaml
 oss:
@@ -240,39 +240,39 @@ oss:
   endpoint: http://minio.pig4cloud.com
 ```
 
-> 注意：这里使用的是冷冷提供的公共 minio，请勿乱用，也不保证数据的可靠性，建议小伙伴自建一个minio，或者使用阿里云 oss
+> Note: The public minio provided by the cold is used here, please do not mess with it, nor do you guarantee the reliability of the data, it is recommended that the small partner build a minio, or use Alibaba Cloud oss
 
-## 2. 坑
+## 2. pit
 
-Ureport2 最新版本是 `2.2.9`，挺久没更新了，存在一个坑：在报表设计页打开一个已存在的报表设计文件时，可能会出现无法预览的情况，参考 ISSUE:https://github.com/youseries/ureport/issues/393
+The latest version of Ureport2 is '2.2.9', which has not been updated for a long time, and there is a pit: when opening an existing report design file on the report design page, there may be a situation where it cannot be previewed, refer to ISSUE: https://github.com/youseries/ureport/issues/393
 
-![无法预览](http://static.xkcoding.com/spring-boot-demo/ureport2/084852.png)
+! [Unable to preview] (http://static.xkcoding.com/spring-boot-demo/ureport2/084852.png)
 
-解决办法：
+Workaround:
 
-![image-20201124164953947](http://static.xkcoding.com/spring-boot-demo/ureport2/084954.png)
+! [image-20201124164953947] (http://static.xkcoding.com/spring-boot-demo/ureport2/084954.png)
 
-条件表达式变成 `undefined`，这里需要注意的是，我们的 xml 文件是正常的，只不过是 ureport 解析的时候出错了。
+The conditional expression becomes 'undefined', and it is important to note here that our xml file is normal, except that there was an error in the ureport parsing.
 
-![条件表达式](http://static.xkcoding.com/spring-boot-demo/ureport2/085114.png)
+! [Conditional Expressions] (http://static.xkcoding.com/spring-boot-demo/ureport2/085114.png)
 
-点击编辑，重新选择表达式即可解决
+Click Edit and reselect the expression to solve the problem
 
-![image-20201124165202295](http://static.xkcoding.com/spring-boot-demo/ureport2/085202.png)
+! [image-20201124165202295] (http://static.xkcoding.com/spring-boot-demo/ureport2/085202.png)
 
-再次尝试预览
+Try the preview again
 
-![斑马纹预览数据](http://static.xkcoding.com/spring-boot-demo/ureport2/085228.png)
+! [Zebra Preview Data] (http://static.xkcoding.com/spring-boot-demo/ureport2/085228.png)
 
-> 注意：该可能性出现在报表设计文件中使用了条件属性的情况下，修复方法就是打开文件之后，重新配置条件属性，此处是坑，小伙伴使用时注意下就好，最好的方法就是避免使用条件属性。
+> Note: This possibility appears in the case of the use of conditional attributes in the report design file, the repair method is to open the file, reconfigure the condition properties, here is the pit, the small partner to use when paying attention to the good, the best way is to avoid the use of conditional properties.
 
-## 3. 感谢
+## 3. thank
 
-再次感谢 [@冷冷](https://github.com/lltx) 提供的 starter 及 PR，因个人操作失误，PR 未被合并，抱歉~
+Thanks again to [@cold cold] (https://github.com/lltx) for providing the starter and PR, due to personal operational errors, PR has not been merged, sorry~
 
-## 4. 参考
+## 4. reference
 
-- [ureport2 使用文档](https://www.w3cschool.cn/ureport)
-- [ureport-spring-boot-starter](https://github.com/pig-mesh/ureport-spring-boot-starter) UReport2 的 spring boot 封装
--  [oss-spring-boot-starter](https://github.com/pig-mesh/oss-spring-boot-starter) 兼容所有 S3 协议的分布式文件存储系统
+- [ureport2 Using Documentation] (https://www.w3cschool.cn/ureport)
+- [ureport-spring-boot-starter] (https://github.com/pig-mesh/ureport-spring-boot-starter) Spring boot encapsulation for UReport2
+- [oss-spring-boot-starter] (https://github.com/pig-mesh/oss-spring-boot-starter) Distributed file storage system compatible with all S3 protocols
 

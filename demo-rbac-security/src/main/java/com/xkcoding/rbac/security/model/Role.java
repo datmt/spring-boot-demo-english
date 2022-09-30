@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 /**
  * <p>
- * 角色
+ * Roles
  * </p>
  *
  * @author yangkai.shen
@@ -20,29 +20,29 @@ import javax.persistence.Table;
 @Table(name = "sec_role")
 public class Role {
     /**
-     * 主键
+     * Primary key
      */
     @Id
     private Long id;
 
     /**
-     * 角色名
+     * Role name
      */
     private String name;
 
     /**
-     * 描述
+     * Description
      */
     private String description;
 
     /**
-     * 创建时间
+     * Creation time
      */
     @Column(name = "create_time")
     private Long createTime;
 
     /**
-     * 更新时间
+     * Update time
      */
     @Column(name = "update_time")
     private Long updateTime;

@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 
 /**
  * <p>
- * IP 工具类
+ * IP tool class
  * </p>
  *
  * @author yangkai.shen
@@ -46,13 +46,13 @@ public class IpUtil {
     private static boolean internalIp(byte[] addr) {
         final byte b0 = addr[0];
         final byte b1 = addr[1];
-        // 10.x.x.x/8
+         10.x.x.x/8
         final byte SECTION_1 = 0x0A;
-        // 172.16.x.x/12
+         172.16.x.x/12
         final byte SECTION_2 = (byte) 0xAC;
         final byte SECTION_3 = (byte) 0x10;
         final byte SECTION_4 = (byte) 0x1F;
-        // 192.168.x.x/16
+         192.168.x.x/16
         final byte SECTION_5 = (byte) 0xC0;
         final byte SECTION_6 = (byte) 0xA8;
         switch (b0) {
@@ -73,10 +73,10 @@ public class IpUtil {
     }
 
     /**
-     * 将IPv4地址转换成字节
+     * Convert IPv4 addresses to bytes
      *
-     * @param text IPv4地址
-     * @return byte 字节
+     * @param text IPv4 address
+     * @return bytes
      */
     public static byte[] textToNumericFormatV4(String text) {
         if (text.length() == 0) {

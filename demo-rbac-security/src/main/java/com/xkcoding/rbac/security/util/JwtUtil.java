@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- * JWT 工具类
+ * JWT tool class
  * </p>
  *
  * @author yangkai.shen
@@ -42,36 +42,36 @@ public class JwtUtil {
     private StringRedisTemplate stringRedisTemplate;
 
     /**
-     * 创建JWT
+     * Create JWT
      *
-     * @param rememberMe  记住我
-     * @param id          用户id
-     * @param subject     用户名
-     * @param roles       用户角色
-     * @param authorities 用户权限
+     * @param rememberMe remember me
+     * @param id user ID
+     * @param subject username
+     * @param roles user role
+     * @param authorities user rights
      * @return JWT
      */
     public String createJWT(Boolean rememberMe, Long id, String subject, List<String> roles, Collection<? extends GrantedAuthority> authorities) {
         Date now = new Date();
         JwtBuilder builder = Jwts.builder().setId(id.toString()).setSubject(subject).setIssuedAt(now).signWith(SignatureAlgorithm.HS256, jwtConfig.getKey()).claim("roles", roles).claim("authorities", authorities);
 
-        // 设置过期时间
+        Set the expiration time
         Long ttl = rememberMe ? jwtConfig.getRemember() : jwtConfig.getTtl();
         if (ttl > 0) {
             builder.setExpiration(DateUtil.offsetMillisecond(now, ttl.intValue()));
         }
 
         String jwt = builder.compact();
-        // 将生成的JWT保存至Redis
+        Save the generated JWT to Redis
         stringRedisTemplate.opsForValue().set(Consts.REDIS_JWT_KEY_PREFIX + subject, jwt, ttl, TimeUnit.MILLISECONDS);
         return jwt;
     }
 
     /**
-     * 创建JWT
+     * Create JWT
      *
-     * @param authentication 用户认证信息
-     * @param rememberMe     记住我
+     * @param authentication user authentication information
+     * @param rememberMe remember me
      * @return JWT
      */
     public String createJWT(Authentication authentication, Boolean rememberMe) {
@@ -80,7 +80,7 @@ public class JwtUtil {
     }
 
     /**
-     * 解析JWT
+     * Parse JWT
      *
      * @param jwt JWT
      * @return {@link Claims}
@@ -92,13 +92,13 @@ public class JwtUtil {
             String username = claims.getSubject();
             String redisKey = Consts.REDIS_JWT_KEY_PREFIX + username;
 
-            // 校验redis中的JWT是否存在
+            Check whether JWT exists in redis
             Long expire = stringRedisTemplate.getExpire(redisKey, TimeUnit.MILLISECONDS);
             if (Objects.isNull(expire) || expire <= 0) {
                 throw new SecurityException(Status.TOKEN_EXPIRED);
             }
 
-            // 校验redis中的JWT是否与当前的一致，不一致则代表用户已注销/用户在不同设备登录，均代表JWT已过期
+            Check whether the JWT in redis is consistent with the current one, and if it is inconsistent, it means that the user has logged out/the user has logged in on a different device, which means that the JWT has expired
             String redisToken = stringRedisTemplate.opsForValue().get(redisKey);
             if (!StrUtil.equals(jwt, redisToken)) {
                 throw new SecurityException(Status.TOKEN_OUT_OF_CTRL);
@@ -123,22 +123,22 @@ public class JwtUtil {
     }
 
     /**
-     * 设置JWT过期
+     * Set JWT expiration
      *
-     * @param request 请求
+     * @param request request
      */
     public void invalidateJWT(HttpServletRequest request) {
         String jwt = getJwtFromRequest(request);
         String username = getUsernameFromJWT(jwt);
-        // 从redis中清除JWT
+        Clear the JWT from redis
         stringRedisTemplate.delete(Consts.REDIS_JWT_KEY_PREFIX + username);
     }
 
     /**
-     * 根据 jwt 获取用户名
+     * Get username based on jwt
      *
      * @param jwt JWT
-     * @return 用户名
+     * @return Username
      */
     public String getUsernameFromJWT(String jwt) {
         Claims claims = parseJWT(jwt);
@@ -146,9 +146,9 @@ public class JwtUtil {
     }
 
     /**
-     * 从 request 的 header 中获取 JWT
+     * Get the JWT from the header of the request
      *
-     * @param request 请求
+     * @param request request
      * @return JWT
      */
     public String getJwtFromRequest(HttpServletRequest request) {

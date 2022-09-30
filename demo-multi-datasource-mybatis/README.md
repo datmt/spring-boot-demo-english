@@ -1,10 +1,10 @@
 # spring-boot-demo-multi-datasource-mybatis
 
-> 此 demo 主要演示了 Spring Boot 如何集成 Mybatis 的多数据源。可以自己基于AOP实现多数据源，这里基于 Mybatis-Plus 提供的一个优雅的开源的解决方案来实现。
+> This demo demonstrates how Spring Boott integrates with Mybati's multiple data sources. You can implement multiple data sources yourself based on AOP, which is based on an elegant open source solution provided by Mybatis-Plus.
 
-## 准备工作
+## Preparation
 
-准备两个数据源，分别执行如下建表语句
+Prepare two data sources and execute the following table creation statement
 
 ```mysql
 DROP TABLE IF EXISTS `multi_user`;
@@ -19,7 +19,7 @@ CREATE TABLE `multi_user`(
   COLLATE = utf8_general_ci;
 ```
 
-## 导入依赖
+## Import dependencies
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -105,18 +105,18 @@ CREATE TABLE `multi_user`(
 </project>
 ```
 
-## 准备实体类
+## Prepare the entity class
 
 `User.java`
 
-> 1. @Data / @NoArgsConstructor / @AllArgsConstructor / @Builder 都是 lombok 注解
-> 2. @TableName("multi_user") 是 Mybatis-Plus 注解，主要是当实体类名字和表名不满足 **驼峰和下划线互转** 的格式时，用于表示数据库表名
-> 3. @TableId(type = IdType.ID_WORKER) 是 Mybatis-Plus 注解，主要是指定主键类型，这里我使用的是 Mybatis-Plus 基于 twitter 提供的 雪花算法
+> 1. @Data / @NoArgsConstructor / @AllArgsConstructor / @Builder are lombok annotations
+> 2. @TableName ("multi_user") is a Mybatis-Plus annotation that represents database table names primarily when entity class names and table names do not meet the format of hump and underscore
+> 3. @TableId (type = IdType.ID_WORKER) is a Mybatis-Plus annotation that specifies the primary key type, and here I'm using Mybatis-Plus based on the snowflake algorithm provided by twitter
 
 ```java
 /**
  * <p>
- * User实体类
+ * User entity class
  * </p>
  *
  * @author yangkai.shen
@@ -131,33 +131,33 @@ public class User implements Serializable {
     private static final long serialVersionUID = -1923859222295750467L;
 
     /**
-     * 主键
+     * Primary key
      */
     @TableId(type = IdType.ID_WORKER)
     private Long id;
 
     /**
-     * 姓名
+     * Name
      */
     private String name;
 
     /**
-     * 年龄
+     * Age
      */
     private Integer age;
 }
 ```
 
-## 数据访问层
+## Data access layer
 
 `UserMapper.java`
 
-> 不需要建对应的xml，只需要继承 BaseMapper 就拥有了大部分单表操作的方法了。
+> does not need to build the corresponding xml, only needs to inherit BaseMapper to have most of the single-table operation methods.
 
 ```java
 /**
  * <p>
- * 数据访问层
+ * Data access layer
  * </p>
  *
  * @author yangkai.shen
@@ -167,16 +167,16 @@ public interface UserMapper extends BaseMapper<User> {
 }
 ```
 
-## 数据服务层
+## Data Services Layer
 
-### 接口
+### Interface
 
 `UserService.java`
 
 ```java
 /**
  * <p>
- * 数据服务层
+ * Data service layer
  * </p>
  *
  * @author yangkai.shen
@@ -185,26 +185,26 @@ public interface UserMapper extends BaseMapper<User> {
 public interface UserService extends IService<User> {
 
     /**
-     * 添加 User
+     * Add User
      *
-     * @param user 用户
+     * @param user user
      */
     void addUser(User user);
 }
 ```
 
-### 实现
+### Implementation
 
 `UserServiceImpl.java`
 
-> 1. @DS: 注解在类上或方法上来切换数据源，方法上的@DS优先级大于类上的@DS
-> 2. baseMapper: mapper 对象，即`UserMapper`，可获得CRUD功能
-> 3. 默认走从库: `@DS(value = "slave")`在类上，默认走从库，除非在方法在添加`@DS(value = "master")`才走主库
+> 1. @DS: Annotations switch data sources on a class or method with a @DS precedence over @DS on the class
+> 2. baseMapper: The mapper object, known as 'UserMapper', gets CRUD functionality
+> 3. Default slave library: '@DS(value = 'slave')' on the class, default go slave library, unless in the method to add '@DS (value = "master")' to the main library
 
 ```java
 /**
  * <p>
- * 数据服务层 实现
+ * Data Services Layer implementation
  * </p>
  *
  * @author yangkai.shen
@@ -215,9 +215,9 @@ public interface UserService extends IService<User> {
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     /**
-     * 类上 {@code @DS("slave")} 代表默认从库，在方法上写 {@code @DS("master")} 代表默认主库
+     * On the class {@code @DS("slave")} represents the default slave library, and on the method, write {@code @DS("master")} represents the default master library
      *
-     * @param user 用户
+     * @param user user
      */
     @DS("master")
     @Override
@@ -227,16 +227,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 }
 ```
 
-## 启动类
+## Start the class
 
 `SpringBootDemoMultiDatasourceMybatisApplication.java`
 
-> 启动类上方需要使用@MapperScan扫描 mapper 类所在的包
+> above the startup class needs to use the @MapperScan to scan the package where the mapper class is located
 
 ```java
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen
@@ -253,7 +253,7 @@ public class SpringBootDemoMultiDatasourceMybatisApplication {
 }
 ```
 
-## 配置文件
+## Configuration file
 
 `application.yml`
 
@@ -270,7 +270,7 @@ spring:
         slave:
           username: root
           password: root
-          url: jdbc:mysql://127.0.0.1:3306/spring-boot-demo-2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8
+          url: jdbc:mysql://127.0.0.1:3306/spring-boot-demo-2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT% 2B8
           driver-class-name: com.mysql.cj.jdbc.Driver
       mp-enabled: true
 logging:
@@ -278,12 +278,12 @@ logging:
     com.xkcoding.multi.datasource.mybatis: debug
 ```
 
-## 测试类
+## Test class
 
 ```java
 /**
  * <p>
- * 测试主从数据源
+ * Test the master-slave data source
  * </p>
  *
  * @author yangkai.shen
@@ -295,19 +295,19 @@ public class UserServiceImplTest extends SpringBootDemoMultiDatasourceMybatisApp
     private UserService userService;
 
     /**
-     * 主从库添加
+     * Add from master and slave libraries
      */
     @Test
     public void addUser() {
-        User userMaster = User.builder().name("主库添加").age(20).build();
+        User userMaster = User.builder().name.age(20).build();
         userService.addUser(userMaster);
 
-        User userSlave = User.builder().name("从库添加").age(20).build();
+        User userSlave = User.builder().name.age(20).build();
         userService.save(userSlave);
     }
 
     /**
-     * 从库查询
+     * Query from the library
      */
     @Test
     public void testListUser() {
@@ -317,36 +317,36 @@ public class UserServiceImplTest extends SpringBootDemoMultiDatasourceMybatisApp
 }
 ```
 
-### 测试结果
+### Test results
 
-主从数据源加载成功
+The master and slave data source loads successfully
 
 ```java
 2019-01-21 14:55:41.096  INFO 7239 --- [           main] com.zaxxer.hikari.HikariDataSource       : master - Starting...
 2019-01-21 14:55:41.307  INFO 7239 --- [           main] com.zaxxer.hikari.HikariDataSource       : master - Start completed.
 2019-01-21 14:55:41.308  INFO 7239 --- [           main] com.zaxxer.hikari.HikariDataSource       : slave - Starting...
 2019-01-21 14:55:41.312  INFO 7239 --- [           main] com.zaxxer.hikari.HikariDataSource       : slave - Start completed.
-2019-01-21 14:55:41.312  INFO 7239 --- [           main] c.b.d.d.DynamicRoutingDataSource         : 初始共加载 2 个数据源
-2019-01-21 14:55:41.313  INFO 7239 --- [           main] c.b.d.d.DynamicRoutingDataSource         : 动态数据源-加载 slave 成功
-2019-01-21 14:55:41.313  INFO 7239 --- [           main] c.b.d.d.DynamicRoutingDataSource         : 动态数据源-加载 master 成功
-2019-01-21 14:55:41.313  INFO 7239 --- [           main] c.b.d.d.DynamicRoutingDataSource         : 当前的默认数据源是单数据源，数据源名为 master
+2019-01-21 14:55:41.312 INFO 7239 --- [ main] c.b.d.d.DynamicRoutingDataSource : Initially loaded a total of 2 data sources
+2019-01-21 14:55:41.313 INFO 7239 --- [ main] c.b.d.d.DynamicRoutingDataSource : Dynamic Data Source - Load slave successful
+2019-01-21 14:55:41.313 INFO 7239 --- [ main] c.b.d.d.DynamicRoutingDataSource : Dynamic Data Source - Load master successful
+2019-01-21 14:55:41.313 INFO 7239 --- [ main] c.b.d.d.DynamicRoutingDataSource : The current default data source is a single data source with the data source name master
  _ _   |_  _ _|_. ___ _ |    _
-| | |\/|_)(_| | |_\  |_)||_|_\
+| | |\/|_)(_| | |_\  |_)|| _|_\
      /               |
                         3.0.7.1
 ```
 
-**主**库 **建议** 只执行 **INSERT** **UPDATE** **DELETE** 操作
+**Main **Library**Recommended** Only perform the **INSERT****UPDATE****DELETE** operation
 
-![image-20190121153211509](http://static.xkcoding.com/spring-boot-demo/multi-datasource/mybatis/063506.jpg)
+! [image-20190121153211509] (http://static.xkcoding.com/spring-boot-demo/multi-datasource/mybatis/063506.jpg)
 
-**从**库 **建议** 只执行 **SELECT** 操作
+**From **Library**Recommended** Only perform the **SELECT** operation
 
-![image-20190121152825859](http://static.xkcoding.com/spring-boot-demo/multi-datasource/mybatis/063505.jpg)
+! [image-20190121152825859] (http://static.xkcoding.com/spring-boot-demo/multi-datasource/mybatis/063505.jpg)
 
-> 生产环境需要搭建 **主从复制**
+> The production environment needs to be set up **master-slave replication**
 
-## 参考
+## Reference
 
-1. Mybatis-Plus 多数据源文档：https://mybatis.plus/guide/dynamic-datasource.html
-2. Mybatis-Plus 多数据源集成官方 demo：https://gitee.com/baomidou/dynamic-datasource-spring-boot-starter/tree/master/samples
+1. Mybatis-Plus Multiple Data Source Document: https://mybatis.plus/guide/dynamic-datasource.html
+2. Mybatis-Plus Multi-Data Source Integration Official demo:https://gitee.com/baomidou/dynamic-datasource-spring-boot-starter/tree/master/samples

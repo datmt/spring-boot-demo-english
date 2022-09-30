@@ -1,12 +1,12 @@
 # spring-boot-demo-admin
 
-> 本 demo 主要演示了 Spring Boot 如何集成 Admin 管控台，监控管理 Spring Boot 应用，分别为 admin 服务端和 admin 客户端，两个模块。
+> This demo mainly demonstrates how Spring Boot integrates with the Admin control station to monitor and manage the Spring Boot application, which are two modules: admin server and admin client.
 
-## 运行步骤
+## Run the steps
 
-1. 进入 `spring-boot-demo-admin-server` 服务端，启动管控台服务端程序
-2. 进入 `spring-boot-demo-admin-client` 客户端，启动客户端程序，注册到服务端
-3. 观察服务端里，客户端程序的运行状态等信息
+1. Enter the 'spring-boot-demo-admin-server' server and start the control desk server
+2. Enter the 'spring-boot-demo-admin-client' client, start the client program, and register with the server
+3. Observe the running status of the client program on the server side
 
 ## pom.xml
 

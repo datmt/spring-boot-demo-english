@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * <p>
- * 分页结果集
+ * Paginated result set
  * </p>
  *
  * @author yangkai.shen
@@ -17,22 +17,22 @@ import java.util.List;
 @AllArgsConstructor
 public class PageResult<T> {
     /**
-     * 总条数
+     * Total number of items
      */
     private Long total;
 
     /**
-     * 页码
+     * Page number
      */
     private int pageNumber;
 
     /**
-     * 每页结果数
+     * Number of results per page
      */
     private int pageSize;
 
     /**
-     * 结果集
+     * Result set
      */
     private List<T> list;
 }

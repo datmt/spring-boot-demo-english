@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 /**
  * <p>
- * 数据源配置
+ * Data source configuration
  * </p>
  *
  * @author yangkai.shen

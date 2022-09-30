@@ -2,7 +2,7 @@ package com.xkcoding.websocket.model.server;
 
 /**
  * <p>
- * 系统相关信息实体
+ * System-related information entities
  * </p>
  *
  * @author yangkai.shen
@@ -10,27 +10,27 @@ package com.xkcoding.websocket.model.server;
  */
 public class Sys {
     /**
-     * 服务器名称
+     * Server name
      */
     private String computerName;
 
     /**
-     * 服务器Ip
+     * Server Ip
      */
     private String computerIp;
 
     /**
-     * 项目路径
+     * Project path
      */
     private String userDir;
 
     /**
-     * 操作系统
+     * Operating system
      */
     private String osName;
 
     /**
-     * 系统架构
+     * System architecture
      */
     private String osArch;
 

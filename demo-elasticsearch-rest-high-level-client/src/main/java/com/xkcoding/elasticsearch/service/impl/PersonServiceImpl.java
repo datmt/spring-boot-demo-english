@@ -67,7 +67,7 @@ public class PersonServiceImpl extends BaseElasticsearchService implements Perso
     @Override
     public void delete(String index, Person person) {
         if (ObjectUtils.isEmpty(person)) {
-            // 如果person 对象为空，则删除全量
+            If the person object is empty, the full amount is deleted
             searchList(index).forEach(p -> {
                 deleteRequest(index, String.valueOf(p.getId()));
             });

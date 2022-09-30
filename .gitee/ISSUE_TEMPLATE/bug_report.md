@@ -1,31 +1,31 @@
 ---
-name: 报告缺陷
-about: 报告缺陷以帮助我们改进
+name: Report a defect
+about: Report bugs to help us improve
 title: "[BUG]"
 labels: bug
 assignees: xkcoding
 ---
 
-**请先看[《提问的智慧》](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md?utm_source=hacpai.com)**，并尝试到 **[issue 列表](https://github.com/xkcoding/spring-boot-demo/issues)** 搜寻是否已经有人遇到过同样的问题。
+**Please first look at [The Wisdom of Asking Questions] (https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md?utm_source=hacpai.com) and try **[issue list] ( https://github.com/xkcoding/spring-boot-demo/issues)** Search if someone has already encountered the same problem.
 
 ----
 
-### 描述问题
+### Describe the problem
 
-请尽量清晰精准地描述你碰到的问题。
+Please try to describe the problem you are experiencing as clearly and accurately as possible.
 
 ```bash
-日志内容
+Log content
 ```
 
-### 期待的结果
+### Expected results
 
-请尽量清晰精准地描述你所期待的结果。
+Please try to describe as clearly and accurately as possible the results you expect.
 
-### 截屏或录像
+### Take a screenshot or video
 
-如果可能，请尽量附加截图或录像来描述你遇到的问题。
+If possible, try to attach screenshots or videos to describe the problem you're experiencing.
 
-### 其他信息
+### Additional information
 
-请提供其他附加信息帮助我们诊断问题。
+Please provide additional additional information to help us diagnose the problem.

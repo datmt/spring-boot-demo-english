@@ -1,6 +1,6 @@
 # spring-boot-demo-orm-mybatis-mapper-page
 
-> 此 demo 演示了 Spring Boot 如何集成通用Mapper插件和分页助手插件，简化Mybatis开发，带给你难以置信的开发体验。
+> This demo demonstrates how Spring Boot integrates the generic Mapper plugin and the Pagination Assistant plugin to simplify Mybatis development and give you an incredible development experience.
 
 ## pom.xml
 
@@ -37,14 +37,14 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- 通用Mapper -->
+        <!-- General Mapper -->
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
             <version>${mybatis.mapper.version}</version>
         </dependency>
 
-        <!-- 分页助手 -->
+        <!-- Pagination Assistant -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
@@ -97,14 +97,14 @@
 ```java
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen
  * @date Created in 2018-11-08 13:43
  */
 @SpringBootApplication
-@MapperScan(basePackages = {"com.xkcoding.orm.mybatis.MapperAndPage.mapper"}) // 注意：这里的 MapperScan 是 tk.mybatis.spring.annotation.MapperScan 这个包下的
+@MapperScan(basePackages = {"com.xkcoding.orm.mybatis.MapperAndPage.mapper"}) // Note: The MapperScan here is under the package tk.mybatis.spring.annotation.MapperScan
 public class SpringBootDemoOrmMybatisMapperPageApplication {
 
     public static void main(String[] args) {
@@ -144,7 +144,7 @@ logging:
     com.xkcoding.orm.mybatis.MapperAndPage.mapper: trace
 mybatis:
   configuration:
-    # 下划线转驼峰
+    # Underline to hump
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mappers/*.xml
   type-aliases-package: com.xkcoding.orm.mybatis.MapperAndPage.entity
@@ -176,7 +176,7 @@ pagehelper:
  * @date Created in 2018-11-08 14:15
  */
 @Component
-// 注意：这里的Mapper是tk.mybatis.mapper.common.Mapper包下的
+Note: The Mapper here is under the tk.mybatis.mapper.common.Mapper package
 public interface UserMapper extends Mapper<User>, MySqlMapper<User> {
 }
 ```
@@ -186,7 +186,7 @@ public interface UserMapper extends Mapper<User>, MySqlMapper<User> {
 ```java
 /**
  * <p>
- * UserMapper 测试
+ * UserMapper test
  * </p>
  *
  * @author yangkai.shen
@@ -199,36 +199,36 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     private UserMapper userMapper;
 
     /**
-     * 测试通用Mapper - 保存
+     * Test Universal Mapper - Save
      */
     @Test
     public void testInsert() {
         String salt = IdUtil.fastSimpleUUID();
-        User testSave3 = User.builder().name("testSave3").password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave3@xkcoding.com").phoneNumber("17300000003").status(1).lastLoginTime(new DateTime()).createTime(new DateTime()).lastUpdateTime(new DateTime()).build();
+        User testSave3 = User.builder().name("testSave3").password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave3@xkcoding.com").phoneNumber("17300000003").status(1) .lastLoginTime(new DateTime()).createTime(new DateTime()).lastUpdateTime(new DateTime()).build();
         userMapper.insertUseGeneratedKeys(testSave3);
         Assert.assertNotNull(testSave3.getId());
-        log.debug("【测试主键回写#testSave3.getId()】= {}", testSave3.getId());
+        log.debug("[Test primary key writeback #testSave3.getId()] = {}", testSave3.getId());
     }
 
     /**
-     * 测试通用Mapper - 批量保存
+     * Test Universal Mapper - Batch Save
      */
     @Test
     public void testInsertList() {
         List<User> userList = Lists.newArrayList();
         for (int i = 4; i < 14; i++) {
             String salt = IdUtil.fastSimpleUUID();
-            User user = User.builder().name("testSave" + i).password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave" + i + "@xkcoding.com").phoneNumber("1730000000" + i).status(1).lastLoginTime(new DateTime()).createTime(new DateTime()).lastUpdateTime(new DateTime()).build();
+            User user = User.builder().name("testSave" + i).password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave" + i + "@xkcoding.com").phoneNumber("1730000000" + i).status(1 ).lastLoginTime(new DateTime()).createTime(new DateTime()).lastUpdateTime(new DateTime()).build();
             userList.add(user);
         }
         int i = userMapper.insertList(userList);
         Assert.assertEquals(userList.size(), i);
         List<Long> ids = userList.stream().map(User::getId).collect(Collectors.toList());
-        log.debug("【测试主键回写#userList.ids】= {}", ids);
+        log.debug("[Test primary key writes back #userList.ids] = {}", ids);
     }
 
     /**
-     * 测试通用Mapper - 删除
+     * Test Universal Mapper - Delete
      */
     @Test
     public void testDelete() {
@@ -240,23 +240,23 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试通用Mapper - 更新
+     * Test Universal Mapper - Update
      */
     @Test
     public void testUpdate() {
         Long primaryKey = 1L;
         User user = userMapper.selectByPrimaryKey(primaryKey);
-        user.setName("通用Mapper名字更新");
+        user.setName ("Generic Mapper Name Update");
         int i = userMapper.updateByPrimaryKeySelective(user);
         Assert.assertEquals(1, i);
         User update = userMapper.selectByPrimaryKey(primaryKey);
         Assert.assertNotNull(update);
-        Assert.assertEquals("通用Mapper名字更新", update.getName());
+        Assert.assertEquals ("Generic Mapper Name Update", update.getName());
         log.debug("【update】= {}", update);
     }
 
     /**
-     * 测试通用Mapper - 查询单个
+     * Test generic Mapper - query single
      */
     @Test
     public void testQueryOne(){
@@ -266,7 +266,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试通用Mapper - 查询全部
+     * Test Universal Mapper - Query All
      */
     @Test
     public void testQueryAll() {
@@ -276,7 +276,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试分页助手 - 分页排序查询
+     * Test Pagination Assistant - Pagination Sort Query
      */
     @Test
     public void testQueryByPageAndSort() {
@@ -294,20 +294,20 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试通用Mapper - 条件查询
+     * Test generic Mapper - conditional query
      */
     @Test
     public void testQueryByCondition() {
         initData();
         Example example = new Example(User.class);
-        // 过滤
+        filtration
         example.createCriteria().andLike("name", "%Save1%").orEqualTo("phoneNumber", "17300000001");
-        // 排序
+        sort
         example.setOrderByClause("id desc");
         int count = userMapper.selectCountByExample(example);
-        // 分页
+        pagination
         PageHelper.startPage(1, 3);
-        // 查询
+        Inquire
         List<User> userList = userMapper.selectByExample(example);
         PageInfo<User> userPageInfo = new PageInfo<>(userList);
         Assert.assertEquals(3, userPageInfo.getSize());
@@ -316,7 +316,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 初始化数据
+     * Initialize data
      */
     private void initData() {
         testInsertList();
@@ -325,7 +325,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
 }
 ```
 
-## 参考
+## Reference
 
-- 通用Mapper官方文档：https://github.com/abel533/Mapper/wiki/1.integration
-- pagehelper 官方文档：https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/zh/HowToUse.md
+- Official Universal Mapper Documentation: https://github.com/abel533/Mapper/wiki/1.integration
+- pagehelper official documentation: https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/zh/HowToUse.md

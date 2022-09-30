@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 异常基类
+ * Exception base class
  * </p>
  *
  * @author yangkai.shen

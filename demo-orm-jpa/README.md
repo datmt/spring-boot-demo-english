@@ -1,7 +1,7 @@
 # spring-boot-demo-orm-jpa
-> 此 demo 主要演示了 Spring Boot 如何使用 JPA 操作数据库，包含简单使用以及级联使用。
+> This demo demonstrates how Spring Boot can use JPA to manipulate databases, including simple use as well as cascading use.
 
-## 主要代码
+## Main code
 
 ### pom.xml
 
@@ -85,7 +85,7 @@
 ```java
 /**
  * <p>
- * JPA配置类
+ * JPA configuration class
  * </p>
  *
  * @author yangkai.shen
@@ -125,7 +125,7 @@ public class JpaConfig {
 ```java
 /**
  * <p>
- * 用户实体类
+ * User entity class
  * </p>
  *
  * @author yangkai.shen
@@ -141,55 +141,55 @@ public class JpaConfig {
 @ToString(callSuper = true)
 public class User extends AbstractAuditModel {
     /**
-     * 用户名
+     * Username
      */
     private String name;
 
     /**
-     * 加密后的密码
+     * Encrypted password
      */
     private String password;
 
     /**
-     * 加密使用的盐
+     * Salt used for encryption
      */
     private String salt;
 
     /**
-     * 邮箱
+     * Email
      */
     private String email;
 
     /**
-     * 手机号码
+     * Mobile phone number
      */
     @Column(name = "phone_number")
     private String phoneNumber;
 
     /**
-     * 状态，-1：逻辑删除，0：禁用，1：启用
+     * Status, -1: Tombstone, 0: Disabled, 1: Enabled
      */
     private Integer status;
 
     /**
-     * 上次登录时间
+     * Last login time
      */
     @Column(name = "last_login_time")
     private Date lastLoginTime;
 
     /**
-     * 关联部门表
-     * 1、关系维护端，负责多对多关系的绑定和解除
-     * 2、@JoinTable注解的name属性指定关联表的名字，joinColumns指定外键的名字，关联到关系维护端(User)
-     * 3、inverseJoinColumns指定外键的名字，要关联的关系被维护端(Department)
-     * 4、其实可以不使用@JoinTable注解，默认生成的关联表名称为主表表名+下划线+从表表名，
-     * 即表名为user_department
-     * 关联到主表的外键名：主表名+下划线+主表中的主键列名,即user_id,这里使用referencedColumnName指定
-     * 关联到从表的外键名：主表中用于关联的属性名+下划线+从表的主键列名,department_id
-     * 主表就是关系维护端对应的表，从表就是关系被维护端对应的表
+     * Associated department table
+     * 1. Relationship maintenance end, responsible for the binding and disarming of many-to-many relationships
+     * 2, @JoinTable the name attribute of the annotation specifies the name of the association table, joinColumns specifies the name of the foreign key, and is associated with the relationship maintenance side (User)
+     * 3, inverseJoinColumns specifies the name of the foreign key, and the relationship to be associated is maintained (Department)
+     * 4, in fact, you can not use the @JoinTable annotation, the default generated associated table name is the main table name + underscore + slave table name,
+     * That is, the table name is user_department
+     * Foreign key name associated to the main table: primary table name + underscore + primary key column name in the primary table, that is, user_id, specified here using referencedColumnName
+     * Foreign key name associated to slave table: The attribute name used in the main table for association + underscore + primary key column name of the slave table, department_id
+     * The primary table is the table corresponding to the relationship maintenance side, and the slave table is the table corresponding to the relationship maintenance side
      */
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "orm_user_dept", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "dept_id", referencedColumnName = "id"))
+    @JoinTable(name = "orm_user_dept", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "dept_id", referencedColumnName = " id"))
     private Collection<Department> departmentList;
 
 }
@@ -198,7 +198,7 @@ public class User extends AbstractAuditModel {
 ```java
 /**
  * <p>
- * 部门实体类
+ * Department entity class
  * </p>
  *
  * @author 76peter
@@ -215,35 +215,35 @@ public class User extends AbstractAuditModel {
 public class Department extends AbstractAuditModel {
 
     /**
-     * 部门名
+     * Department name
      */
     @Column(name = "name", columnDefinition = "varchar(255) not null")
     private String name;
 
     /**
-     * 上级部门id
+     * Parent department id
      */
     @ManyToOne(cascade = {CascadeType.REFRESH}, optional = true)
     @JoinColumn(name = "superior", referencedColumnName = "id")
     private Department superior;
     /**
-     * 所属层级
+     * Level
      */
     @Column(name = "levels", columnDefinition = "int not null default 0")
     private Integer levels;
     /**
-     * 排序
+     * Sort
      */
     @Column(name = "order_no", columnDefinition = "int not null default 0")
     private Integer orderNo;
     /**
-     * 子部门集合
+     * Sub-department collection
      */
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.REMOVE}, fetch = FetchType.EAGER, mappedBy = "superior")
     private Collection<Department> children;
 
     /**
-     * 部门下用户集合
+     * Collection of users under the department
      */
     @ManyToMany(mappedBy = "departmentList")
     private Collection<User> userList;
@@ -254,7 +254,7 @@ public class Department extends AbstractAuditModel {
 ```java
 /**
  * <p>
- * 实体通用父类
+ * Entity generic parent class
  * </p>
  *
  * @author yangkai.shen
@@ -265,14 +265,14 @@ public class Department extends AbstractAuditModel {
 @Data
 public abstract class AbstractAuditModel implements Serializable {
     /**
-     * 主键
+     * Primary key
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * 创建时间
+     * Creation time
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time", nullable = false, updatable = false)
@@ -280,7 +280,7 @@ public abstract class AbstractAuditModel implements Serializable {
     private Date createTime;
 
     /**
-     * 上次更新时间
+     * Last updated
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update_time", nullable = false)
@@ -316,10 +316,10 @@ public interface UserDao extends JpaRepository<User, Long> {
 @Repository
 public interface DepartmentDao extends JpaRepository<Department, Long> {
     /**
-     * 根据层级查询部门
+     * Query departments based on hierarchy
      *
-     * @param level 层级
-     * @return 部门列表
+     * @param level level
+     * @return List of departments
      */
     List<Department> findDepartmentsByLevels(Integer level);
 }
@@ -332,7 +332,7 @@ server:
     context-path: /demo
 spring:
   datasource:
-    jdbc-url: jdbc:mysql://127.0.0.1:3306/spring-boot-demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8
+    jdbc-url: jdbc:mysql://127.0.0.1:3306/spring-boot-demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone= GMT%2B8
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -370,7 +370,7 @@ logging:
 ```java
 /**
  * <p>
- * jpa 测试类
+ * jpa test class
  * </p>
  *
  * @author yangkai.shen
@@ -382,12 +382,12 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     private UserDao userDao;
 
     /**
-     * 测试保存
+     * Test save
      */
     @Test
     public void testSave() {
         String salt = IdUtil.fastSimpleUUID();
-        User testSave3 = User.builder().name("testSave3").password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave3@xkcoding.com").phoneNumber("17300000003").status(1).lastLoginTime(new DateTime()).build();
+        User testSave3 = User.builder().name("testSave3").password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave3@xkcoding.com").phoneNumber("17300000003").status(1) .lastLoginTime(new DateTime()).build();
         userDao.save(testSave3);
 
         Assert.assertNotNull(testSave3.getId());
@@ -397,7 +397,7 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void testDelete() {
@@ -408,19 +408,19 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 测试修改
+     * Test modifications
      */
     @Test
     public void testUpdate() {
         userDao.findById(1L).ifPresent(user -> {
-            user.setName("JPA修改名字");
+            user.setName ("JPA Modified Name");
             userDao.save(user);
         });
-        Assert.assertEquals("JPA修改名字", userDao.findById(1L).get().getName());
+        Assert.assertEquals ("JPA modified name", userDao.findById(1L).get().getName());
     }
 
     /**
-     * 测试查询单个
+     * Test query single
      */
     @Test
     public void testQueryOne() {
@@ -430,7 +430,7 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 测试查询所有
+     * Test query all
      */
     @Test
     public void testQueryAll() {
@@ -440,13 +440,13 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 测试分页排序查询
+     * Test paginated sort query
      */
     @Test
     public void testQueryPage() {
-        // 初始化数据
+        Initialize the data
         initData();
-        // JPA分页的时候起始页是页码减1
+        JPA pagination when the starting page is page number minus 1
         Integer currentPage = 0;
         Integer pageSize = 5;
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
@@ -459,7 +459,7 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 初始化10条数据
+     * Initialize 10 pieces of data
      */
     private void initData() {
         List<User> userList = Lists.newArrayList();
@@ -478,7 +478,7 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
 ```java
 /**
  * <p>
- * jpa 测试类
+ * jpa test class
  * </p>
  *
  * @author 76peter
@@ -492,7 +492,7 @@ public class DepartmentDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     private UserDao userDao;
 
     /**
-     * 测试保存 ,根节点
+     * Test save, root node
      */
     @Test
     @Transactional
@@ -511,40 +511,40 @@ public class DepartmentDaoTest extends SpringBootDemoOrmJpaApplicationTests {
             departmentDao.saveAll(departmentList);
 
             Collection<Department> deptall = departmentDao.findAll();
-            log.debug("【部门】= {}", JSONArray.toJSONString((List) deptall));
+            log.debug("[Department] = {}", JSONArray.toJSONString((List) deptall));
         }
 
 
         userDao.findById(1L).ifPresent(user -> {
-            user.setName("添加部门");
+            user.setName ("Add Department");
             Department dept = departmentDao.findById(2L).get();
             user.setDepartmentList(departmentList);
             userDao.save(user);
         });
 
-        log.debug("用户部门={}", JSONUtil.toJsonStr(userDao.findById(1L).get().getDepartmentList()));
+        log.debug("User department={}", JSONUtil.toJsonStr(userDao.findById(1L).get().getDepartmentList()));
 
 
         departmentDao.findById(2L).ifPresent(dept -> {
             Collection<User> userlist = dept.getUserList();
-            //关联关系由user维护中间表，department userlist不会发生变化，可以增加查询方法来处理  重写getUserList方法
-            log.debug("部门下用户={}", JSONUtil.toJsonStr(userlist));
+            The association relationship is maintained by the user intermediate table, the department userlist does not change, and the query method can be added to handle the override getUserList method
+            log.debug("Under the department user={}", JSONUtil.toJsonStr(userlist));
         });
 
 
         userDao.findById(1L).ifPresent(user -> {
-            user.setName("清空部门");
+            user.setName ("Empty Sector");
             user.setDepartmentList(null);
             userDao.save(user);
         });
-        log.debug("用户部门={}", userDao.findById(1L).get().getDepartmentList());
+        log.debug("User department={}", userDao.findById(1L).get().getDepartmentList());
 
     }
 }
 ```
 
-### 其余代码及 SQL 参见本 demo
+### The rest of the code and SQL can be found in this demo
 
-## 参考
+## Reference
 
-- Spring Data JPA 官方文档：https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
+- Spring Data JPA Official Documentation: https://docs.spring.io/spring-data/jpa/docs/current/reference/html/

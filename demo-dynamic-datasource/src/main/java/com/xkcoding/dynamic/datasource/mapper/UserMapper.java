@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
- * 用户 Mapper
+ * User Mapper
  * </p>
  *
  * @author yangkai.shen

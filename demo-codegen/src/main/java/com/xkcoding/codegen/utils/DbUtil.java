@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
- * 数据库工具类
+ * Database tools class
  * </p>
  *
  * @author yangkai.shen

@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 表格请求参数
+ * Form request parameters
  * </p>
  *
  * @author yangkai.shen
@@ -13,15 +13,15 @@ import lombok.Data;
 @Data
 public class TableRequest {
     /**
-     * 当前页
+     * Current page
      */
     private Integer currentPage;
     /**
-     * 每页条数
+     * Number of articles per page
      */
     private Integer pageSize;
     /**
-     * jdbc-前缀
+     * jdbc- prefix
      */
     private String prepend;
     /**
@@ -29,15 +29,15 @@ public class TableRequest {
      */
     private String url;
     /**
-     * 用户名
+     * Username
      */
     private String username;
     /**
-     * 密码
+     * Password
      */
     private String password;
     /**
-     * 表名
+     * Table name
      */
     private String tableName;
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- * 师生关系
+ * Teacher-student relationship
  * </p>
  *
  * @author yangkai.shen
@@ -18,12 +18,12 @@ import java.util.List;
 @QueryResult
 public class TeacherStudent {
     /**
-     * 教师姓名
+     * Teacher's name
      */
     private String teacherName;
 
     /**
-     * 学生信息
+     * Student information
      */
     private List<Student> students;
 }

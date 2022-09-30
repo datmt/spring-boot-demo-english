@@ -1,6 +1,6 @@
 # spring-boot-demo-template-beetl
 
-> 本 demo 主要演示了 Spring Boot 项目如何集成 beetl 模板引擎
+> This demo demonstrates how the Spring Boot project integrates with the beetl template engine
 
 ## pom.xml
 
@@ -78,7 +78,7 @@
 ```java
 /**
  * <p>
- * 主页
+ * Homepage
  * </p>
  *
  * @author yangkai.shen
@@ -110,7 +110,7 @@ public class IndexController {
 ```java
 /**
  * <p>
- * 用户页面
+ * User page
  * </p>
  *
  * @author yangkai.shen
@@ -146,7 +146,7 @@ public class UserController {
 <% include("/common/head.html"){} %>
 <body>
 <div id="app" style="margin: 20px 20%">
-	欢迎登录，${user.name}！
+	Welcome to log in, ${user.name}!
 </div>
 </body>
 </html>
@@ -161,9 +161,9 @@ public class UserController {
 <body>
 <div id="app" style="margin: 20px 20%">
 	<form action="/demo/user/login" method="post">
-		用户名<input type="text" name="name" placeholder="用户名"/>
-		密码<input type="password" name="password" placeholder="密码"/>
-		<input type="submit" value="登录">
+		username<input type="text" name="name" placeholder="username"/>
+		password<input type="password" name="password" placeholder="password"/>
+		<input type="submit" value="Login" >
 	</form>
 </div>
 </body>
@@ -179,7 +179,7 @@ server:
     context-path: /demo
 ```
 
-## Beetl 语法糖学习文档
+## Beetl syntax sugar learning documentation
 
 http://ibeetl.com/guide/#beetl
 

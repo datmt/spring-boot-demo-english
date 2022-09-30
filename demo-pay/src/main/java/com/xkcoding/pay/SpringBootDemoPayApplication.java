@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 启动类
+ * Startup class
  * </p>
  *
  * @author yangkai.shen

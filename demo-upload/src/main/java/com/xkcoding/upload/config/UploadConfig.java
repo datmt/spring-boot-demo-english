@@ -22,7 +22,7 @@ import javax.servlet.Servlet;
 
 /**
  * <p>
- * 上传配置
+ * Upload configuration
  * </p>
  *
  * @author yangkai.shen
@@ -47,7 +47,7 @@ public class UploadConfig {
     }
 
     /**
-     * 上传配置
+     * Upload configuration
      */
     @Bean
     @ConditionalOnMissingBean
@@ -56,7 +56,7 @@ public class UploadConfig {
     }
 
     /**
-     * 注册解析器
+     * Register the parser
      */
     @Bean(name = DispatcherServlet.MULTIPART_RESOLVER_BEAN_NAME)
     @ConditionalOnMissingBean(MultipartResolver.class)
@@ -67,7 +67,7 @@ public class UploadConfig {
     }
 
     /**
-     * 华东机房
+     * East China computer room
      */
     @Bean
     public com.qiniu.storage.Configuration qiniuConfig() {
@@ -75,7 +75,7 @@ public class UploadConfig {
     }
 
     /**
-     * 构建一个七牛上传工具实例
+     * Build an instance of the Seven Bulls Upload Tool
      */
     @Bean
     public UploadManager uploadManager() {
@@ -83,7 +83,7 @@ public class UploadConfig {
     }
 
     /**
-     * 认证信息实例
+     * Authentication information instance
      */
     @Bean
     public Auth auth() {
@@ -91,7 +91,7 @@ public class UploadConfig {
     }
 
     /**
-     * 构建七牛空间管理实例
+     * Build a Seven Bulls Space Management instance
      */
     @Bean
     public BucketManager bucketManager() {

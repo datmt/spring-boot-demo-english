@@ -27,87 +27,87 @@ import java.util.List;
 public class ElasticsearchProperties {
 
     /**
-     * 请求协议
+     * Request agreement
      */
     private String schema = "http";
 
     /**
-     * 集群名称
+     * Cluster name
      */
     private String clusterName = "elasticsearch";
 
     /**
-     * 集群节点
+     * Cluster nodes
      */
     @NotNull(message = "集群节点不允许为空")
     private List<String> clusterNodes = new ArrayList<>();
 
     /**
-     * 连接超时时间(毫秒)
+     * Connection timeout (ms)
      */
     private Integer connectTimeout = 1000;
 
     /**
-     * socket 超时时间
+     * socket timeout period
      */
     private Integer socketTimeout = 30000;
 
     /**
-     * 连接请求超时时间
+     * Connection request timeout period
      */
     private Integer connectionRequestTimeout = 500;
 
     /**
-     * 每个路由的最大连接数量
+     * Maximum number of connections per route
      */
     private Integer maxConnectPerRoute = 10;
 
     /**
-     * 最大连接总数量
+     * Maximum total number of connections
      */
     private Integer maxConnectTotal = 30;
 
     /**
-     * 索引配置信息
+     * Index configuration information
      */
     private Index index = new Index();
 
     /**
-     * 认证账户
+     * Verify the account
      */
     private Account account = new Account();
 
     /**
-     * 索引配置信息
+     * Index configuration information
      */
     @Data
     public static class Index {
 
         /**
-         * 分片数量
+         * Number of shards
          */
         private Integer numberOfShards = 3;
 
         /**
-         * 副本数量
+         * Number of copies
          */
         private Integer numberOfReplicas = 2;
 
     }
 
     /**
-     * 认证账户
+     * Verify the account
      */
     @Data
     public static class Account {
 
         /**
-         * 认证用户
+         * Authenticate users
          */
         private String username;
 
         /**
-         * 认证密码
+         * Authentication password
          */
         private String password;
 

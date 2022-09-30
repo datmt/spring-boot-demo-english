@@ -2,7 +2,7 @@ package com.xkcoding.swagger.common;
 
 /**
  * <p>
- * 方便在 @ApiImplicitParam 的 dataType 属性使用
+ * Easy to use in the dataType property of @ApiImplicitParam
  * </p>
  *
  * @author yangkai.shen

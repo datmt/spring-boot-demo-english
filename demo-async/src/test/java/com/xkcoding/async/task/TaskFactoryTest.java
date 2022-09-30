@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 
 /**
  * <p>
- * 测试任务
+ * Test tasks
  * </p>
  *
  * @author yangkai.shen
@@ -22,7 +22,7 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
     private TaskFactory task;
 
     /**
-     * 测试异步任务
+     * Test asynchronous tasks
      */
     @Test
     public void asyncTaskTest() throws InterruptedException, ExecutionException {
@@ -31,7 +31,7 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
         Future<Boolean> asyncTask2 = task.asyncTask2();
         Future<Boolean> asyncTask3 = task.asyncTask3();
 
-        // 调用 get() 阻塞主线程
+        Calling get() blocks the main thread
         asyncTask1.get();
         asyncTask2.get();
         asyncTask3.get();
@@ -41,7 +41,7 @@ public class TaskFactoryTest extends SpringBootDemoAsyncApplicationTests {
     }
 
     /**
-     * 测试同步任务
+     * Test synchronization tasks
      */
     @Test
     public void taskTest() throws InterruptedException {

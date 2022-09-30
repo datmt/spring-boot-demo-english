@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 自定义User
+ * Custom User
  * </p>
  *
  * @author yangkai.shen
@@ -31,68 +31,68 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
     /**
-     * 主键
+     * Primary key
      */
     private Long id;
 
     /**
-     * 用户名
+     * Username
      */
     private String username;
 
     /**
-     * 密码
+     * Password
      */
     @JsonIgnore
     private String password;
 
     /**
-     * 昵称
+     * Nickname
      */
     private String nickname;
 
     /**
-     * 手机
+     * Mobile phone
      */
     private String phone;
 
     /**
-     * 邮箱
+     * Email
      */
     private String email;
 
     /**
-     * 生日
+     * Birthday
      */
     private Long birthday;
 
     /**
-     * 性别，男-1，女-2
+     * Gender, male-1, female-2
      */
     private Integer sex;
 
     /**
-     * 状态，启用-1，禁用-0
+     * Status, enabled -1, disabled -0
      */
     private Integer status;
 
     /**
-     * 创建时间
+     * Creation time
      */
     private Long createTime;
 
     /**
-     * 更新时间
+     * Update time
      */
     private Long updateTime;
 
     /**
-     * 用户角色列表
+     * List of user roles
      */
     private List<String> roles;
 
     /**
-     * 用户权限列表
+     * List of user permissions
      */
     private Collection<? extends GrantedAuthority> authorities;
 

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
- * IP 工具类
+ * IP tool class
  * </p>
  *
  * @author yangkai.shen
@@ -21,9 +21,9 @@ public class IpUtil {
     private final static int MAX_LENGTH = 15;
 
     /**
-     * 获取IP地址
-     * 使用Nginx等反向代理软件， 则不能通过request.getRemoteAddr()获取IP地址
-     * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址，X-Forwarded-For中第一个非unknown的有效IP字符串，则为真实IP地址
+     * Get the IP address
+     * With reverse proxy software such as Nginx, you cannot obtain an IP address through request.getRemoteAddr().
+     * If a multi-level reverse proxy is used, X-Forwarded-For does not have a value of one, but a string of IP addresses, and the first non-unknown valid IP string in X-Forwarded-For, is the real IP address
      */
     public static String getIpAddr() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -48,7 +48,7 @@ public class IpUtil {
         } catch (Exception e) {
             log.error("IPUtils ERROR ", e);
         }
-        // 使用代理，则获取第一个IP地址
+        Using a proxy, the first IP address is obtained
         if (!StrUtil.isEmpty(ip) && ip.length() > MAX_LENGTH) {
             if (ip.indexOf(StrUtil.COMMA) > 0) {
                 ip = ip.substring(0, ip.indexOf(StrUtil.COMMA));

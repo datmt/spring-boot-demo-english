@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * <p>
- * MVC配置
+ * MVC configuration
  * </p>
  *
  * @author yangkai.shen

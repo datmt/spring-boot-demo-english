@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
- * 数据源配置 Controller
+ * Data source configuration Controller
  * </p>
  *
  * @author yangkai.shen
@@ -22,7 +22,7 @@ public class DatasourceConfigController {
     private final DatasourceConfigMapper configMapper;
 
     /**
-     * 保存
+     * Save
      */
     @PostMapping("/config")
     @DefaultDatasource
@@ -33,7 +33,7 @@ public class DatasourceConfigController {
     }
 
     /**
-     * 保存
+     * Save
      */
     @DeleteMapping("/config/{id}")
     @DefaultDatasource

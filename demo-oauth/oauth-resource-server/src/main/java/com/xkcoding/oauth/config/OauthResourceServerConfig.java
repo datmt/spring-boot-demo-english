@@ -11,8 +11,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
- * 资源服务器配置.
- * 我们自己实现了它的配置，所以它的自动装配不会生效
+ * Resource server configuration.
+ * We implemented its configuration ourselves, so its auto-assembly will not take effect
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-09  14:20
@@ -34,7 +34,7 @@ public class OauthResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         super.configure(http);
-        // 前后端分离下，可以关闭 csrf
+        With the front and back ends separated, csrf can be turned off
         http.csrf().disable();
     }
 

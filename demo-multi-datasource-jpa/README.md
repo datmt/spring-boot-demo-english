@@ -1,6 +1,6 @@
 # spring-boot-demo-multi-datasource-jpa
 
-> 此 demo 主要演示 Spring Boot 如何集成 JPA 的多数据源。
+> This demo mainly demonstrates how Spring Boott integrates with JPA's multiple data sources.
 
 ## pom.xml
 
@@ -83,12 +83,12 @@
 
 ## PrimaryDataSourceConfig.java
 
-> 主数据源配置
+> Primary data source configuration
 
 ```java
 /**
  * <p>
- * JPA多数据源配置 - 主数据源
+ * JPA Multiple Data Source Configuration - Primary Data Source
  * </p>
  *
  * @author yangkai.shen
@@ -98,9 +98,9 @@
 public class PrimaryDataSourceConfig {
 
     /**
-     * 扫描spring.datasource.primary开头的配置信息
+     * Scan configuration information starting with spring.datasource.primary
      *
-     * @return 数据源配置信息
+     * @return data source configuration information
      */
     @Primary
     @Bean(name = "primaryDataSourceProperties")
@@ -110,10 +110,10 @@ public class PrimaryDataSourceConfig {
     }
 
     /**
-     * 获取主库数据源对象
+     * Get the main library data source object
      *
-     * @param dataSourceProperties 注入名为primaryDataSourceProperties的bean
-     * @return 数据源对象
+     * @param dataSourceProperties injects a bean called primaryDataSourceProperties
+     * @return data source object
      */
     @Primary
     @Bean(name = "primaryDataSource")
@@ -122,10 +122,10 @@ public class PrimaryDataSourceConfig {
     }
 
     /**
-     * 该方法仅在需要使用JdbcTemplate对象时选用
+     * This method is only used when a JdbcTemplate object is required
      *
-     * @param dataSource 注入名为primaryDataSource的bean
-     * @return 数据源JdbcTemplate对象
+     * @param dataSource injects a bean called primaryDataSource
+     * @return data source JdbcTemplate object
      */
     @Primary
     @Bean(name = "primaryJdbcTemplate")
@@ -138,12 +138,12 @@ public class PrimaryDataSourceConfig {
 
 ## SecondDataSourceConfig.java
 
-> 从数据源配置
+> Configure from a data source
 
 ```java
 /**
  * <p>
- * JPA多数据源配置 - 次数据源
+ * JPA Multiple Data Source Configuration - Secondary Data Source
  * </p>
  *
  * @author yangkai.shen
@@ -153,9 +153,9 @@ public class PrimaryDataSourceConfig {
 public class SecondDataSourceConfig {
 
     /**
-     * 扫描spring.datasource.second开头的配置信息
+     * Scan the configuration information at the beginning of spring.datasource.second
      *
-     * @return 数据源配置信息
+     * @return data source configuration information
      */
     @Bean(name = "secondDataSourceProperties")
     @ConfigurationProperties(prefix = "spring.datasource.second")
@@ -164,10 +164,10 @@ public class SecondDataSourceConfig {
     }
 
     /**
-     * 获取主库数据源对象
+     * Get the main library data source object
      *
-     * @param dataSourceProperties 注入名为secondDataSourceProperties的bean
-     * @return 数据源对象
+     * @param dataSourceProperties injects a bean called secondDataSourceProperties
+     * @return data source object
      */
     @Bean(name = "secondDataSource")
     public DataSource dataSource(@Qualifier("secondDataSourceProperties") DataSourceProperties dataSourceProperties) {
@@ -175,10 +175,10 @@ public class SecondDataSourceConfig {
     }
 
     /**
-     * 该方法仅在需要使用JdbcTemplate对象时选用
+     * This method is only used when a JdbcTemplate object is required
      *
-     * @param dataSource 注入名为secondDataSource的bean
-     * @return 数据源JdbcTemplate对象
+     * @param dataSource injects a bean named secondDataSource
+     * @return data source JdbcTemplate object
      */
     @Bean(name = "secondJdbcTemplate")
     public JdbcTemplate jdbcTemplate(@Qualifier("secondDataSource") DataSource dataSource) {
@@ -190,12 +190,12 @@ public class SecondDataSourceConfig {
 
 ## PrimaryJpaConfig.java
 
-> 主 JPA 配置
+> the primary JPA configuration
 
 ```java
 /**
  * <p>
- * JPA多数据源配置 - 主 JPA 配置
+ * JPA Multi-Data Source Configuration - Primary JPA configuration
  * </p>
  *
  * @author yangkai.shen
@@ -204,11 +204,11 @@ public class SecondDataSourceConfig {
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        // repository包名
+        repository package name
         basePackages = PrimaryJpaConfig.REPOSITORY_PACKAGE,
-        // 实体管理bean名称
+        The entity manages the bean name
         entityManagerFactoryRef = "primaryEntityManagerFactory",
-        // 事务管理bean名称
+        Transaction management bean name
         transactionManagerRef = "primaryTransactionManager")
 public class PrimaryJpaConfig {
     static final String REPOSITORY_PACKAGE = "com.xkcoding.multi.datasource.jpa.repository.primary";
@@ -216,9 +216,9 @@ public class PrimaryJpaConfig {
 
 
     /**
-     * 扫描spring.jpa.primary开头的配置信息
+     * Scan configuration information starting with spring.jpa.primary
      *
-     * @return jpa配置信息
+     * @return jpa configuration information
      */
     @Primary
     @Bean(name = "primaryJpaProperties")
@@ -228,32 +228,32 @@ public class PrimaryJpaConfig {
     }
 
     /**
-     * 获取主库实体管理工厂对象
+     * Get the master library entity management factory object
      *
-     * @param primaryDataSource 注入名为primaryDataSource的数据源
-     * @param jpaProperties     注入名为primaryJpaProperties的jpa配置信息
-     * @param builder           注入EntityManagerFactoryBuilder
-     * @return 实体管理工厂对象
+     * @param primaryDataSource injects a data source called primaryDataSource
+     * @param jpaProperties injects jpa configuration information called primaryJpaProperties
+     * @param builder injected into EntityManagerFactoryBuilder
+     * @return Entity management factory objects
      */
     @Primary
     @Bean(name = "primaryEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("primaryDataSource") DataSource primaryDataSource, @Qualifier("primaryJpaProperties") JpaProperties jpaProperties, EntityManagerFactoryBuilder builder) {
         return builder
-                // 设置数据源
+                Set up the data source
                 .dataSource(primaryDataSource)
-                // 设置jpa配置
+                Set the jpa configuration
                 .properties(jpaProperties.getProperties())
-                // 设置实体包名
+                Set the entity package name
                 .packages(ENTITY_PACKAGE)
-                // 设置持久化单元名，用于@PersistenceContext注解获取EntityManager时指定数据源
+                Sets the persistence unit name that specifies the data source when @PersistenceContext annotation gets EntityManager
                 .persistenceUnit("primaryPersistenceUnit").build();
     }
 
     /**
-     * 获取实体管理对象
+     * Get the entity management object
      *
-     * @param factory 注入名为primaryEntityManagerFactory的bean
-     * @return 实体管理对象
+     * @param factory injects a bean called primaryEntityManagerFactory
+     * @return Entity management objects
      */
     @Primary
     @Bean(name = "primaryEntityManager")
@@ -262,10 +262,10 @@ public class PrimaryJpaConfig {
     }
 
     /**
-     * 获取主库事务管理对象
+     * Get the main library transaction management object
      *
-     * @param factory 注入名为primaryEntityManagerFactory的bean
-     * @return 事务管理对象
+     * @param factory injects a bean called primaryEntityManagerFactory
+     * @return Transaction management objects
      */
     @Primary
     @Bean(name = "primaryTransactionManager")
@@ -278,12 +278,12 @@ public class PrimaryJpaConfig {
 
 ## SecondJpaConfig.java
 
-> 从 JPA 配置
+> Configuration from JPA
 
 ```java
 /**
  * <p>
- * JPA多数据源配置 - 次 JPA 配置
+ * JPA Multiple Data Source Configuration - Sub-JPA configuration
  * </p>
  *
  * @author yangkai.shen
@@ -292,11 +292,11 @@ public class PrimaryJpaConfig {
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        // repository包名
+        repository package name
         basePackages = SecondJpaConfig.REPOSITORY_PACKAGE,
-        // 实体管理bean名称
+        The entity manages the bean name
         entityManagerFactoryRef = "secondEntityManagerFactory",
-        // 事务管理bean名称
+        Transaction management bean name
         transactionManagerRef = "secondTransactionManager")
 public class SecondJpaConfig {
     static final String REPOSITORY_PACKAGE = "com.xkcoding.multi.datasource.jpa.repository.second";
@@ -304,9 +304,9 @@ public class SecondJpaConfig {
 
 
     /**
-     * 扫描spring.jpa.second开头的配置信息
+     * Scan configuration information beginning with spring.jpa.second
      *
-     * @return jpa配置信息
+     * @return jpa configuration information
      */
     @Bean(name = "secondJpaProperties")
     @ConfigurationProperties(prefix = "spring.jpa.second")
@@ -315,31 +315,31 @@ public class SecondJpaConfig {
     }
 
     /**
-     * 获取主库实体管理工厂对象
+     * Get the master library entity management factory object
      *
-     * @param secondDataSource 注入名为secondDataSource的数据源
-     * @param jpaProperties    注入名为secondJpaProperties的jpa配置信息
-     * @param builder          注入EntityManagerFactoryBuilder
-     * @return 实体管理工厂对象
+     * @param secondDataSource injects a data source named secondDataSource
+     * @param jpaProperties injects jpa configuration information called secondJpaProperties
+     * @param builder injected into EntityManagerFactoryBuilder
+     * @return Entity management factory objects
      */
     @Bean(name = "secondEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("secondDataSource") DataSource secondDataSource, @Qualifier("secondJpaProperties") JpaProperties jpaProperties, EntityManagerFactoryBuilder builder) {
         return builder
-                // 设置数据源
+                Set up the data source
                 .dataSource(secondDataSource)
-                // 设置jpa配置
+                Set the jpa configuration
                 .properties(jpaProperties.getProperties())
-                // 设置实体包名
+                Set the entity package name
                 .packages(ENTITY_PACKAGE)
-                // 设置持久化单元名，用于@PersistenceContext注解获取EntityManager时指定数据源
+                Sets the persistence unit name that specifies the data source when @PersistenceContext annotation gets EntityManager
                 .persistenceUnit("secondPersistenceUnit").build();
     }
 
     /**
-     * 获取实体管理对象
+     * Get the entity management object
      *
-     * @param factory 注入名为secondEntityManagerFactory的bean
-     * @return 实体管理对象
+     * @param factory injects a bean called secondEntityManagerFactory
+     * @return Entity management objects
      */
     @Bean(name = "secondEntityManager")
     public EntityManager entityManager(@Qualifier("secondEntityManagerFactory") EntityManagerFactory factory) {
@@ -347,10 +347,10 @@ public class SecondJpaConfig {
     }
 
     /**
-     * 获取主库事务管理对象
+     * Get the main library transaction management object
      *
-     * @param factory 注入名为secondEntityManagerFactory的bean
-     * @return 事务管理对象
+     * @param factory injects a bean called secondEntityManagerFactory
+     * @return Transaction management objects
      */
     @Bean(name = "secondTransactionManager")
     public PlatformTransactionManager transactionManager(@Qualifier("secondEntityManagerFactory") EntityManagerFactory factory) {
@@ -381,7 +381,7 @@ spring:
         max-lifetime: 60000
         connection-timeout: 30000
     second:
-      url: jdbc:mysql://127.0.0.1:3306/spring-boot-demo-2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8
+      url: jdbc:mysql://127.0.0.1:3306/spring-boot-demo-2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT% 2B8
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -454,7 +454,7 @@ public class SpringBootDemoMultiDatasourceJpaApplicationTests {
 
     @Test
     public void testInsert() {
-        PrimaryMultiTable primary = new PrimaryMultiTable(snowflake.nextId(),"测试名称-1");
+        PrimaryMultiTable primary = new PrimaryMultiTable(snowflake.nextId(), "test name-1");
         primaryRepo.save(primary);
 
         SecondMultiTable second = new SecondMultiTable();
@@ -465,7 +465,7 @@ public class SpringBootDemoMultiDatasourceJpaApplicationTests {
     @Test
     public void testUpdate() {
         primaryRepo.findAll().forEach(primary -> {
-            primary.setName("修改后的"+primary.getName());
+            primary.setName ("modified"+primary.getName());
             primaryRepo.save(primary);
 
             SecondMultiTable second = new SecondMultiTable();
@@ -493,7 +493,7 @@ public class SpringBootDemoMultiDatasourceJpaApplicationTests {
 }
 ```
 
-## 目录结构
+## Directory structure
 
 ```
 .
@@ -530,7 +530,7 @@ public class SpringBootDemoMultiDatasourceJpaApplicationTests {
 └── target
 ```
 
-## 参考
+## Reference
 
 1. https://www.jianshu.com/p/34730e595a8c
 2. https://blog.csdn.net/anxpp/article/details/52274120

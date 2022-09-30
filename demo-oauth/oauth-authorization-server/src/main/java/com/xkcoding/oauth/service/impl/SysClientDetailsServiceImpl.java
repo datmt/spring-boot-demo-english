@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 客户端 相关操作.
+ * Client related operations.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 13:37

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * <p>
- * 校验Session的拦截器
+ * Verify the interceptor of the Session
  * </p>
  *
  * @author yangkai.shen
@@ -24,7 +24,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
         if (session.getAttribute(Consts.SESSION_KEY) != null) {
             return true;
         }
-        // 跳转到登录页
+        Jump to the login page
         String url = "/page/login?redirect=true";
         response.sendRedirect(request.getContextPath() + url);
         return false;

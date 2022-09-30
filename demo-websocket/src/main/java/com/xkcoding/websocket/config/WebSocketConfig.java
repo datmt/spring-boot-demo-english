@@ -9,7 +9,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 /**
  * <p>
- * WebSocket配置
+ * WebSocket configuration
  * </p>
  *
  * @author yangkai.shen
@@ -22,15 +22,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // 注册一个 /notification 端点，前端通过这个端点进行连接
+        Registers a /notification endpoint through which the front end connects
         registry.addEndpoint("/notification")
-            //解决跨域问题
+            Resolve cross-domain issues
             .setAllowedOrigins("*").withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        //定义了一个客户端订阅地址的前缀信息，也就是客户端接收服务端发送消息的前缀信息
+        Defines the prefix information of a client subscription address, that is, the prefix information of the message sent by the client receiving the server
         registry.enableSimpleBroker("/topic");
     }
 

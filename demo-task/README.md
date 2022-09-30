@@ -1,6 +1,6 @@
 # spring-boot-demo-task
 
-> 此 demo 主要演示了 Spring Boot 如何快速实现定时任务。
+> This demo demonstrates how Spring Boott can quickly implement scheduled tasks.
 
 ## pom.xml
 
@@ -73,7 +73,7 @@
 
 ## TaskConfig.java
 
-> 此处等同于在配置文件配置
+> is equivalent here to configuration in the configuration file
 >
 > ```properties
 > spring.task.scheduling.pool.size=20
@@ -83,7 +83,7 @@
 ```java
 /**
  * <p>
- * 定时任务配置，配置线程池，使用不同线程执行任务，提升效率
+ * Scheduled task configuration, configure the thread pool, use different threads to perform tasks, improve efficiency
  * </p>
  *
  * @author yangkai.shen
@@ -99,7 +99,7 @@ public class TaskConfig implements SchedulingConfigurer {
     }
 
     /**
-     * 这里等同于配置文件配置
+     * This is equivalent to profile configuration
      * {@code spring.task.scheduling.pool.size=20} - Maximum allowed number of threads.
      * {@code spring.task.scheduling.thread-name-prefix=Job-Thread- } - Prefix to use for the names of newly created threads.
      * {@link org.springframework.boot.autoconfigure.task.TaskSchedulingProperties}
@@ -116,7 +116,7 @@ public class TaskConfig implements SchedulingConfigurer {
 ```java
 /**
  * <p>
- * 定时任务
+ * Scheduled tasks
  * </p>
  *
  * @author yangkai.shen
@@ -127,29 +127,29 @@ public class TaskConfig implements SchedulingConfigurer {
 public class TaskJob {
 
     /**
-     * 按照标准时间来算，每隔 10s 执行一次
+     * Executes every 10s in standard time
      */
     @Scheduled(cron = "0/10 * * * * ?")
     public void job1() {
-        log.info("【job1】开始执行：{}", DateUtil.formatDateTime(new Date()));
+        log.info ("[job1] start execution :{}", DateUtil.formatDateTime(new Date()));
     }
 
     /**
-     * 从启动时间开始，间隔 2s 执行
-     * 固定间隔时间
+     * Performed at intervals of 2s from the start time
+     * Fixed intervals
      */
     @Scheduled(fixedRate = 2000)
     public void job2() {
-        log.info("【job2】开始执行：{}", DateUtil.formatDateTime(new Date()));
+        log.info ("[job2] start execution :{}", DateUtil.formatDateTime(new Date()));
     }
 
     /**
-     * 从启动时间开始，延迟 5s 后间隔 4s 执行
-     * 固定等待时间
+     * Starts at startup time and is performed at 4s intervals after a delay of 5s
+     * Fixed waiting time
      */
     @Scheduled(fixedDelay = 4000, initialDelay = 5000)
     public void job3() {
-        log.info("【job3】开始执行：{}", DateUtil.formatDateTime(new Date()));
+        log.info ("[job3] start execution :{}", DateUtil.formatDateTime(new Date()));
     }
 }
 ```
@@ -161,7 +161,7 @@ server:
   port: 8080
   servlet:
     context-path: /demo
-# 下面的配置等同于 TaskConfig
+# The following configuration is equivalent to TaskConfig
 #spring:
 #  task:
 #    scheduling:
@@ -170,6 +170,6 @@ server:
 #      thread-name-prefix: Job-Thread-
 ```
 
-## 参考
+## Reference
 
-- Spring Boot官方文档：https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#boot-features-task-execution-scheduling
+- Spring Boot Official Documentation: https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#boot-features-task-execution-scheduling

@@ -28,7 +28,7 @@ import java.util.Objects;
 
 /**
  * <p>
- * 使用 aop 切面记录请求日志信息
+ * Use aop slices to record request log information
  * </p>
  *
  * @author yangkai.shen
@@ -40,7 +40,7 @@ import java.util.Objects;
 @Slf4j
 public class AopLog {
     /**
-     * 切入点
+     * Entry point
      */
     @Pointcut("execution(public * com.xkcoding.log.aop.controller.*Controller.*(..))")
     public void log() {
@@ -48,20 +48,20 @@ public class AopLog {
     }
 
     /**
-     * 环绕操作
+     * Wrap operation
      *
-     * @param point 切入点
-     * @return 原方法返回值
-     * @throws Throwable 异常信息
+     * @param point pointcut
+     * @return Original method return value
+     * @throws Throwable exception information
      */
     @Around("log()")
     public Object aroundLog(ProceedingJoinPoint point) throws Throwable {
 
-        // 开始打印请求日志
+        Start printing the request log
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
 
-        // 打印请求相关参数
+        Print request-related parameters
         long startTime = System.currentTimeMillis();
         Object result = point.proceed();
         String header = request.getHeader("User-Agent");
@@ -88,7 +88,7 @@ public class AopLog {
     }
 
     /**
-     *  获取方法参数名和参数值
+     * Get the method parameter name and parameter value
      * @param joinPoint
      * @return
      */
@@ -116,7 +116,7 @@ public class AopLog {
     private static final String UNKNOWN = "unknown";
 
     /**
-     * 获取ip地址
+     * Get IP address
      */
     public static String getIp(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
@@ -135,7 +135,7 @@ public class AopLog {
             ip = ip.split(",")[0];
         }
         if (localhost.equals(ip)) {
-            // 获取本机真正的ip地址
+            Gets the native real IP address
             try {
                 ip = InetAddress.getLocalHost().getHostAddress();
             } catch (UnknownHostException e) {
@@ -150,29 +150,29 @@ public class AopLog {
     @NoArgsConstructor
     @AllArgsConstructor
     static class Log {
-        // 线程id
+        Thread ID
         private String threadId;
-        // 线程名称
+        The thread name
         private String threadName;
-        // ip
+         ip
         private String ip;
-        // url
+         url
         private String url;
-        // http方法 GET POST PUT DELETE PATCH
+        http方法 GET POST PUT DELETE PATCH
         private String httpMethod;
-        // 类方法
+        Class methods
         private String classMethod;
-        // 请求参数
+        Request parameters
         private Object requestParams;
-        // 返回参数
+        Return parameters
         private Object result;
-        // 接口耗时
+        The interface is time-consuming
         private Long timeCost;
-        // 操作系统
+        operating system
         private String os;
-        // 浏览器
+        browser
         private String browser;
-        // user-agent
+         user-agent
         private String userAgent;
     }
 }

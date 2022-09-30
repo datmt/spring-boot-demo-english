@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 /**
  * <p>
- * 启动类
+ * Startup class
  * </p>
  *
  * @author yangkai.shen

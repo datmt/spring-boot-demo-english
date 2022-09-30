@@ -1,6 +1,6 @@
 # spring-boot-demo-dubbo-provider
 
-> 此 module 主要是服务提供方示例
+> This module is primarily a service provider example
 
 ## pom.xml
 
@@ -88,7 +88,7 @@ spring:
 ```java
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen
@@ -109,7 +109,7 @@ public class SpringBootDemoDubboProviderApplication {
 ```java
 /**
  * <p>
- * Hello服务实现
+ * Hello service implementation
  * </p>
  *
  * @author yangkai.shen
@@ -120,10 +120,10 @@ public class SpringBootDemoDubboProviderApplication {
 @Slf4j
 public class HelloServiceImpl implements HelloService {
     /**
-     * 问好
+     * Say hello
      *
-     * @param name 姓名
-     * @return 问好
+     * @param name name
+     * @return Say hello
      */
     @Override
     public String sayHello(String name) {

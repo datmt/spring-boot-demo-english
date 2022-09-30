@@ -30,7 +30,7 @@ public class LdapDemoApplicationTests {
     }
 
     /**
-     * 测试查询单个
+     * Test query single
      */
     @Test
     public void loginTest() {
@@ -40,7 +40,7 @@ public class LdapDemoApplicationTests {
     }
 
     /**
-     * 测试查询列表
+     * Test query list
      */
     @Test
     public void listAllPersonTest() {
@@ -49,7 +49,7 @@ public class LdapDemoApplicationTests {
     }
 
     /**
-     * 测试保存
+     * Test save
      */
     @Test
     public void saveTest() {
@@ -61,7 +61,7 @@ public class LdapDemoApplicationTests {
         person.setGivenName("四");
         person.setUserPassword("123456");
 
-        // required field
+         required field
         person.setPersonName("赵四");
         person.setUidNumber("666");
         person.setGidNumber("666");
@@ -72,7 +72,7 @@ public class LdapDemoApplicationTests {
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void deleteTest() {

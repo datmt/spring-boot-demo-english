@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 加群载荷
+ * Add group load
  * </p>
  *
  * @author yangkai.shen
@@ -13,12 +13,12 @@ import lombok.Data;
 @Data
 public class JoinRequest {
     /**
-     * 用户id
+     * User ID
      */
     private String userId;
 
     /**
-     * 群名称
+     * Group name
      */
     private String groupId;
 }

@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * 需要忽略的字段
+ * Fields to ignore
  * </p>
  *
  * @author yangkai.shen

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 测试Controller
+ * Test Controller
  * </p>
  *
  * @author yangkai.shen

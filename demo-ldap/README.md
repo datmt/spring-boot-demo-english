@@ -1,19 +1,19 @@
 # spring-boot-demo-ldap
 
-> 此 demo 主要演示了 Spring Boot 如何集成 `spring-boot-starter-data-ldap` 完成对 LDAP 的基本 CURD操作, 并给出以登录为实战的 API 示例
+> This demo mainly demonstrates how Spring Boot integrates 'spring-boot-starter-data-ldap' to complete basic curd operations on LDAP, and gives examples of APIs that are practical for login
 
-## docker openldap 安装步骤
+## docker openldap installation steps
 
-> 参考： https://github.com/osixia/docker-openldap
-1. 下载镜像： `docker pull osixia/openldap:1.2.5`
+> Reference: https://github.com/osixia/docker-openldap
+1. Download image: 'docker pull osixia/openldap:1.2.5'
 
-2. 运行容器： `docker run -p 389:389 -p 636:636 --name my-openldap --detach osixia/openldap:1.2.5`
+2. Run the container: 'docker run -p 389:389 -p 636:636 --name my-openldap --detach osixia/openldap:1.2.5'
 
-3. 添加管理员： `docker exec my-openldap ldapsearch -x -H ldap://localhost -b dc=example,dc=org -D "cn=admin,dc=example,dc=org" -w admin`
+3. Add an administrator: 'docker exec my-openldap ldapsearch -x -H ldap://localhost -b dc=example,dc=org -D "cn=admin,dc=example,dc=org" -w admin'
 
-4. 停止容器：`docker stop my-openldap`
+4. Stop container: 'docker stop my-openldap'
 
-5. 启动容器：`docker start my-openldap`
+5. Start the container: 'docker start my-openldap'
 
 
 ## pom.xml
@@ -83,8 +83,8 @@ spring:
 
 ## Person.java
 
-> 实体类
-> @Entry 注解 映射ldap对象关系
+> Entity classes
+> @Entry annotations map ldap object relationships
 ```java
 /**
  * People
@@ -110,45 +110,45 @@ public class Person implements Serializable {
     private String gidNumber;
 
     /**
-     * 用户名
+     * Username
      */
     @DnAttribute(value = "uid", index = 1)
     private String uid;
 
     /**
-     * 姓名
+     * Name
      */
     @Attribute(name = "cn")
     private String personName;
 
     /**
-     * 密码
+     * Password
      */
     private String userPassword;
 
     /**
-     * 名字
+     * First name
      */
     private String givenName;
 
     /**
-     * 姓氏
+     * Last name
      */
     @Attribute(name = "sn")
     private String surname;
 
     /**
-     * 邮箱
+     * Email
      */
     private String mail;
 
     /**
-     * 职位
+     * Position
      */
     private String title;
 
     /**
-     * 根目录
+     * Root directory
      */
     private String homeDirectory;
 
@@ -160,7 +160,7 @@ public class Person implements Serializable {
 ```
 
 ## PersonRepository.java
-> person 数据持久层
+> person data persistence layer
 ```java
 /**
  * PersonRepository
@@ -173,9 +173,9 @@ public class Person implements Serializable {
 public interface PersonRepository extends CrudRepository<Person, Name> {
 
     /**
-     * 根据用户名查找
+     * Find based on username
      *
-     * @param uid 用户名
+     * @param uid username
      * @return com.xkcoding.ldap.entity.Person
      */
     Person findByUid(String uid);
@@ -183,7 +183,7 @@ public interface PersonRepository extends CrudRepository<Person, Name> {
 ```
 
 ## PersonService.java
-> 数据操作服务
+> Data Manipulation Service
 ```java
 /**
  * PersonService
@@ -195,7 +195,7 @@ public interface PersonRepository extends CrudRepository<Person, Name> {
 public interface PersonService {
 
     /**
-     * 登录
+     * Login
      *
      * @param request {@link LoginRequest}
      * @return {@link Result}
@@ -203,21 +203,21 @@ public interface PersonService {
     Result login(LoginRequest request);
 
     /**
-     * 查询全部
+     * Enquire all
      *
      * @return {@link Result}
      */
     Result listAllPerson();
 
     /**
-     * 保存
+     * Save
      *
      * @param person {@link Person}
      */
     void save(Person person);
 
     /**
-     * 删除
+     * Delete
      *
      * @param person {@link Person}
      */
@@ -227,7 +227,7 @@ public interface PersonService {
 ```
 
 ## PersonServiceImpl.java
-> person数据操作服务具体逻辑实现类
+> personData Manipulation Service specific logic implementation class
 
 ```java
 /**
@@ -244,7 +244,7 @@ public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
 
     /**
-     * 登录
+     * Login
      *
      * @param request {@link LoginRequest}
      * @return {@link Result}
@@ -257,11 +257,11 @@ public class PersonServiceImpl implements PersonService {
 
         try {
             if (ObjectUtils.isEmpty(user)) {
-                throw new ServiceException("用户名或密码错误，请重新尝试");
+                throw new ServiceException ("Username or password error, please try again");
             } else {
                 user.setUserPassword(LdapUtils.asciiToString(user.getUserPassword()));
-                if (!LdapUtils.verify(user.getUserPassword(), request.getPassword())) {
-                    throw new ServiceException("用户名或密码错误，请重新尝试");
+                if (! LdapUtils.verify(user.getUserPassword(), request.getPassword())) {
+                    throw new ServiceException ("Username or password error, please try again");
                 }
             }
         } catch (NoSuchAlgorithmException e) {
@@ -273,7 +273,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     /**
-     * 查询全部
+     * Enquire all
      *
      * @return {@link Result}
      */
@@ -285,32 +285,32 @@ public class PersonServiceImpl implements PersonService {
     }
 
     /**
-     * 保存
+     * Save
      *
      * @param person {@link Person}
      */
     @Override
     public void save(Person person) {
         Person p = personRepository.save(person);
-        log.info("用户{}保存成功", p.getUid());
+        log.info ("User {} saved successfully", p.getUid());
     }
 
     /**
-     * 删除
+     * Delete
      *
      * @param person {@link Person}
      */
     @Override
     public void delete(Person person) {
         personRepository.delete(person);
-        log.info("删除用户{}成功", person.getUid());
+        log.info ("Delete user {} successful", person.getUid());
     }
 
 }
 ```
 
 ## LdapDemoApplicationTests.java
-> 测试
+> Testing
 ```java
 /**
  * LdapDemoApplicationTest
@@ -331,7 +331,7 @@ public class LdapDemoApplicationTests {
     }
 
     /**
-     * 测试查询单个
+     * Test query single
      */
     @Test
     public void loginTest() {
@@ -341,7 +341,7 @@ public class LdapDemoApplicationTests {
     }
 
     /**
-     * 测试查询列表
+     * Test query list
      */
     @Test
     public void listAllPersonTest() {
@@ -350,7 +350,7 @@ public class LdapDemoApplicationTests {
     }
 
     /**
-     * 测试保存
+     * Test save
      */
     @Test
     public void saveTest() {
@@ -358,12 +358,12 @@ public class LdapDemoApplicationTests {
 
         person.setUid("zhaosi");
 
-        person.setSurname("赵");
-        person.setGivenName("四");
+        person.setSurname ("Zhao");
+        person.setGivenName ("four");
         person.setUserPassword("123456");
 
-        // required field
-        person.setPersonName("赵四");
+         required field
+        person.setPersonName ("Zhao Si");
         person.setUidNumber("666");
         person.setGidNumber("666");
         person.setHomeDirectory("/home/zhaosi");
@@ -373,7 +373,7 @@ public class LdapDemoApplicationTests {
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void deleteTest() {
@@ -386,8 +386,8 @@ public class LdapDemoApplicationTests {
 }
 ```
 
-## 其余代码参见本 demo
+## See this demo for the rest of the code
 
-## 参考
+## Reference
 
-spring-data-ldap 官方文档: https://docs.spring.io/spring-data/ldap/docs/2.1.10.RELEASE/reference/html/
+spring-data-ldap official documentation: https://docs.spring.io/spring-data/ldap/docs/2.1.10.RELEASE/reference/html/

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * <p>
- * mybatis-plus 配置
+ * mybatis-plus configuration
  * </p>
  *
  * @author yangkai.shen
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class MybatisPlusConfig {
     /**
-     * 性能分析拦截器，不建议生产使用
+     * Performance analysis interceptor, not recommended for production
      */
     @Bean
     public PerformanceInterceptor performanceInterceptor() {
@@ -28,7 +28,7 @@ public class MybatisPlusConfig {
     }
 
     /**
-     * 分页插件
+     * Pagination plugin
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {

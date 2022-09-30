@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>
- * 数据源管理
+ * Data source management
  * </p>
  *
  * @author yangkai.shen
@@ -15,32 +15,32 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public enum DatasourceHolder {
     /**
-     * 当前实例
+     * Current instance
      */
     INSTANCE;
 
     /**
-     * 启动执行，定时5分钟清理一次
+     * Start execution, timed 5 minutes to clean up
      */
     DatasourceHolder() {
         DatasourceScheduler.INSTANCE.schedule(this::clearExpiredDatasource, 5 * 60 * 1000);
     }
 
     /**
-     * 默认数据源的id
+     * The id of the default data source
      */
     public static final Long DEFAULT_ID = -1L;
 
     /**
-     * 管理动态数据源列表。
+     * Manage dynamic data source lists.
      */
     private static final Map<Long, DatasourceManager> DATASOURCE_CACHE = new ConcurrentHashMap<>();
 
     /**
-     * 添加动态数据源
+     * Add dynamic data source
      *
-     * @param id         数据源id
-     * @param dataSource 数据源
+     * @param id data source id
+     * @param dataSource data source
      */
     public synchronized void addDatasource(Long id, HikariDataSource dataSource) {
         DatasourceManager datasourceManager = new DatasourceManager(dataSource);
@@ -48,10 +48,10 @@ public enum DatasourceHolder {
     }
 
     /**
-     * 查询动态数据源
+     * Query dynamic data sources
      *
-     * @param id 数据源id
-     * @return 数据源
+     * @param id data source id
+     * @return Data source
      */
     public synchronized HikariDataSource getDatasource(Long id) {
         if (DATASOURCE_CACHE.containsKey(id)) {
@@ -63,11 +63,11 @@ public enum DatasourceHolder {
     }
 
     /**
-     * 清除超时的数据源
+     * Clear the timed out data source
      */
     public synchronized void clearExpiredDatasource() {
         DATASOURCE_CACHE.forEach((k, v) -> {
-            // 排除默认数据源
+            Excludes the default data source
             if (!DEFAULT_ID.equals(k)) {
                 if (v.isExpired()) {
                     DATASOURCE_CACHE.remove(k);
@@ -77,15 +77,15 @@ public enum DatasourceHolder {
     }
 
     /**
-     * 清除动态数据源
+     * Clear dynamic data sources
      *
-     * @param id 数据源id
+     * @param id data source id
      */
     public synchronized void removeDatasource(Long id) {
         if (DATASOURCE_CACHE.containsKey(id)) {
-            // 关闭数据源
+            Close the data source
             DATASOURCE_CACHE.get(id).getDataSource().close();
-            // 移除缓存
+            Remove the cache
             DATASOURCE_CACHE.remove(id);
         }
     }

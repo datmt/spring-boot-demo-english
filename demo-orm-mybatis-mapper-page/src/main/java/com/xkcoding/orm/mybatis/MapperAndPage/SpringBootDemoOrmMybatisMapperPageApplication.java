@@ -6,7 +6,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen

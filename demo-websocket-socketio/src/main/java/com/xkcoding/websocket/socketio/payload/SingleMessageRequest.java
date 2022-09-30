@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 私聊消息载荷
+ * Private chat message payload
  * </p>
  *
  * @author yangkai.shen
@@ -13,17 +13,17 @@ import lombok.Data;
 @Data
 public class SingleMessageRequest {
     /**
-     * 消息发送方用户id
+     * Message sender user ID
      */
     private String fromUid;
 
     /**
-     * 消息接收方用户id
+     * Message receiver user ID
      */
     private String toUid;
 
     /**
-     * 消息内容
+     * Message content
      */
     private String message;
 }

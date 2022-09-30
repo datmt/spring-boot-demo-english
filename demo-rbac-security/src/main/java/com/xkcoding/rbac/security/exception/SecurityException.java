@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 全局异常
+ * Global exceptions
  * </p>
  *
  * @author yangkai.shen

@@ -2,7 +2,7 @@ package com.xkcoding.rbac.security.common;
 
 /**
  * <p>
- * 常量池
+ * Constant pool
  * </p>
  *
  * @author yangkai.shen
@@ -10,51 +10,51 @@ package com.xkcoding.rbac.security.common;
  */
 public interface Consts {
     /**
-     * 启用
+     * Enabled
      */
     Integer ENABLE = 1;
     /**
-     * 禁用
+     * Disabled
      */
     Integer DISABLE = 0;
 
     /**
-     * 页面
+     * Page
      */
     Integer PAGE = 1;
 
     /**
-     * 按钮
+     * Button
      */
     Integer BUTTON = 2;
 
     /**
-     * JWT 在 Redis 中保存的key前缀
+     * JWT's key prefix saved in Redis
      */
     String REDIS_JWT_KEY_PREFIX = "security:jwt:";
 
     /**
-     * 星号
+     * Asterisk
      */
     String SYMBOL_STAR = "*";
 
     /**
-     * 邮箱符号
+     * Mailbox symbol
      */
     String SYMBOL_EMAIL = "@";
 
     /**
-     * 默认当前页码
+     * Default current page number
      */
     Integer DEFAULT_CURRENT_PAGE = 1;
 
     /**
-     * 默认每页条数
+     * Default number of articles per page
      */
     Integer DEFAULT_PAGE_SIZE = 10;
 
     /**
-     * 匿名用户 用户名
+     * Anonymous user username
      */
     String ANONYMOUS_NAME = "匿名用户";
 }

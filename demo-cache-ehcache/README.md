@@ -1,6 +1,6 @@
 # spring-boot-demo-cache-ehcache
 
-> 此 demo 主要演示了 Spring Boot 如何集成 ehcache 使用缓存。
+> This demo mainly demonstrates how Spring Boot integrates ehcache using caching.
 
 ## pom.xml
 
@@ -81,7 +81,7 @@
 ```java
 /**
  * <p>
- * 启动类
+ * Startup class
  * </p>
  *
  * @author yangkai.shen
@@ -113,12 +113,12 @@ logging:
 ## ehcache.xml
 
 ```xml
-<!-- ehcache配置 -->
+<!-- ehcache configuration -->
 <ehcache
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
         updateCheck="false">
-    <!--缓存路径，用户目录下的base_ehcache目录-->
+    <!-- cache path, base_ehcache directory under User Directory - >
     <diskStore path="user.home/base_ehcache"/>
 
     <defaultCache
@@ -133,13 +133,13 @@ logging:
             memoryStoreEvictionPolicy="LRU"/>
 
     <!--
-    缓存文件名：user，同样的可以配置多个缓存
-    maxElementsInMemory：内存中最多存储
-    eternal：外部存储
-    overflowToDisk：超出缓存到磁盘
-    diskPersistent：磁盘持久化
-    timeToLiveSeconds：缓存时间
-    diskExpiryThreadIntervalSeconds：磁盘过期时间
+    Cache file name: user, the same can configure multiple caches
+    maxElementsInMemory: The maximum amount of storage in memory
+    eternal: External storage
+    overflowToDisk: Beyond the cache to disk
+    diskPersistent: Disk persistence
+    timeToLiveSeconds: Cache time
+    diskExpiryThreadIntervalSeconds: Disk expiration time
     -->
     <cache name="user"
            maxElementsInMemory="20000"
@@ -167,12 +167,12 @@ logging:
 @Slf4j
 public class UserServiceImpl implements UserService {
     /**
-     * 模拟数据库
+     * Simulated database
      */
     private static final Map<Long, User> DATABASES = Maps.newConcurrentMap();
 
     /**
-     * 初始化数据
+     * Initialize data
      */
     static {
         DATABASES.put(1L, new User(1L, "user1"));
@@ -181,43 +181,43 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 保存或修改用户
+     * Save or modify users
      *
-     * @param user 用户对象
-     * @return 操作结果
+     * @param user user object
+     * @return Operation result
      */
     @CachePut(value = "user", key = "#user.id")
     @Override
     public User saveOrUpdate(User user) {
         DATABASES.put(user.getId(), user);
-        log.info("保存用户【user】= {}", user);
+        log.info ("Save user [user] = {}", user);
         return user;
     }
 
     /**
-     * 获取用户
+     * Get users
      *
-     * @param id key值
-     * @return 返回结果
+     * @param id key value
+     * @return Returns results
      */
     @Cacheable(value = "user", key = "#id")
     @Override
     public User get(Long id) {
-        // 我们假设从数据库读取
-        log.info("查询用户【id】= {}", id);
+        We assume that a read is made from a database
+        log.info ("query user [id] = {}", id);
         return DATABASES.get(id);
     }
 
     /**
-     * 删除
+     * Delete
      *
-     * @param id key值
+     * @param id key value
      */
     @CacheEvict(value = "user", key = "#id")
     @Override
     public void delete(Long id) {
         DATABASES.remove(id);
-        log.info("删除用户【id】= {}", id);
+        log.info ("Delete user [id] = {}", id);
     }
 }
 ```
@@ -227,7 +227,7 @@ public class UserServiceImpl implements UserService {
 ```java
 /**
  * <p>
- * ehcache缓存测试
+ * ehcache test
  * </p>
  *
  * @author yangkai.shen
@@ -240,22 +240,22 @@ public class UserServiceTest extends SpringBootDemoCacheEhcacheApplicationTests 
     private UserService userService;
 
     /**
-     * 获取两次，查看日志验证缓存
+     * Get twice, view the log verification cache
      */
     @Test
     public void getTwice() {
-        // 模拟查询id为1的用户
+        Simulates a user whose query has an id of 1
         User user1 = userService.get(1L);
         log.debug("【user1】= {}", user1);
 
-        // 再次查询
+        Query again
         User user2 = userService.get(1L);
         log.debug("【user2】= {}", user2);
-        // 查看日志，只打印一次日志，证明缓存生效
+        Review the log and print it only once to prove that the cache is in effect
     }
 
     /**
-     * 先存，再查询，查看日志验证缓存
+     * Save first, then query, view the log verification cache
      */
     @Test
     public void getAfterSave() {
@@ -263,24 +263,24 @@ public class UserServiceTest extends SpringBootDemoCacheEhcacheApplicationTests 
 
         User user = userService.get(4L);
         log.debug("【user】= {}", user);
-        // 查看日志，只打印保存用户的日志，查询是未触发查询日志，因此缓存生效
+        View the log, only print the log of the saved user, the query is not triggered query log, so the cache takes effect
     }
 
     /**
-     * 测试删除，查看redis是否存在缓存数据
+     * Test deletion to see if redis has cached data
      */
     @Test
     public void deleteUser() {
-        // 查询一次，使ehcache中存在缓存数据
+        Query once so that cached data exists in the ehcache
         userService.get(1L);
-        // 删除，查看ehcache是否存在缓存数据
+        Delete to see if the ehcache exists for cached data
         userService.delete(1L);
     }
 }
 ```
 
-## 参考
+## Reference
 
-- Ehcache 官网：http://www.ehcache.org/documentation/
-- Spring Boot 官方文档：https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#boot-features-caching-provider-ehcache2
-- 博客：https://juejin.im/post/5b308de9518825748b56ae1d
+- Ehcache: http://www.ehcache.org/documentation/
+- Spring Boott Official Documentation: https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#boot-features-caching-provider-ehcache2
+- Blog: https://juejin.im/post/5b308de9518825748b56ae1d

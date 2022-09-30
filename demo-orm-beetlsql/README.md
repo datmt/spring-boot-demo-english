@@ -1,6 +1,6 @@
 # spring-boot-demo-orm-beetlsql
 
-> 此 demo 主要演示了 Spring Boot 如何整合 beetl sql 快捷操作数据库，使用的是beetl官方提供的beetl-framework-starter集成。集成过程不是十分顺利，没有其他的orm框架集成的便捷。
+> This demo mainly demonstrates how Spring Boot integrates the beetl sql quick operation database, using the beetl-framework-starter integration provided by beetl. The integration process is not very smooth, and there is no other orm framework integration convenience.
 
 ## pom.xml
 
@@ -90,7 +90,7 @@
 
 ## application.yml
 
-> 注意下方注释的地方，**不能解开注释，并且需要通过JavaConfig的方式手动配置数据源**，否则，会导致beetl启动失败，因此，初始化数据库的数据，只能手动在数据库使用 resources/db 下的建表语句和数据库初始化数据。
+> Note where the comments below are, **Cannot uncomment and need to manually configure the data source through JavaConfig**, otherwise, it will cause beetl startup failure, so to initialize the data of the database, you can only manually use the table building statements and database initialization data under resources/db in the database.
 
 ```yaml
 spring:
@@ -99,7 +99,7 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-#### beetlsql starter不能开启下面选项
+#### beetlsql starter does not open the following options
 #    type: com.zaxxer.hikari.HikariDataSource
 #    initialization-mode: always
 #    continue-on-error: true
@@ -138,7 +138,7 @@ beet-beetlsql:
 ```java
 /**
  * <p>
- * Beetl数据源配置
+ * Beetl data source configuration
  * </p>
  *
  * @author yangkai.shen
@@ -148,7 +148,7 @@ beet-beetlsql:
 public class BeetlConfig {
 
     /**
-     * Beetl需要显示的配置数据源，方可启动项目，大坑，切记！
+     * Beettl needs to display the configuration data source to start the project, big pit, remember!
      */
     @Bean(name = "datasource")
     public DataSource getDataSource(Environment env){
@@ -202,9 +202,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 新增用户
+     * New users
      *
-     * @param user 用户
+     * @param user user
      */
     @Override
     public User saveUser(User user) {
@@ -213,9 +213,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 批量插入用户
+     * Batch insert users
      *
-     * @param users 用户列表
+     * @param users user list
      */
     @Override
     public void saveUserList(List<User> users) {
@@ -223,9 +223,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 根据主键删除用户
+     * Delete users based on primary keys
      *
-     * @param id 主键
+     * @param id primary key
      */
     @Override
     public void deleteUser(Long id) {
@@ -233,25 +233,25 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 更新用户
+     * Update users
      *
-     * @param user 用户
-     * @return 更新后的用户
+     * @param user user
+     * @return updated users
      */
     @Override
     public User updateUser(User user) {
         if (ObjectUtil.isNull(user)) {
-            throw new RuntimeException("用户id不能为null");
+            throw new RuntimeException ("user id cannot be null");
         }
         userDao.updateTemplateById(user);
         return userDao.single(user.getId());
     }
 
     /**
-     * 查询单个用户
+     * Query for a single user
      *
-     * @param id 主键id
-     * @return 用户信息
+     * @param id primary key id
+     * @return User information
      */
     @Override
     public User getUser(Long id) {
@@ -259,9 +259,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 查询用户列表
+     * Query the list of users
      *
-     * @return 用户列表
+     * @return User list
      */
     @Override
     public List<User> getUserList() {
@@ -269,11 +269,11 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 分页查询
+     * Paginated queries
      *
-     * @param currentPage 当前页
-     * @param pageSize    每页条数
-     * @return 分页用户列表
+     * @param currentPage current page
+     * @param pageSize per page
+     * @return Paginated user list
      */
     @Override
     public PageQuery<User> getUserByPage(Integer currentPage, Integer pageSize) {
@@ -287,7 +287,7 @@ public class UserServiceImpl implements UserService {
 ```java
 /**
  * <p>
- * User Service测试
+ * User Service test
  * </p>
  *
  * @author yangkai.shen
@@ -301,7 +301,7 @@ public class UserServiceTest extends SpringBootDemoOrmBeetlsqlApplicationTests {
     @Test
     public void saveUser() {
         String salt = IdUtil.fastSimpleUUID();
-        User user = User.builder().name("testSave3").password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave3@xkcoding.com").phoneNumber("17300000003").status(1).lastLoginTime(new DateTime()).createTime(new DateTime()).lastUpdateTime(new DateTime()).build();
+        User user = User.builder().name("testSave3").password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave3@xkcoding.com").phoneNumber("17300000003").status(1). lastLoginTime(new DateTime()).createTime(new DateTime()).lastUpdateTime(new DateTime()).build();
 
         user = userService.saveUser(user);
         Assert.assertTrue(ObjectUtil.isNotNull(user.getId()));
@@ -313,7 +313,7 @@ public class UserServiceTest extends SpringBootDemoOrmBeetlsqlApplicationTests {
         List<User> users = Lists.newArrayList();
         for (int i = 5; i < 15; i++) {
             String salt = IdUtil.fastSimpleUUID();
-            User user = User.builder().name("testSave" + i).password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave" + i + "@xkcoding.com").phoneNumber("1730000000" + i).status(1).lastLoginTime(new DateTime()).createTime(new DateTime()).lastUpdateTime(new DateTime()).build();
+            User user = User.builder().name("testSave" + i).password(SecureUtil.md5("123456" + salt)).salt(salt).email("testSave" + i + "@xkcoding.com").phoneNumber("1730000000" + i).status(1 ).lastLoginTime(new DateTime()).createTime(new DateTime()).lastUpdateTime(new DateTime()).build();
             users.add(user);
         }
         userService.saveUserList(users);
@@ -330,9 +330,9 @@ public class UserServiceTest extends SpringBootDemoOrmBeetlsqlApplicationTests {
     @Test
     public void updateUser() {
         User user = userService.getUser(2L);
-        user.setName("beetlSql 修改后的名字");
+        user.setName ("beetlSql modified name");
         User update = userService.updateUser(user);
-        Assert.assertEquals("beetlSql 修改后的名字", update.getName());
+        Assert.assertEquals ("beetlSql modified name", update.getName());
         log.debug("【update】= {}", update);
     }
 
@@ -361,8 +361,8 @@ public class UserServiceTest extends SpringBootDemoOrmBeetlsqlApplicationTests {
 }
 ```
 
-## 参考
+## Reference
 
-- BeetlSQL官方文档：http://ibeetl.com/guide/#beetlsql
-- 开源项目：https://gitee.com/yangkb/springboot-beetl-beetlsql
-- 博客：https://blog.csdn.net/flystarfly/article/details/82752597
+- Official BeetlSQL Documentation: http://ibeetl.com/guide/#beetlsql
+- Open Source Project: https://gitee.com/yangkb/springboot-beetl-beetlsql
+- Blog: https://blog.csdn.net/flystarfly/article/details/82752597

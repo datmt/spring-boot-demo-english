@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 角色-权限联合主键
+ * Role-permission federation primary key
  * </p>
  *
  * @author yangkai.shen
@@ -20,13 +20,13 @@ public class RolePermissionKey implements Serializable {
     private static final long serialVersionUID = 6850974328279713855L;
 
     /**
-     * 角色id
+     * Role ID
      */
     @Column(name = "role_id")
     private Long roleId;
 
     /**
-     * 权限id
+     * Permission id
      */
     @Column(name = "permission_id")
     private Long permissionId;

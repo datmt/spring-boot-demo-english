@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>
- * 模拟数据库
+ * Simulated database
  * </p>
  *
  * @author yangkai.shen
@@ -19,23 +19,23 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class DbTemplate {
     /**
-     * 模拟数据库存储 user_id <-> session_id 的关系
+     * The simulated database stores the relationship user_id <-> session_id
      */
     public static final ConcurrentHashMap<String, UUID> DB = new ConcurrentHashMap<>();
 
     /**
-     * 获取所有SessionId
+     * Get all SessionIds
      *
-     * @return SessionId列表
+     * @return SessionId list
      */
     public List<UUID> findAll() {
         return CollUtil.newArrayList(DB.values());
     }
 
     /**
-     * 根据UserId查询SessionId
+     * Query SessionId according to UserId
      *
-     * @param userId 用户id
+     * @param userId userid
      * @return SessionId
      */
     public Optional<UUID> findByUserId(String userId) {
@@ -43,9 +43,9 @@ public class DbTemplate {
     }
 
     /**
-     * 保存/更新 user_id <-> session_id 的关系
+     * Save/update user_id <-> session_id relationships
      *
-     * @param userId    用户id
+     * @param userId userid
      * @param sessionId SessionId
      */
     public void save(String userId, UUID sessionId) {
@@ -53,9 +53,9 @@ public class DbTemplate {
     }
 
     /**
-     * 删除 user_id <-> session_id 的关系
+     * Delete the user_id <-> session_id relationship
      *
-     * @param userId 用户id
+     * @param userId userid
      */
     public void deleteByUserId(String userId) {
         DB.remove(userId);

@@ -1,6 +1,6 @@
 # spring-boot-demo-template-enjoy
 
-> 本 demo 主要演示了 Spring Boot 项目如何集成 enjoy 模板引擎。
+> This demo demonstrates how the Spring Boot project integrates with the enjoy template engine.
 
 ## pom.xml
 
@@ -78,7 +78,7 @@
 ```java
 /**
  * <p>
- * Enjoy 模板配置类
+ * Enjoy template configuration class
  * </p>
  *
  * @author yangkai.shen
@@ -89,17 +89,17 @@ public class EnjoyConfig {
    @Bean(name = "jfinalViewResolver")
    public JFinalViewResolver getJFinalViewResolver() {
       JFinalViewResolver jfr = new JFinalViewResolver();
-      // setDevMode 配置放在最前面
+      The setDevMode configuration is placed first
       jfr.setDevMode(true);
-      // 使用 ClassPathSourceFactory 从 class path 与 jar 包中加载模板文件
+      Use ClassPathSourceFactory to load template files from class path and jar packages
       jfr.setSourceFactory(new ClassPathSourceFactory());
-      // 在使用 ClassPathSourceFactory 时要使用 setBaseTemplatePath
-      // 代替 jfr.setPrefix("/view/")
+      Use setBaseTemplatePath when using ClassPathSourceFactory
+      instead of jfr.setPrefix("/view/")
       JFinalViewResolver.engine.setBaseTemplatePath("/templates/");
 
       jfr.setSessionInView(true);
       jfr.setSuffix(".html");
-      jfr.setContentType("text/html;charset=UTF-8");
+      jfr.setContentType("text/html; charset=UTF-8");
       jfr.setOrder(0);
       return jfr;
    }
@@ -111,7 +111,7 @@ public class EnjoyConfig {
 ```java
 /**
  * <p>
- * 主页
+ * Homepage
  * </p>
  *
  * @author yangkai.shen
@@ -143,7 +143,7 @@ public class IndexController {
 ```java
 /**
  * <p>
- * 用户页面
+ * User page
  * </p>
  *
  * @author yangkai.shen
@@ -179,7 +179,7 @@ public class UserController {
 #include("/common/head.html")
 <body>
 <div id="app" style="margin: 20px 20%">
-	欢迎登录，#(user.name)！
+	Welcome to log in, #(user.name)!
 </div>
 </body>
 </html>
@@ -194,9 +194,9 @@ public class UserController {
 <body>
 <div id="app" style="margin: 20px 20%">
 	<form action="/demo/user/login" method="post">
-		用户名<input type="text" name="name" placeholder="用户名"/>
-		密码<input type="password" name="password" placeholder="密码"/>
-		<input type="submit" value="登录">
+		username<input type="text" name="name" placeholder="username"/>
+		password<input type="password" name="password" placeholder="password"/>
+		<input type="submit" value="Login" >
 	</form>
 </div>
 </body>
@@ -212,7 +212,7 @@ server:
     context-path: /demo
 ```
 
-## Enjoy 语法糖学习文档
+## Enjoy the syntax sugar learning documentation
 
 http://www.jfinal.com/doc/6-1
 

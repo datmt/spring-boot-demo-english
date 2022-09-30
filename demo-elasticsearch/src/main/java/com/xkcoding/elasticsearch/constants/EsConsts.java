@@ -2,7 +2,7 @@ package com.xkcoding.elasticsearch.constants;
 
 /**
  * <p>
- * ES常量池
+ * ES constant pool
  * </p>
  *
  * @author yangkai.shen
@@ -10,12 +10,12 @@ package com.xkcoding.elasticsearch.constants;
  */
 public interface EsConsts {
     /**
-     * 索引名称
+     * Index name
      */
     String INDEX_NAME = "person";
 
     /**
-     * 类型名称
+     * Type name
      */
     String TYPE_NAME = "person";
 }

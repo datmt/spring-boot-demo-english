@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * <p>
- * 系统文件相关信息实体VO
+ * System file related information entity VO
  * </p>
  *
  * @author yangkai.shen

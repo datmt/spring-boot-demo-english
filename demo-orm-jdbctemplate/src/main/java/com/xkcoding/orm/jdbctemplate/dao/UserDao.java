@@ -25,51 +25,51 @@ public class UserDao extends BaseDao<User, Long> {
     }
 
     /**
-     * 保存用户
+     * Save users
      *
-     * @param user 用户对象
-     * @return 操作影响行数
+     * @param user user object
+     * @return operation affects the number of rows
      */
     public Integer insert(User user) {
         return super.insert(user, true);
     }
 
     /**
-     * 根据主键删除用户
+     * Delete users based on primary keys
      *
-     * @param id 主键id
-     * @return 操作影响行数
+     * @param id primary key id
+     * @return operation affects the number of rows
      */
     public Integer delete(Long id) {
         return super.deleteById(id);
     }
 
     /**
-     * 更新用户
+     * Update users
      *
-     * @param user 用户对象
-     * @param id   主键id
-     * @return 操作影响行数
+     * @param user user object
+     * @param id primary key id
+     * @return operation affects the number of rows
      */
     public Integer update(User user, Long id) {
         return super.updateById(user, id, true);
     }
 
     /**
-     * 根据主键获取用户
+     * Get users based on primary key
      *
-     * @param id 主键id
-     * @return id对应的用户
+     * @param id primary key id
+     * @return the user corresponding to the id
      */
     public User selectById(Long id) {
         return super.findOneById(id);
     }
 
     /**
-     * 根据查询条件获取用户列表
+     * Get a list of users based on query criteria
      *
-     * @param user 用户查询条件
-     * @return 用户列表
+     * @param user query criteria
+     * @return User list
      */
     public List<User> selectUserList(User user) {
         return super.findByExample(user);

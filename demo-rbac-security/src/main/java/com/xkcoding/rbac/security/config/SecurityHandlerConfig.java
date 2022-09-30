@@ -8,7 +8,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 /**
  * <p>
- * Security 结果处理配置
+ * Security result processing configuration
  * </p>
  *
  * @author yangkai.shen

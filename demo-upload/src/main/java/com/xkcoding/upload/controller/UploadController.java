@@ -23,7 +23,7 @@ import java.io.IOException;
 
 /**
  * <p>
- * 文件上传 Controller
+ * File upload Controller
  * </p>
  *
  * @author yangkai.shen

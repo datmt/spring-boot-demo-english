@@ -10,12 +10,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * 客户端信息.
- * 这里实现了 ClientDetails 接口
- * 个人建议不应该在实体类里面写任何逻辑代码
- * 而为了避免实体类耦合严重不应该去实现这个接口的
- * 但是这里为了演示和 {@link SysUser} 不同的方式，所以就选择实现这个接口了
- * 另一种方式是写一个方法将它转化为默认实现 {@link BaseClientDetails} 比较好一点并且简单很多
+ * Client information.
+ * The ClientDetails interface is implemented here
+ * Personal advice should not write any logical code inside an entity class
+ * In order to avoid the importance of entity class coupling, this interface should not be implemented
+ * But here in order to demonstrate a different way from {@link SysUser}, so I chose to implement this interface
+ * Another way is to write a method that turns it into a default implementation of {@link BaseClientDetails} which is a bit better and much simpler
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 12:54
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class SysClientDetails implements ClientDetails {
 
     /**
-     * 主键
+     * Primary key
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,54 +38,54 @@ public class SysClientDetails implements ClientDetails {
     private String clientId;
 
     /**
-     * client 密钥
+     * client key
      */
     private String clientSecret;
 
     /**
-     * 资源服务器名称
+     * Resource server name
      */
     private String resourceIds;
 
     /**
-     * 授权域
+     * Authorized domain
      */
     private String scopes;
 
     /**
-     * 授权类型
+     * Authorization type
      */
     private String grantTypes;
 
     /**
-     * 重定向地址，授权码时必填
+     * Redirect address, authorization code is required
      */
     private String redirectUrl;
 
     /**
-     * 授权信息
+     * Authorization information
      */
     private String authorizations;
 
     /**
-     * 授权令牌有效时间
+     * Authorization token validity time
      */
     private Integer accessTokenValiditySeconds;
 
     /**
-     * 刷新令牌有效时间
+     * Refresh token validity time
      */
     private Integer refreshTokenValiditySeconds;
 
     /**
-     * 自动授权请求域
+     * Automatic authorization request domain
      */
     private String autoApproveScopes;
 
     /**
-     * 是否安全
+     * Whether it is safe or not
      *
-     * @return 结果
+     * @return Results
      */
     @Override
     public boolean isSecretRequired() {
@@ -93,9 +93,9 @@ public class SysClientDetails implements ClientDetails {
     }
 
     /**
-     * 是否有 scopes
+     * Whether there are scopes
      *
-     * @return 结果
+     * @return Results
      */
     @Override
     public boolean isScoped() {
@@ -113,9 +113,9 @@ public class SysClientDetails implements ClientDetails {
     }
 
     /**
-     * 授权类型
+     * Authorization type
      *
-     * @return 结果
+     * @return Results
      */
     @Override
     public Set<String> getAuthorizedGrantTypes() {
@@ -129,7 +129,7 @@ public class SysClientDetails implements ClientDetails {
 
 
     /**
-     * 获取回调地址
+     * Get callback address
      *
      * @return redirectUrl
      */
@@ -139,13 +139,13 @@ public class SysClientDetails implements ClientDetails {
     }
 
     /**
-     * 这里需要提一下
-     * 个人觉得这里应该是客户端所有的权限
-     * 但是已经有 scope 的存在可以很好的对客户端的权限进行认证了
-     * 那么在 oauth2 的四个角色中，这里就有可能是资源服务器的权限
-     * 但是一般资源服务器都有自己的权限管理机制，比如拿到用户信息后做 RBAC
-     * 所以在 spring security 的默认实现中直接给的是空的一个集合
-     * 这里我们也给他一个空的把
+     * Need to mention it here
+     * Personally feel that this should be all the permissions of the client
+     * But there is already a scope that can be a good way to authenticate the client's permissions
+     * Then in the four roles of oauth2, there may be permissions for the resource server
+     * However, the general resource server has its own permission management mechanism, such as RBAC after getting the user information
+     * So in the default implementation of spring security is a set of empty directly
+     * Here we also give him an empty handle
      *
      * @return GrantedAuthority
      */
@@ -155,10 +155,10 @@ public class SysClientDetails implements ClientDetails {
     }
 
     /**
-     * 判断是否自动授权
+     * Determine whether to automatically authorize
      *
      * @param scope scope
-     * @return 结果
+     * @return Results
      */
     @Override
     public boolean isAutoApprove(String scope) {
@@ -175,8 +175,8 @@ public class SysClientDetails implements ClientDetails {
     }
 
     /**
-     * additional information 是 spring security 的保留字段
-     * 暂时用不到，直接给个空的即可
+     * Additional information is a reserved field for spring security
+     * Not used temporarily, just give an empty one
      *
      * @return map
      */

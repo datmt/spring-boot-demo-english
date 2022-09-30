@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 测试操作 MongoDb
+ * Test operation MongoDb
  * </p>
  *
  * @author yangkai.shen
@@ -41,7 +41,7 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     private Snowflake snowflake;
 
     /**
-     * 测试新增
+     * New to testing
      */
     @Test
     public void testSave() {
@@ -51,7 +51,7 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     }
 
     /**
-     * 测试新增列表
+     * Test new list
      */
     @Test
     public void testSaveList() {
@@ -65,7 +65,7 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     }
 
     /**
-     * 测试更新
+     * Test updates
      */
     @Test
     public void testUpdate() {
@@ -78,19 +78,19 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void testDelete() {
-        // 根据主键删除
+        Delete based on the primary key
         articleRepo.deleteById(1L);
 
-        // 全部删除
+        Delete All
         articleRepo.deleteAll();
     }
 
     /**
-     * 测试点赞数、访客数，使用save方式更新点赞、访客
+     * Test the number of likes and visitors, and use save to update likes and visitors
      */
     @Test
     public void testThumbUp() {
@@ -103,7 +103,7 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     }
 
     /**
-     * 测试点赞数、访客数，使用更优雅/高效的方式更新点赞、访客
+     * Test likes, visitors, and update likes and visitors in a more elegant/efficient way
      */
     @Test
     public void testThumbUp2() {
@@ -118,7 +118,7 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     }
 
     /**
-     * 测试分页排序查询
+     * Test paginated sort query
      */
     @Test
     public void testQuery() {
@@ -131,7 +131,7 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     }
 
     /**
-     * 测试根据标题模糊查询
+     * Test fuzzy query based on title
      */
     @Test
     public void testFindByTitleLike() {

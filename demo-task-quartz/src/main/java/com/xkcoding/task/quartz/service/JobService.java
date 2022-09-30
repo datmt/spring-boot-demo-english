@@ -15,51 +15,51 @@ import org.quartz.SchedulerException;
  */
 public interface JobService {
     /**
-     * 添加并启动定时任务
+     * Add and start scheduled tasks
      *
-     * @param form 表单参数 {@link JobForm}
-     * @throws Exception 异常
+     * @param form form parameter {@link JobForm}
+     * @throws Exception exception
      */
     void addJob(JobForm form) throws Exception;
 
     /**
-     * 删除定时任务
+     * Delete scheduled tasks
      *
-     * @param form 表单参数 {@link JobForm}
-     * @throws SchedulerException 异常
+     * @param form form parameter {@link JobForm}
+     * @throws SchedulerException exception
      */
     void deleteJob(JobForm form) throws SchedulerException;
 
     /**
-     * 暂停定时任务
+     * Pause scheduled tasks
      *
-     * @param form 表单参数 {@link JobForm}
-     * @throws SchedulerException 异常
+     * @param form form parameter {@link JobForm}
+     * @throws SchedulerException exception
      */
     void pauseJob(JobForm form) throws SchedulerException;
 
     /**
-     * 恢复定时任务
+     * Resume scheduled tasks
      *
-     * @param form 表单参数 {@link JobForm}
-     * @throws SchedulerException 异常
+     * @param form form parameter {@link JobForm}
+     * @throws SchedulerException exception
      */
     void resumeJob(JobForm form) throws SchedulerException;
 
     /**
-     * 重新配置定时任务
+     * Reconfigure scheduled tasks
      *
-     * @param form 表单参数 {@link JobForm}
-     * @throws Exception 异常
+     * @param form form parameter {@link JobForm}
+     * @throws Exception exception
      */
     void cronJob(JobForm form) throws Exception;
 
     /**
-     * 查询定时任务列表
+     * Query the list of scheduled tasks
      *
-     * @param currentPage 当前页
-     * @param pageSize    每页条数
-     * @return 定时任务列表
+     * @param currentPage current page
+     * @param pageSize per page
+     * @return Scheduled task list
      */
     PageInfo<JobAndTrigger> list(Integer currentPage, Integer pageSize);
 }

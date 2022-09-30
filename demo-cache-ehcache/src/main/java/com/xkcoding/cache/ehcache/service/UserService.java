@@ -12,25 +12,25 @@ import com.xkcoding.cache.ehcache.entity.User;
  */
 public interface UserService {
     /**
-     * 保存或修改用户
+     * Save or modify users
      *
-     * @param user 用户对象
-     * @return 操作结果
+     * @param user user object
+     * @return Operation result
      */
     User saveOrUpdate(User user);
 
     /**
-     * 获取用户
+     * Get users
      *
-     * @param id key值
-     * @return 返回结果
+     * @param id key value
+     * @return Returns results
      */
     User get(Long id);
 
     /**
-     * 删除
+     * Delete
      *
-     * @param id key值
+     * @param id key value
      */
     void delete(Long id);
 }

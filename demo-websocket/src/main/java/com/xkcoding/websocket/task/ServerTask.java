@@ -17,7 +17,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 服务器定时推送任务
+ * Server timing push task
  * </p>
  *
  * @author yangkai.shen
@@ -30,12 +30,12 @@ public class ServerTask {
     private SimpMessagingTemplate wsTemplate;
 
     /**
-     * 按照标准时间来算，每隔 2s 执行一次
+     * Performed every 2s in standard time
      */
     @Scheduled(cron = "0/2 * * * * ?")
     public void websocket() throws Exception {
         log.info("【推送消息】开始执行：{}", DateUtil.formatDateTime(new Date()));
-        // 查询服务器状态
+        Query the server status
         Server server = new Server();
         server.copyTo();
         ServerVO serverVO = ServerUtil.wrapServerVO(server);

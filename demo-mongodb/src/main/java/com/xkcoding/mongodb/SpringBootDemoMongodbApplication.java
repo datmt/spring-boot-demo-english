@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen

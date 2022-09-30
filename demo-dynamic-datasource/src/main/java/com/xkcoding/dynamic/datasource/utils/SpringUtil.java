@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * Spring 工具类
+ * Spring tool class
  * </p>
  *
  * @author yangkai.shen
@@ -24,14 +24,14 @@ public class SpringUtil implements ApplicationContextAware, DisposableBean {
     private static ApplicationContext applicationContext = null;
 
     /**
-     * 取得存储在静态变量中的ApplicationContext.
+     * Get the ApplicationContext stored in a static variable.
      */
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
     }
 
     /**
-     * 实现ApplicationContextAware接口, 注入Context到静态变量中.
+     * Implement the ApplicationContextAware interface, inject Context into static variables.
      */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
@@ -39,7 +39,7 @@ public class SpringUtil implements ApplicationContextAware, DisposableBean {
     }
 
     /**
-     * 从静态变量applicationContext中取得Bean, 自动转型为所赋值对象的类型.
+     * Get a bean from the static variable applicationContext, and automatically transition to the type of the assigned object.
      */
     @SuppressWarnings("unchecked")
     public static <T> T getBean(String name) {
@@ -47,14 +47,14 @@ public class SpringUtil implements ApplicationContextAware, DisposableBean {
     }
 
     /**
-     * 从静态变量applicationContext中取得Bean, 自动转型为所赋值对象的类型.
+     * Get a bean from the static variable applicationContext, and automatically transition to the type of the assigned object.
      */
     public static <T> T getBean(Class<T> requiredType) {
         return applicationContext.getBean(requiredType);
     }
 
     /**
-     * 清除SpringContextHolder中的ApplicationContext为Null.
+     * Clear SpringContextHolder from ApplicationContext to null.
      */
     public static void clearHolder() {
         if (log.isDebugEnabled()) {
@@ -64,9 +64,9 @@ public class SpringUtil implements ApplicationContextAware, DisposableBean {
     }
 
     /**
-     * 发布事件
+     * Post events
      *
-     * @param event 事件
+     * @param event event
      */
     public static void publishEvent(ApplicationEvent event) {
         if (applicationContext == null) {
@@ -76,7 +76,7 @@ public class SpringUtil implements ApplicationContextAware, DisposableBean {
     }
 
     /**
-     * 实现DisposableBean接口, 在Context关闭时清理静态变量.
+     * Implement the DisposableBean interface to clean up static variables when the Context is closed.
      */
     @Override
     public void destroy() {

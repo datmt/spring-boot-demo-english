@@ -14,44 +14,44 @@ import java.util.List;
  */
 public interface SysUserService extends UserDetailsService {
     /**
-     * 查询所有用户
+     * Query all users
      *
-     * @return 用户
+     * @return Users
      */
     List<SysUser> findAll();
 
     /**
-     * 通过 id 查询用户
+     * Query users by id
      *
      * @param id id
-     * @return 用户
+     * @return Users
      */
     SysUser findById(Long id);
 
     /**
-     * 创建用户
+     * Create a user
      *
-     * @param sysUser 用户
+     * @param sysUser users
      */
     void createUser(SysUser sysUser);
 
     /**
-     * 更新用户
+     * Update users
      *
-     * @param sysUser 用户
+     * @param sysUser users
      */
     void updateUser(SysUser sysUser);
 
     /**
-     * 更新用户 密码
+     * Update user password
      *
-     * @param id       用户 id
-     * @param password 用户密码
+     * @param id user ID
+     * @param password user password
      */
     void updatePassword(Long id, String password);
 
     /**
-     * 删除用户.
+     * Delete users.
      *
      * @param id id
      */

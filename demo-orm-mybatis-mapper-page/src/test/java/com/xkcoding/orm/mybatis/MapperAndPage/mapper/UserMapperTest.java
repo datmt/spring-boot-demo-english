@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * UserMapper 测试
+ * UserMapper test
  * </p>
  *
  * @author yangkai.shen
@@ -33,7 +33,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     private UserMapper userMapper;
 
     /**
-     * 测试通用Mapper - 保存
+     * Test Universal Mapper - Save
      */
     @Test
     public void testInsert() {
@@ -45,7 +45,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试通用Mapper - 批量保存
+     * Test Universal Mapper - Batch Save
      */
     @Test
     public void testInsertList() {
@@ -62,7 +62,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试通用Mapper - 删除
+     * Test Universal Mapper - Delete
      */
     @Test
     public void testDelete() {
@@ -74,7 +74,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试通用Mapper - 更新
+     * Test Universal Mapper - Update
      */
     @Test
     public void testUpdate() {
@@ -90,7 +90,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试通用Mapper - 查询单个
+     * Test generic Mapper - query single
      */
     @Test
     public void testQueryOne() {
@@ -100,7 +100,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试通用Mapper - 查询全部
+     * Test Universal Mapper - Query All
      */
     @Test
     public void testQueryAll() {
@@ -110,7 +110,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试分页助手 - 分页排序查询
+     * Test Pagination Assistant - Pagination Sort Query
      */
     @Test
     public void testQueryByPageAndSort() {
@@ -128,20 +128,20 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 测试通用Mapper - 条件查询
+     * Test generic Mapper - conditional query
      */
     @Test
     public void testQueryByCondition() {
         initData();
         Example example = new Example(User.class);
-        // 过滤
+        filtration
         example.createCriteria().andLike("name", "%Save1%").orEqualTo("phoneNumber", "17300000001");
-        // 排序
+        sort
         example.setOrderByClause("id desc");
         int count = userMapper.selectCountByExample(example);
-        // 分页
+        pagination
         PageHelper.startPage(1, 3);
-        // 查询
+        Inquire
         List<User> userList = userMapper.selectByExample(example);
         PageInfo<User> userPageInfo = new PageInfo<>(userList);
         Assert.assertEquals(3, userPageInfo.getSize());
@@ -150,7 +150,7 @@ public class UserMapperTest extends SpringBootDemoOrmMybatisMapperPageApplicatio
     }
 
     /**
-     * 初始化数据
+     * Initialize data
      */
     private void initData() {
         testInsertList();

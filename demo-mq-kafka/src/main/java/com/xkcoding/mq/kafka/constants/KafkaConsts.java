@@ -2,7 +2,7 @@ package com.xkcoding.mq.kafka.constants;
 
 /**
  * <p>
- * kafka 常量池
+ * Kafka constant pool
  * </p>
  *
  * @author yangkai.shen
@@ -10,12 +10,12 @@ package com.xkcoding.mq.kafka.constants;
  */
 public interface KafkaConsts {
     /**
-     * 默认分区大小
+     * Default partition size
      */
     Integer DEFAULT_PARTITION_NUM = 3;
 
     /**
-     * Topic 名称
+     * Topic name
      */
     String TOPIC_TEST = "test";
 }

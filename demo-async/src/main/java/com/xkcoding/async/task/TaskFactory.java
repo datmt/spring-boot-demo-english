@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- * 任务工厂
+ * Mission Factory
  * </p>
  *
  * @author yangkai.shen
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class TaskFactory {
 
     /**
-     * 模拟5秒的异步任务
+     * Simulate an asynchronous mission for 5 seconds
      */
     @Async
     public Future<Boolean> asyncTask1() throws InterruptedException {
@@ -30,7 +30,7 @@ public class TaskFactory {
     }
 
     /**
-     * 模拟2秒的异步任务
+     * Simulate an asynchronous task for 2 seconds
      */
     @Async
     public Future<Boolean> asyncTask2() throws InterruptedException {
@@ -39,7 +39,7 @@ public class TaskFactory {
     }
 
     /**
-     * 模拟3秒的异步任务
+     * Simulate an asynchronous task for 3 seconds
      */
     @Async
     public Future<Boolean> asyncTask3() throws InterruptedException {
@@ -48,21 +48,21 @@ public class TaskFactory {
     }
 
     /**
-     * 模拟5秒的同步任务
+     * Simulate 5 seconds of synchronous tasks
      */
     public void task1() throws InterruptedException {
         doTask("task1", 5);
     }
 
     /**
-     * 模拟2秒的同步任务
+     * Simulate a 2-second sync task
      */
     public void task2() throws InterruptedException {
         doTask("task2", 2);
     }
 
     /**
-     * 模拟3秒的同步任务
+     * Simulate 3 seconds of synchronous tasks
      */
     public void task3() throws InterruptedException {
         doTask("task3", 3);

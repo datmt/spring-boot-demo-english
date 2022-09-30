@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  * <p>
- * JVM相关信息实体
+ * JVM-related entities
  * </p>
  *
  * @author yangkai.shen
@@ -16,37 +16,37 @@ import java.util.Date;
  */
 public class Jvm {
     /**
-     * 当前JVM占用的内存总数(M)
+     * Total memory currently occupied by the JVM (M)
      */
     private double total;
 
     /**
-     * JVM最大可用内存总数(M)
+     * Maximum total available memory in the JVM (M)
      */
     private double max;
 
     /**
-     * JVM空闲内存(M)
+     * JVM free memory (M)
      */
     private double free;
 
     /**
-     * JDK版本
+     * JDK version
      */
     private String version;
 
     /**
-     * JDK路径
+     * JDK path
      */
     private String home;
 
     /**
-     * JDK启动时间
+     * JDK startup time
      */
     private String startTime;
 
     /**
-     * JDK运行时间
+     * JDK running time
      */
     private String runTime;
 
@@ -83,7 +83,7 @@ public class Jvm {
     }
 
     /**
-     * 获取JDK名称
+     * Get the JDK name
      */
     public String getName() {
         return ManagementFactory.getRuntimeMXBean().getVmName();

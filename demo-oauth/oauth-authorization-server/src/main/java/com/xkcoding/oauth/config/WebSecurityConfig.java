@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * 安全配置.
+ * Security configuration.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 13:27
@@ -28,10 +28,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 授权管理.
+     * Authorization management.
      *
-     * @return 认证管理对象
-     * @throws Exception 认证异常信息
+     * @return Authentication management objects
+     * @throws Exception authentication exception information
      */
     @Override
     @Bean

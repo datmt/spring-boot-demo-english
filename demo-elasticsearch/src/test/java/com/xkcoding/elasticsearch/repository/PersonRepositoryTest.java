@@ -26,7 +26,7 @@ import java.util.List;
 
 /**
  * <p>
- * 测试 Repository 操作ES
+ * Test the Repository operation ES
  * </p>
  *
  * @author yangkai.shen
@@ -38,7 +38,7 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
     private PersonRepository repo;
 
     /**
-     * 测试新增
+     * New to testing
      */
     @Test
     public void save() {
@@ -48,7 +48,7 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
     }
 
     /**
-     * 测试批量新增
+     * Test batch added
      */
     @Test
     public void saveList() {
@@ -61,7 +61,7 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
     }
 
     /**
-     * 测试更新
+     * Test updates
      */
     @Test
     public void update() {
@@ -73,22 +73,22 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void delete() {
-        // 主键删除
+        Primary key deletion
         repo.deleteById(1L);
 
-        // 对象删除
+        The object is deleted
         repo.findById(2L).ifPresent(person -> repo.delete(person));
 
-        // 批量删除
+        Bulk delete
         repo.deleteAll(repo.findAll());
     }
 
     /**
-     * 测试普通查询，按生日倒序
+     * Test normal queries in reverse order of birthdays
      */
     @Test
     public void select() {
@@ -96,7 +96,7 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
     }
 
     /**
-     * 自定义查询，根据年龄范围查询
+     * Custom queries, based on age range
      */
     @Test
     public void customSelectRangeOfAge() {
@@ -104,11 +104,11 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
     }
 
     /**
-     * 高级查询
+     * Advanced queries
      */
     @Test
     public void advanceSelect() {
-        // QueryBuilders 提供了很多静态方法，可以实现大部分查询条件的封装
+        QueryBuilders provides a number of static methods to encapsulate most query conditions
         MatchQueryBuilder queryBuilder = QueryBuilders.matchQuery("name", "孙权");
         log.info("【queryBuilder】= {}", queryBuilder.toString());
 
@@ -116,17 +116,17 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
     }
 
     /**
-     * 自定义高级查询
+     * Customize advanced queries
      */
     @Test
     public void customAdvanceSelect() {
-        // 构造查询条件
+        Construct query criteria
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
-        // 添加基本的分词条件
+        Add basic word breaker conditions
         queryBuilder.withQuery(QueryBuilders.matchQuery("remark", "东汉"));
-        // 排序条件
+        Sort criteria
         queryBuilder.withSort(SortBuilders.fieldSort("age").order(SortOrder.DESC));
-        // 分页条件
+        Paging conditions
         queryBuilder.withPageable(PageRequest.of(0, 2));
         Page<Person> people = repo.search(queryBuilder.build());
         log.info("【people】总条数 = {}", people.getTotalElements());
@@ -135,16 +135,16 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
     }
 
     /**
-     * 测试聚合，测试平均年龄
+     * Test aggregation, test average age
      */
     @Test
     public void agg() {
-        // 构造查询条件
+        Construct query criteria
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
-        // 不查询任何结果
+        No results are queried
         queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{""}, null));
 
-        // 平均年龄
+        Average age
         queryBuilder.addAggregation(AggregationBuilders.avg("avg").field("age"));
 
         log.info("【queryBuilder】= {}", JSONUtil.toJsonStr(queryBuilder.build()));
@@ -155,34 +155,34 @@ public class PersonRepositoryTest extends SpringBootDemoElasticsearchApplication
     }
 
     /**
-     * 测试高级聚合查询，每个国家的人有几个，每个国家的平均年龄是多少
+     * Test advanced aggregate queries, there are several people in each country, and what is the average age of each country
      */
     @Test
     public void advanceAgg() {
-        // 构造查询条件
+        Construct query criteria
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
-        // 不查询任何结果
+        No results are queried
         queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{""}, null));
 
-        // 1. 添加一个新的聚合，聚合类型为terms，聚合名称为country，聚合字段为age
+         1. Add a new aggregation with the aggregation type as terms, the aggregation name as country, and the aggregation field as age
         queryBuilder.addAggregation(AggregationBuilders.terms("country").field("country")
-            // 2. 在国家聚合桶内进行嵌套聚合，求平均年龄
+             2. Nested aggregations are performed within the national aggregation bucket to find the average age
             .subAggregation(AggregationBuilders.avg("avg").field("age")));
 
         log.info("【queryBuilder】= {}", JSONUtil.toJsonStr(queryBuilder.build()));
 
-        // 3. 查询
+         3. Inquire
         AggregatedPage<Person> people = (AggregatedPage<Person>) repo.search(queryBuilder.build());
 
-        // 4. 解析
-        // 4.1. 从结果中取出名为 country 的那个聚合，因为是利用String类型字段来进行的term聚合，所以结果要强转为StringTerm类型
+         4. parse
+         4.1. Take the aggregation named country from the result, because it is a term aggregation using a String type field, so the result is strongly converted to the StringTerm type
         StringTerms country = (StringTerms) people.getAggregation("country");
-        // 4.2. 获取桶
+         4.2. Gets the bucket
         List<StringTerms.Bucket> buckets = country.getBuckets();
         for (StringTerms.Bucket bucket : buckets) {
-            // 4.3. 获取桶中的key，即国家名称  4.4. 获取桶中的文档数量
+             4.3. Get the key in the bucket, which is the country name 4.4. Gets the number of documents in the bucket
             log.info("{} 总共有 {} 人", bucket.getKeyAsString(), bucket.getDocCount());
-            // 4.5. 获取子聚合结果：
+             4.5. To get the sub-aggregate result:
             InternalAvg avg = (InternalAvg) bucket.getAggregations().asMap().get("avg");
             log.info("平均年龄：{}", avg);
         }

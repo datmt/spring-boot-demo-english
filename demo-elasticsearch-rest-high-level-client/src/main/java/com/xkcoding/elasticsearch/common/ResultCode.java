@@ -15,12 +15,12 @@ import lombok.Getter;
 public enum ResultCode {
 
     /**
-     * 接口调用成功
+     * The interface call was successful
      */
     SUCCESS(0, "Request Successful"),
 
     /**
-     * 服务器暂不可用，建议稍候重试。建议重试次数不超过3次。
+     * The server is temporarily unavailable, we recommend that you try again later. It is recommended to retry no more than 3 times.
      */
     FAILURE(-1, "System Busy");
 

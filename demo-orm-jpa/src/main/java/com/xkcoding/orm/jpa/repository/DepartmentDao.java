@@ -18,10 +18,10 @@ import java.util.List;
 @Repository
 public interface DepartmentDao extends JpaRepository<Department, Long> {
     /**
-     * 根据层级查询部门
+     * Query departments based on hierarchy
      *
-     * @param level 层级
-     * @return 部门列表
+     * @param level level
+     * @return List of departments
      */
     List<Department> findDepartmentsByLevels(Integer level);
 }

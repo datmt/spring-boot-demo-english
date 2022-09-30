@@ -5,7 +5,7 @@ import com.xkcoding.multi.datasource.mybatis.model.User;
 
 /**
  * <p>
- * 数据访问层
+ * Data access layer
  * </p>
  *
  * @author yangkai.shen

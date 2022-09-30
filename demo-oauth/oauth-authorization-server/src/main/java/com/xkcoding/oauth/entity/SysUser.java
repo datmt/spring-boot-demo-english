@@ -10,11 +10,11 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * 用户实体.
- * 避免实体类耦合，所以不去实现 {@link UserDetails} 接口
- * 因为有且只有登录加载用户的时候才会需要这个接口
- * 我们就手动构建一个 {@link User} 的默认实现就可以了
- * 实现接口的方式可以参考 {@link SysClientDetails}
+ * User entity.
+ * Avoid entity class coupling, so do not implement the {@link UserDetails} interface
+ * Because there is and only needs this interface when logging in to load users
+ * Let's manually build a default implementation of {@link User}
+ * For a way to implement the interface, see {@link SysClientDetails}
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 12:41
@@ -27,24 +27,24 @@ import java.util.Set;
 public class SysUser {
 
     /**
-     * 主键.
+     * Primary key.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * 用户名.
+     * Username.
      */
     private String username;
 
     /**
-     * 密码.
+     * Password.
      */
     private String password;
 
     /**
-     * 当前用户所有角色.
+     * All roles of the current user.
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

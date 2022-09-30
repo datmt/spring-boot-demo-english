@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * <p>
- * Spring Security工具类
+ * Spring Security Tools class
  * </p>
  *
  * @author yangkai.shen
@@ -16,9 +16,9 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class SecurityUtil {
     /**
-     * 获取当前登录用户用户名
+     * Get the username of the currently logged-in user
      *
-     * @return 当前登录用户用户名
+     * @return The user name of the currently logged-on user
      */
     public static String getCurrentUsername() {
         UserPrincipal currentUser = getCurrentUser();
@@ -26,9 +26,9 @@ public class SecurityUtil {
     }
 
     /**
-     * 获取当前登录用户信息
+     * Get the current logged-in user information
      *
-     * @return 当前登录用户信息，匿名登录时，为null
+     * @return The current logged-on user information, when logging in anonymously, is null
      */
     public static UserPrincipal getCurrentUser() {
         Object userInfo = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

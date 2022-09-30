@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * 数据服务层 实现
+ * Data Services Layer implementation
  * </p>
  *
  * @author yangkai.shen
@@ -20,9 +20,9 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     /**
-     * 类上 {@code @DS("slave")} 代表默认从库，在方法上写 {@code @DS("master")} 代表默认主库
+     * On the class {@code @DS("slave")} represents the default slave library, and on the method, write {@code @DS("master")} represents the default master library
      *
-     * @param user 用户
+     * @param user user
      */
     @DS("master")
     @Override

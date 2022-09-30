@@ -5,7 +5,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 /**
  * <p>
- * 课程节点Repository
+ * Course node Repository
  * </p>
  *
  * @author yangkai.shen

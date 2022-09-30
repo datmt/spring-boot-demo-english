@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * <p>
- * 状态码封装
+ * Status code encapsulation
  * </p>
  *
  * @author yangkai.shen
@@ -13,20 +13,20 @@ import lombok.Getter;
 @Getter
 public enum Status {
     /**
-     * 操作成功
+     * Operation successful
      */
     OK(200, "操作成功"),
 
     /**
-     * 未知异常
+     * Unknown exception
      */
     UNKNOWN_ERROR(500, "服务器出错啦");
     /**
-     * 状态码
+     * Status code
      */
     private Integer code;
     /**
-     * 内容
+     * Content
      */
     private String message;
 

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 /**
  * <p>
- * 班级节点Repository
+ * Class node Repository
  * </p>
  *
  * @author yangkai.shen
@@ -15,10 +15,10 @@ import java.util.Optional;
  */
 public interface ClassRepository extends Neo4jRepository<Class, String> {
     /**
-     * 根据班级名称查询班级信息
+     * Check class information based on class name
      *
-     * @param name 班级名称
-     * @return 班级信息
+     * @param name class name
+     * @return Class information
      */
     Optional<Class> findByName(String name);
 }

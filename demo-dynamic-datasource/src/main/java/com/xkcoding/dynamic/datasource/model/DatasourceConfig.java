@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 数据源配置表
+ * Data source configuration table
  * </p>
  *
  * @author yangkai.shen
@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Table(name = "datasource_config")
 public class DatasourceConfig implements Serializable {
     /**
-     * 主键
+     * Primary key
      */
     @Id
     @Column(name = "`id`")
@@ -28,37 +28,37 @@ public class DatasourceConfig implements Serializable {
     private Long id;
 
     /**
-     * 数据库地址
+     * Database address
      */
     @Column(name = "`host`")
     private String host;
 
     /**
-     * 数据库端口
+     * Database port
      */
     @Column(name = "`port`")
     private Integer port;
 
     /**
-     * 数据库用户名
+     * Database user name
      */
     @Column(name = "`username`")
     private String username;
 
     /**
-     * 数据库密码
+     * Database password
      */
     @Column(name = "`password`")
     private String password;
 
     /**
-     * 数据库名称
+     * Database name
      */
     @Column(name = "`database`")
     private String database;
 
     /**
-     * 构造JDBC URL
+     * Construct the JDBC URL
      *
      * @return JDBC URL
      */

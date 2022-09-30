@@ -1,24 +1,24 @@
 # spring-boot-demo-dubbo
 
-> 此 demo 主要演示了 Spring Boot 如何集成 Dubbo，demo 分了3个module，分别为公共模块 `spring-boot-demo-dubbo-common`、服务提供方`spring-boot-demo-dubbo-provider`、服务调用方`spring-boot-demo-dubbo-consumer`
+> This demo mainly demonstrates how Spring Boot integrates with Dubbo, demo is divided into 3 modules, namely the common module 'spring-boot-demo-dubbo-common', the service provider 'spring-boot-demo-dubbo-provider', the service caller 'spring-boot-demo-dubbo-consumer'
 
-## 注意
+## Note
 
-本例注册中心使用的是 zookeeper，作者编写本demo时，采用docker方式运行 zookeeper
+The registry in this example uses zookeeper, and the author runs zookeeper in docker mode when writing this demo
 
-1. 下载镜像：`docker pull wurstmeister/zookeeper`
+1. Download the image: 'docker pull wurstmeister/zookeeper'
 
-2. 运行容器：`docker run -d -p 2181:2181 -p 2888:2888 -p 2222:22 -p 3888:3888 --name zk wurstmeister/zookeeper`
+2. Run the container: 'docker run -d -p 2181:2181 -p 2888:2888 -p 2222:22 -p 3888:3888 --name zk wurstmeister/zookeeper'
 
-3. 停止容器：`docker stop zk`
+3. Stop container: 'docker stop zk'
 
-4. 启动容器：`docker start zk`
+4. Start the container: 'docker start zk'
 
-## 运行步骤
+## Run the steps
 
-1. 进入服务提供方 `spring-boot-demo-dubbo-provider` 目录，运行 `SpringBootDemoDubboProviderApplication.java`
-2. 进入服务调用方 `spring-boot-demo-dubbo-consumer` 目录，运行 `SpringBootDemoDubboConsumerApplication.java`
-3. 打开浏览器输入 http://localhost:8080/demo/sayHello ，观察浏览器输出，以及服务提供方和服务调用方的控制台输出日志情况
+1. Go to the service provider's 'spring-boot-demo-dubbo-provider' directory and run 'SpringBootDemoDubboProviderApplication.java'
+2. Go to the service caller 'spring-boot-demo-dubbo-consumer' directory and run 'SpringBootDemoDubboConsumerApplication.java'
+3. Open the browser input http://localhost:8080/demo/sayHello and observe the browser output and the console output logs of the service provider and the service caller
 
 ## pom.xml
 
@@ -66,8 +66,8 @@
 </project>
 ```
 
-## 参考
+## Reference
 
-1. dubbo 官网：http://dubbo.apache.org/zh-cn/
-2. [超详细，新手都能看懂 ！使用SpringBoot+Dubbo 搭建一个简单的分布式服务](https://segmentfault.com/a/1190000017178722#articleHeader20)
+1. dubbo official website:http://dubbo.apache.org/zh-cn/
+2. [Super detailed, novice can understand!] Build a simple distributed service with SpringBoot+Dubbo] (https://segmentfault.com/a/1190000017178722#articleHeader20)
 

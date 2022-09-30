@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * <p>
- * RabbitMQ配置，主要是配置队列，如果提前存在该队列，可以省略本配置类
+ * RabbitMQ configuration, mainly configuration queue, if the queue exists in advance, you can omit this configuration class
  * </p>
  *
  * @author yangkai.shen
@@ -35,7 +35,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 直接模式队列1
+     * Direct mode queue 1
      */
     @Bean
     public Queue directOneQueue() {
@@ -43,7 +43,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 队列2
+     * Queue 2
      */
     @Bean
     public Queue queueTwo() {
@@ -51,7 +51,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 队列3
+     * Queue 3
      */
     @Bean
     public Queue queueThree() {
@@ -59,7 +59,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 分列模式队列
+     * Column mode queue
      */
     @Bean
     public FanoutExchange fanoutExchange() {
@@ -67,10 +67,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 分列模式绑定队列1
+     * Column mode bind queue 1
      *
-     * @param directOneQueue 绑定队列1
-     * @param fanoutExchange 分列模式交换器
+     * @param directOneQueue bound queue 1
+     * @param fanoutExchange Split Mode Switch
      */
     @Bean
     public Binding fanoutBinding1(Queue directOneQueue, FanoutExchange fanoutExchange) {
@@ -78,10 +78,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 分列模式绑定队列2
+     * Column mode bind queue 2
      *
-     * @param queueTwo       绑定队列2
-     * @param fanoutExchange 分列模式交换器
+     * @param queueTwo bound queue 2
+     * @param fanoutExchange Split Mode Switch
      */
     @Bean
     public Binding fanoutBinding2(Queue queueTwo, FanoutExchange fanoutExchange) {
@@ -89,10 +89,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 主题模式队列
-     * <li>路由格式必须以 . 分隔，比如 user.email 或者 user.aaa.email</li>
-     * <li>通配符 * ，代表一个占位符，或者说一个单词，比如路由为 user.*，那么 user.email 可以匹配，但是 user.aaa.email 就匹配不了</li>
-     * <li>通配符 # ，代表一个或多个占位符，或者说一个或多个单词，比如路由为 user.#，那么 user.email 可以匹配，user.aaa.email 也可以匹配</li>
+     * Topic mode queues
+     * <li>The routing format must be separated by . , such as user.email or user.aaa.email</li>
+     * <li>wildcard character * , represents a placeholder, or a word, such as the route is user.*, then the user.email can match, but user.aaa.email can not match</li>
+     * <li>The wildcard character # represents one or more placeholders, or one or more words, such as a route as user.#, then user.email can match, user.aaa.email can also match</li>
      */
     @Bean
     public TopicExchange topicExchange() {
@@ -101,10 +101,10 @@ public class RabbitMqConfig {
 
 
     /**
-     * 主题模式绑定分列模式
+     * Theme mode binding column mode
      *
-     * @param fanoutExchange 分列模式交换器
-     * @param topicExchange  主题模式交换器
+     * @param fanoutExchange Split Mode Switch
+     * @param topicExchange topic mode switcher
      */
     @Bean
     public Binding topicBinding1(FanoutExchange fanoutExchange, TopicExchange topicExchange) {
@@ -112,10 +112,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 主题模式绑定队列2
+     * Topic mode binding queue 2
      *
-     * @param queueTwo      队列2
-     * @param topicExchange 主题模式交换器
+     * @param queueTwo queue 2
+     * @param topicExchange topic mode switcher
      */
     @Bean
     public Binding topicBinding2(Queue queueTwo, TopicExchange topicExchange) {
@@ -123,10 +123,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 主题模式绑定队列3
+     * Topic mode binding queue 3
      *
-     * @param queueThree    队列3
-     * @param topicExchange 主题模式交换器
+     * @param queue three queue 3
+     * @param topicExchange topic mode switcher
      */
     @Bean
     public Binding topicBinding3(Queue queueThree, TopicExchange topicExchange) {
@@ -134,7 +134,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 延迟队列
+     * Delay queue
      */
     @Bean
     public Queue delayQueue() {
@@ -142,7 +142,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 延迟队列交换器, x-delayed-type 和 x-delayed-message 固定
+     * Delay queue switchers, x-delayed-type and x-delayed-message fixed
      */
     @Bean
     public CustomExchange delayExchange() {
@@ -152,10 +152,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 延迟队列绑定自定义交换器
+     * Delay queue binding custom switch
      *
-     * @param delayQueue    队列
-     * @param delayExchange 延迟交换器
+     * @param delayQueue queue
+     * @param delayExchange delay switcher
      */
     @Bean
     public Binding delayBinding(Queue delayQueue, CustomExchange delayExchange) {

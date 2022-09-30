@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 广播消息载荷
+ * Broadcast message load
  * </p>
  *
  * @author yangkai.shen
@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class BroadcastMessageRequest {
     /**
-     * 消息内容
+     * Message content
      */
     private String message;
 }

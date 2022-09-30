@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 /**
- * 用户信息仓库.
+ * User information repository.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 13:08
@@ -14,10 +14,10 @@ import java.util.Optional;
 public interface SysUserRepository extends JpaRepository<SysUser, Long> {
 
     /**
-     * 通过用户名查找用户.
+     * Find users by username.
      *
-     * @param username 用户名
-     * @return 结果
+     * @param username username
+     * @return Results
      */
     Optional<SysUser> findFirstByUsername(String username);
 

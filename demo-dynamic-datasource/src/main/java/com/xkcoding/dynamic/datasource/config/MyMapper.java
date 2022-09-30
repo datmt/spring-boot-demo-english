@@ -6,7 +6,7 @@ import tk.mybatis.mapper.common.MySqlMapper;
 
 /**
  * <p>
- * 通用 mapper 自定义 mapper 文件
+ * Generic mapper custom mapper file
  * </p>
  *
  * @author yangkai.shen

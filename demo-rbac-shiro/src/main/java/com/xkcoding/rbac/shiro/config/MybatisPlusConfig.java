@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * <p>
- * MP3 配置
+ * MP3 configuration
  * </p>
  *
  * @author yangkai.shen
@@ -26,7 +26,7 @@ public class MybatisPlusConfig {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
 
         List<ISqlParser> sqlParserList = new ArrayList<>();
-        // 攻击 SQL 阻断解析器、加入解析链
+        Attack SQL blocking parser, join the parsing chain
         sqlParserList.add(new BlockAttackSqlParser());
         paginationInterceptor.setSqlParserList(sqlParserList);
 
@@ -34,7 +34,7 @@ public class MybatisPlusConfig {
     }
 
     /**
-     * SQL执行效率插件
+     * SQL execution efficiency plugin
      */
     @Bean
     public PerformanceInterceptor performanceInterceptor() {

@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen
@@ -21,7 +21,7 @@ public class SpringBootDemoWarApplication extends SpringBootServletInitializer {
     }
 
     /**
-     * 若需要打成 war 包，则需要写一个类继承 {@link SpringBootServletInitializer} 并重写 {@link SpringBootServletInitializer#configure(SpringApplicationBuilder)}
+     * If you need to type into a war package, you need to write a class inheritance {@link SpringBootServletInitializer} and rewrite {@link SpringBootServletInitializer#configure(SpringApplicationBuilder)}
      */
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

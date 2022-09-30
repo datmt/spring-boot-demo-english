@@ -13,7 +13,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 用户实体类
+ * User entity class
  * </p>
  *
  * @author yangkai.shen
@@ -25,37 +25,37 @@ import java.util.Date;
 @AllArgsConstructor
 public class Person {
     /**
-     * 主键
+     * Primary key
      */
     @Id
     private Long id;
 
     /**
-     * 名字
+     * First name
      */
     @Field(type = FieldType.Keyword)
     private String name;
 
     /**
-     * 国家
+     * Country
      */
     @Field(type = FieldType.Keyword)
     private String country;
 
     /**
-     * 年龄
+     * Age
      */
     @Field(type = FieldType.Integer)
     private Integer age;
 
     /**
-     * 生日
+     * Birthday
      */
     @Field(type = FieldType.Date)
     private Date birthday;
 
     /**
-     * 介绍
+     * Introduction
      */
     @Field(type = FieldType.Text, analyzer = "ik_smart")
     private String remark;

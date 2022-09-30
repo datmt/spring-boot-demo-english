@@ -2,7 +2,7 @@ package com.xkcoding.rbac.shiro.common;
 
 /**
  * <p>
- * 统一状态码接口
+ * Unified status code interface
  * </p>
  *
  * @author yangkai.shen
@@ -10,16 +10,16 @@ package com.xkcoding.rbac.shiro.common;
  */
 public interface IResultCode {
     /**
-     * 获取状态码
+     * Get the status code
      *
-     * @return 状态码
+     * @return status code
      */
     Integer getCode();
 
     /**
-     * 获取返回消息
+     * Get the return message
      *
-     * @return 返回消息
+     * @return Returns a message
      */
     String getMessage();
 }

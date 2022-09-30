@@ -1,8 +1,8 @@
 # spring-boot-demo-websocket-socketio
 
-> 此 demo 主要演示了 Spring Boot 如何使用 `netty-socketio` 集成 WebSocket，实现一个简单的聊天室。
+> This demo mainly demonstrates how Spring Boot can use 'netty-socketio' to integrate WebSocket and implement a simple chat room.
 
-## 1. 代码
+## 1. code
 
 ### 1.1. pom.xml
 
@@ -83,12 +83,12 @@
 
 ### 1.2. ServerConfig.java
 
-> websocket服务器配置，包括服务器IP、端口信息、以及连接认证等配置
+> websocket server configuration, including server IP, port information, and connection authentication configuration
 
 ```java
 /**
  * <p>
- * websocket服务器配置
+ * Websocket server configuration
  * </p>
  *
  * @author yangkai.shen
@@ -104,13 +104,13 @@ public class ServerConfig {
         config.setHostname(wsConfig.getHost());
         config.setPort(wsConfig.getPort());
 
-        //这个listener可以用来进行身份验证
+        This listener can be used for authentication
         config.setAuthorizationListener(data -> {
-            // http://localhost:8081?token=xxxxxxx
-            // 例如果使用上面的链接进行connect，可以使用如下代码获取用户密码信息，本文不做身份验证
+             http://localhost:8081?token=xxxxxxx
+            For example, if you use the above link for connect, you can use the following code to obtain the user password information, this document does not do authentication
             String token = data.getSingleUrlParam("token");
-            // 校验token的合法性，实际业务需要校验token是否过期等等，参考 spring-boot-demo-rbac-security 里的 JwtUtil
-            // 如果认证不通过会返回一个 Socket.EVENT_CONNECT_ERROR 事件
+            To verify the legitimacy of the token, the actual business needs to verify whether the token has expired, etc., refer to JwtUtil in spring-boot-demo-rbac-security
+            If the authentication fails, a Socket.EVENT_CONNECT_ERROR event is returned
             return StrUtil.isNotBlank(token);
         });
 
@@ -118,7 +118,7 @@ public class ServerConfig {
     }
 
     /**
-     * Spring 扫描自定义注解
+     * Spring scans custom annotations
      */
     @Bean
     public SpringAnnotationScanner springAnnotationScanner(SocketIOServer server) {
@@ -129,12 +129,12 @@ public class ServerConfig {
 
 ### 1.3. MessageEventHandler.java
 
-> 核心事件处理类，主要处理客户端发起的消息事件，以及主动往客户端发起事件
+> core event processing class that primarily handles client-initiated message events and proactively initiates events to clients
 
 ```java
 /**
  * <p>
- * 消息事件处理
+ * Message event handling
  * </p>
  *
  * @author yangkai.shen
@@ -150,56 +150,56 @@ public class MessageEventHandler {
     private DbTemplate dbTemplate;
 
     /**
-     * 添加connect事件，当客户端发起连接时调用
+     * Add the connect event, which is called when the client initiates a connection
      *
-     * @param client 客户端对象
+     * @param client object
      */
     @OnConnect
     public void onConnect(SocketIOClient client) {
         if (client != null) {
             String token = client.getHandshakeData().getSingleUrlParam("token");
-            // 模拟用户id 和token一致
+            The impersonated user id and token are consistent
             String userId = client.getHandshakeData().getSingleUrlParam("token");
             UUID sessionId = client.getSessionId();
 
             dbTemplate.save(userId, sessionId);
-            log.info("连接成功,【token】= {},【sessionId】= {}", token, sessionId);
+            log.info ("Connection successful, [token] = {}, [sessionId] = {}", token, sessionId);
         } else {
-            log.error("客户端为空");
+            log.error("Client is empty");
         }
     }
 
     /**
-     * 添加disconnect事件，客户端断开连接时调用，刷新客户端信息
+     * Add disconnect event, called when the client disconnects, refresh client information
      *
-     * @param client 客户端对象
+     * @param client object
      */
     @OnDisconnect
     public void onDisconnect(SocketIOClient client) {
         if (client != null) {
             String token = client.getHandshakeData().getSingleUrlParam("token");
-            // 模拟用户id 和token一致
+            The impersonated user id and token are consistent
             String userId = client.getHandshakeData().getSingleUrlParam("token");
             UUID sessionId = client.getSessionId();
 
             dbTemplate.deleteByUserId(userId);
-            log.info("客户端断开连接,【token】= {},【sessionId】= {}", token, sessionId);
+            log.info ("client disconnects, [token] = {}, [sessionId] = {}", token, sessionId);
             client.disconnect();
         } else {
-            log.error("客户端为空");
+            log.error("Client is empty");
         }
     }
 
     /**
-     * 加入群聊
+     * Join a group chat
      *
-     * @param client  客户端
-     * @param request 请求
-     * @param data    群聊
+     * @param client client
+     * @param request request
+     * @param data group chat
      */
     @OnEvent(value = Event.JOIN)
     public void onJoinEvent(SocketIOClient client, AckRequest request, JoinRequest data) {
-        log.info("用户：{} 已加入群聊：{}", data.getUserId(), data.getGroupId());
+        log.info ("User:{} Joined Group Chat:{}", data.getUserId(), data.getGroupId());
         client.joinRoom(data.getGroupId());
 
         server.getRoomOperations(data.getGroupId()).sendEvent(Event.JOIN, data);
@@ -210,11 +210,11 @@ public class MessageEventHandler {
     public void onChatEvent(SocketIOClient client, AckRequest request, SingleMessageRequest data) {
         Optional<UUID> toUser = dbTemplate.findByUserId(data.getToUid());
         if (toUser.isPresent()) {
-            log.info("用户 {} 刚刚私信了用户 {}：{}", data.getFromUid(), data.getToUid(), data.getMessage());
+            log.info ("User {} just sent a private message to user {}:{}", data.getFromUid(), data.getToUid(), data.getMessage());
             sendToSingle(toUser.get(), data);
-            client.sendEvent(Event.CHAT_RECEIVED, "发送成功");
+            client.sendEvent(Event.CHAT_RECEIVED, "Sent successfully");
         } else {
-            client.sendEvent(Event.CHAT_REFUSED, "发送失败，对方不想理你");
+            client.sendEvent(Event.CHAT_REFUSED, "The sending failed, the other party does not want to pay attention to you");
         }
     }
 
@@ -230,25 +230,25 @@ public class MessageEventHandler {
             }
         }
         if (inGroup) {
-            log.info("群号 {} 收到来自 {} 的群聊消息：{}", data.getGroupId(), data.getFromUid(), data.getMessage());
+            log.info("Group number {} received a group chat message from {}:{}", data.getGroupId(), data.getFromUid(), data.getMessage());
             sendToGroup(data);
         } else {
-            request.sendAckData("请先加群！");
+            request.sendAckData("Please add the group first!) );
         }
     }
 
     /**
-     * 单聊
+     * Single chat
      */
     public void sendToSingle(UUID sessionId, SingleMessageRequest message) {
         server.getClient(sessionId).sendEvent(Event.CHAT, message);
     }
 
     /**
-     * 广播
+     * Broadcast
      */
     public void sendToBroadcast(BroadcastMessageRequest message) {
-        log.info("系统紧急广播一条通知：{}", message.getMessage());
+        log.info ("System emergency broadcast a notification: {}", message.getMessage());
         for (UUID clientId : dbTemplate.findAll()) {
             if (server.getClient(clientId) == null) {
                 continue;
@@ -258,7 +258,7 @@ public class MessageEventHandler {
     }
 
     /**
-     * 群聊
+     * Group chat
      */
     public void sendToGroup(GroupMessageRequest message) {
         server.getRoomOperations(message.getGroupId()).sendEvent(Event.GROUP, message);
@@ -268,12 +268,12 @@ public class MessageEventHandler {
 
 ### 1.4. ServerRunner.java
 
->  websocket 服务器启动类
+> websocket server startup class
 
 ```java
 /**
  * <p>
- * websocket服务器启动
+ * Websocket server starts
  * </p>
  *
  * @author yangkai.shen
@@ -288,32 +288,32 @@ public class ServerRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         server.start();
-        log.info("websocket 服务器启动成功。。。");
+        log.info ("Websocket server started successfully...) );
     }
 }
 ```
 
-## 2. 运行方式
+## 2. Operates in
 
-1. 启动 `SpringBootDemoWebsocketSocketioApplication.java`
-2. 使用不同的浏览器，访问 http://localhost:8080/demo/index.html
+1. Start 'SpringBootDemoWebsocketSocketioApplication.java'
+2. Use a different browser to access http://localhost:8080/demo/index.html
 
-## 3. 运行效果
+## 3. Run the effect
 
-**浏览器1：**![image-20181219152318079](http://static.xkcoding.com/spring-boot-demo/websocket/socketio/064155.jpg)
+**Browser 1:**! [image-20181219152318079] (http://static.xkcoding.com/spring-boot-demo/websocket/socketio/064155.jpg)
 
-**浏览器2：**![image-20181219152330156](http://static.xkcoding.com/spring-boot-demo/websocket/socketio/064154.jpg)
+**Browser 2:**! [image-20181219152330156] (http://static.xkcoding.com/spring-boot-demo/websocket/socketio/064154.jpg)
 
-## 4. 参考
+## 4. reference
 
-### 4.1. 后端
+### 4.1. back end
 
-1. Netty-socketio 官方仓库：https://github.com/mrniko/netty-socketio
-2. SpringBoot系列 - 集成SocketIO实时通信：https://www.xncoding.com/2017/07/16/spring/sb-socketio.html
-3. Spring Boot 集成 socket.io 后端实现消息实时通信：http://alexpdh.com/2017/09/03/springboot-socketio/
-4. Spring Boot实战之netty-socketio实现简单聊天室：http://blog.csdn.net/sun_t89/article/details/52060946
+1. Netty-socketio official repository: https://github.com/mrniko/netty-socketio
+2. SpringBoot Series - Integrated SocketIO Real-Time Communication: https://www.xncoding.com/2017/07/16/spring/sb-socketio.html
+3. Spring Boot integrates with socket.io backend for real-time message communication:http://alexpdh.com/2017/09/03/springboot-socketio/
+4. Spring Boot's netty-socketio implements simple chat rooms: http://blog.csdn.net/sun_t89/article/details/52060946
 
-### 4.2. 前端
+### 4.2. Front
 
-1. socket.io 官网：https://socket.io/
-2. axios.js 用法：https://github.com/axios/axios#example
+1. socket.io Official Website:https://socket.io/
+2. axios.js Usage: https://github.com/axios/axios#example

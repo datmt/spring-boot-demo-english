@@ -1,6 +1,6 @@
 # spring-boot-demo-cache-redis
 
-> 此 demo 主要演示了 Spring Boot 如何整合 redis，操作redis中的数据，并使用redis缓存数据。连接池使用  Lettuce。
+> This demo mainly demonstrates how Spring Boot can integrate redis, manipulate data in redis, and use redis to cache data. Connection pooling uses Lettuce.
 
 ## pom.xml
 
@@ -40,13 +40,13 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!-- 对象池，使用redis时必须引入 -->
+        <!-- object pool, --> must be introduced when using redis
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
 
-        <!-- 引入 jackson 对象json转换 -->
+        <!-- Introduce the jackson object json transform -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-json</artifactId>
@@ -94,22 +94,22 @@
 spring:
   redis:
     host: localhost
-    # 连接超时时间（记得添加单位，Duration）
+    # Connection timeout (remember to add units, Duration)
     timeout: 10000ms
-    # Redis默认情况下有16个分片，这里配置具体使用的分片
+    # Redis has 16 shards by default, and here you configure the specific shards used
     # database: 0
     lettuce:
       pool:
-        # 连接池最大连接数（使用负值表示没有限制） 默认 8
+        # The maximum number of connections in the connection pool (using a negative value to indicate no limit) defaults to 8
         max-active: 8
-        # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+        # Connection pool maximum blocking wait time (using a negative value to indicate no limit) Default -1
         max-wait: -1ms
-        # 连接池中的最大空闲连接 默认 8
+        # Maximum idle connections in connection pool Default 8
         max-idle: 8
-        # 连接池中的最小空闲连接 默认 0
+        # Minimum idle connections in connection pool Default 0
         min-idle: 0
   cache:
-    # 一般来说是不用配置的，Spring Cache 会根据依赖的包自行装配
+    # Generally speaking, it is not configured, and Spring Cache will assemble itself according to the dependent packages
     type: redis
 logging:
   level:
@@ -121,7 +121,7 @@ logging:
 ```java
 /**
  * <p>
- * redis配置
+ * Redis configuration
  * </p>
  *
  * @author yangkai.shen
@@ -133,7 +133,7 @@ logging:
 public class RedisConfig {
 
     /**
-     * 默认情况下的模板只能支持RedisTemplate<String, String>，也就是只能存入字符串，因此支持序列化
+     * By default, templates can only support RedisTemplate<String, String>, that is, only strings can be saved, so serialization is supported
      */
     @Bean
     public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -145,13 +145,13 @@ public class RedisConfig {
     }
 
     /**
-     * 配置使用注解的时候缓存配置，默认是序列化反序列化的形式，加上此配置则为 json 形式
+     * When configuring the cache configuration when using annotations, the default is serialized deserialized form, plus this configuration is in json form
      */
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory factory) {
-        // 配置序列化
+        Configure serialization
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
-        RedisCacheConfiguration redisCacheConfiguration = config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer())).serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+        RedisCacheConfiguration redisCacheConfiguration = config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer())). serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
         return RedisCacheManager.builder(factory).cacheDefaults(redisCacheConfiguration).build();
     }
@@ -173,12 +173,12 @@ public class RedisConfig {
 @Slf4j
 public class UserServiceImpl implements UserService {
     /**
-     * 模拟数据库
+     * Simulated database
      */
     private static final Map<Long, User> DATABASES = Maps.newConcurrentMap();
 
     /**
-     * 初始化数据
+     * Initialize data
      */
     static {
         DATABASES.put(1L, new User(1L, "user1"));
@@ -187,62 +187,62 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 保存或修改用户
+     * Save or modify users
      *
-     * @param user 用户对象
-     * @return 操作结果
+     * @param user user object
+     * @return Operation result
      */
     @CachePut(value = "user", key = "#user.id")
     @Override
     public User saveOrUpdate(User user) {
         DATABASES.put(user.getId(), user);
-        log.info("保存用户【user】= {}", user);
+        log.info ("Save user [user] = {}", user);
         return user;
     }
 
     /**
-     * 获取用户
+     * Get users
      *
-     * @param id key值
-     * @return 返回结果
+     * @param id key value
+     * @return Returns results
      */
     @Cacheable(value = "user", key = "#id")
     @Override
     public User get(Long id) {
-        // 我们假设从数据库读取
-        log.info("查询用户【id】= {}", id);
+        We assume that a read is made from a database
+        log.info ("query user [id] = {}", id);
         return DATABASES.get(id);
     }
 
     /**
-     * 删除
+     * Delete
      *
-     * @param id key值
+     * @param id key value
      */
     @CacheEvict(value = "user", key = "#id")
     @Override
     public void delete(Long id) {
         DATABASES.remove(id);
-        log.info("删除用户【id】= {}", id);
+        log.info ("Delete user [id] = {}", id);
     }
 }
 ```
 
 ## RedisTest.java
 
-> 主要测试使用 `RedisTemplate` 操作 `Redis` 中的数据：
+> mainly tests data in 'Redis' using 'RedisTemplate' operations:
 >
-> - opsForValue：对应 String（字符串）
-> - opsForZSet：对应 ZSet（有序集合）
-> - opsForHash：对应 Hash（哈希）
-> - opsForList：对应 List（列表）
-> - opsForSet：对应 Set（集合）
-> - opsForGeo：** 对应 GEO（地理位置）
+> - opsForValue: String
+> - opsForZSet: corresponds to ZSet (ordered set)
+> - opsForHash: Corresponding to Hash (hash)
+> - opsForList: Corresponds to List
+> - opsForSet: Set
+> - opsForGeo:** for GEO (geolocation)
 
 ```java
 /**
  * <p>
- * Redis测试
+ * Redis test
  * </p>
  *
  * @author yangkai.shen
@@ -258,11 +258,11 @@ public class RedisTest extends SpringBootDemoCacheRedisApplicationTests {
     private RedisTemplate<String, Serializable> redisCacheTemplate;
 
     /**
-     * 测试 Redis 操作
+     * Test Redis operations
      */
     @Test
     public void get() {
-        // 测试线程安全，程序结束查看redis中count的值是否为1000
+        To test thread safety, the program ends to see if the value of count in redis is 1000
         ExecutorService executorService = Executors.newFixedThreadPool(1000);
         IntStream.range(0, 1000).forEach(i -> executorService.execute(() -> stringRedisTemplate.opsForValue().increment("count", 1)));
 
@@ -270,10 +270,10 @@ public class RedisTest extends SpringBootDemoCacheRedisApplicationTests {
         String k1 = stringRedisTemplate.opsForValue().get("k1");
         log.debug("【k1】= {}", k1);
 
-        // 以下演示整合，具体Redis命令可以参考官方文档
+        The following demonstrates the integration, and the specific Redis command can refer to the official documentation
         String key = "xkcoding:user:1";
         redisCacheTemplate.opsForValue().set(key, new User(1L, "user1"));
-        // 对应 String（字符串）
+        Corresponding to String (string)
         User user = (User) redisCacheTemplate.opsForValue().get(key);
         log.debug("【user】= {}", user);
     }
@@ -283,12 +283,12 @@ public class RedisTest extends SpringBootDemoCacheRedisApplicationTests {
 
 ## UserServiceTest.java
 
-> 主要测试使用Redis缓存是否起效
+> primarily tests whether using Redis caching works
 
 ```java
 /**
  * <p>
- * Redis - 缓存测试
+ * Redis - Caching test
  * </p>
  *
  * @author yangkai.shen
@@ -300,48 +300,48 @@ public class UserServiceTest extends SpringBootDemoCacheRedisApplicationTests {
     private UserService userService;
 
     /**
-     * 获取两次，查看日志验证缓存
+     * Get twice, view the log verification cache
      */
     @Test
     public void getTwice() {
-        // 模拟查询id为1的用户
+        Simulates a user whose query has an id of 1
         User user1 = userService.get(1L);
         log.debug("【user1】= {}", user1);
 
-        // 再次查询
+        Query again
         User user2 = userService.get(1L);
         log.debug("【user2】= {}", user2);
-        // 查看日志，只打印一次日志，证明缓存生效
+        Review the log and print it only once to prove that the cache is in effect
     }
 
     /**
-     * 先存，再查询，查看日志验证缓存
+     * Save first, then query, view the log verification cache
      */
     @Test
     public void getAfterSave() {
-        userService.saveOrUpdate(new User(4L, "测试中文"));
+        userService.saveOrUpdate (new User(4L, "Test Chinese"));
 
         User user = userService.get(4L);
         log.debug("【user】= {}", user);
-        // 查看日志，只打印保存用户的日志，查询是未触发查询日志，因此缓存生效
+        View the log, only print the log of the saved user, the query is not triggered query log, so the cache takes effect
     }
 
     /**
-     * 测试删除，查看redis是否存在缓存数据
+     * Test deletion to see if redis has cached data
      */
     @Test
     public void deleteUser() {
-        // 查询一次，使redis中存在缓存数据
+        Query once so that cached data exists in redis
         userService.get(1L);
-        // 删除，查看redis是否存在缓存数据
+        Delete to see if redis has cached data
         userService.delete(1L);
     }
 
 }
 ```
 
-## 参考
+## Reference
 
-- spring-data-redis 官方文档：https://docs.spring.io/spring-data/redis/docs/2.0.1.RELEASE/reference/html/
-- redis 文档：https://redis.io/documentation
-- redis 中文文档：http://www.redis.cn/commands.html
+- Spring-data-redis Official Documentation: https://docs.spring.io/spring-data/redis/docs/2.0.1.RELEASE/reference/html/
+- Redis documentation: https://redis.io/documentation
+- Redis Chinese Documentation: http://www.redis.cn/commands.html

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p>
- * 订单表 Mapper
+ * Order sheet Mapper
  * </p>
  *
  * @author yangkai.shen

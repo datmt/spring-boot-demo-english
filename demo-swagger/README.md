@@ -1,8 +1,8 @@
 # spring-boot-demo-swagger
 
-> 此 demo 主要演示了 Spring Boot 如何集成原生 swagger ，自动生成 API 文档。
+> This demo demonstrates how Spring Boot integrates with native swagger to automatically generate API documentation.
 >
-> 启动项目，访问地址：http://localhost:8080/demo/swagger-ui.html#/
+> Start Project, Access Address: http://localhost:8080/demo/swagger-ui.html#/
 
 # pom.xml
 
@@ -81,7 +81,7 @@
 ```java
 /**
  * <p>
- * Swagger2 配置
+ * Swagger2 configuration
  * </p>
  *
  * @author yangkai.shen
@@ -102,7 +102,7 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("spring-boot-demo")
-                .description("这是一个简单的 Swagger API 演示")
+                .description ("This is a simple Swagger API demo")
                 .contact(new Contact("Yangkai.Shen", "http://xkcoding.com", "237497819@qq.com"))
                 .version("1.0.0-SNAPSHOT")
                 .build();
@@ -113,7 +113,7 @@ public class Swagger2Config {
 
 ## UserController.java
 
-> 主要演示API层的注解。
+> mainly demonstrates the annotations of the API layer.
 
 ```java
 /**
@@ -126,68 +126,68 @@ public class Swagger2Config {
  */
 @RestController
 @RequestMapping("/user")
-@Api(tags = "1.0.0-SNAPSHOT", description = "用户管理", value = "用户管理")
+@Api (tags = "1.0.0-SNAPSHOT", description = "User Management", value = "User Management")
 @Slf4j
 public class UserController {
     @GetMapping
-    @ApiOperation(value = "条件查询（DONE）", notes = "备注")
-    @ApiImplicitParams({@ApiImplicitParam(name = "username", value = "用户名", dataType = DataType.STRING, paramType = ParamType.QUERY, defaultValue = "xxx")})
+    @ApiOperation (value = "DONE", notes = "Notes")
+    @ApiImplicitParams({@ApiImplicitParam(name = "username", value = "username", dataType = DataType.STRING, paramType = ParamType.QUERY, defaultValue = "xxx")})
     public ApiResponse<User> getByUserName(String username) {
-        log.info("多个参数用  @ApiImplicitParams");
-        return ApiResponse.<User>builder().code(200)
-                .message("操作成功")
+        log.info ("multiple parameters with @ApiImplicitParams");
+        return ApiResponse. <User>builder().code(200)
+                .message ("operation succeeded")
                 .data(new User(1, username, "JAVA"))
                 .build();
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "主键查询（DONE）", notes = "备注")
-    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户编号", dataType = DataType.INT, paramType = ParamType.PATH)})
+    @ApiOperation (value = "Primary Key Query (DONE)", notes = "Comment")
+    @ApiImplicitParams ({@ApiImplicitParam(name = "id", value = "user number", dataType = DataType.INT, paramType = ParamType.PATH)})
     public ApiResponse<User> get(@PathVariable Integer id) {
-        log.info("单个参数用  @ApiImplicitParam");
-        return ApiResponse.<User>builder().code(200)
-                .message("操作成功")
+        log.info ("@ApiImplicitParam for a single parameter");
+        return ApiResponse. <User>builder().code(200)
+                .message ("operation succeeded")
                 .data(new User(id, "u1", "p1"))
                 .build();
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除用户（DONE）", notes = "备注")
-    @ApiImplicitParam(name = "id", value = "用户编号", dataType = DataType.INT, paramType = ParamType.PATH)
+    @ApiOperation (value = "DONE", notes = "note")
+    @ApiImplicitParam(name = "id", value = "user number", dataType = DataType.INT, paramType = ParamType.PATH)
     public void delete(@PathVariable Integer id) {
-        log.info("单个参数用 ApiImplicitParam");
+        log.info ("Single parameter with ApiImplicitParam");
     }
 
     @PostMapping
-    @ApiOperation(value = "添加用户（DONE）")
+    @ApiOperation (value = "DONE")
     public User post(@RequestBody User user) {
-        log.info("如果是 POST PUT 这种带 @RequestBody 的可以不用写 @ApiImplicitParam");
+        log.info ("If it is a POST PUT with a @RequestBody, you can not write a @ApiImplicitParam");
         return user;
     }
 
     @PostMapping("/multipar")
-    @ApiOperation(value = "添加用户（DONE）")
+    @ApiOperation (value = "DONE")
     public List<User> multipar(@RequestBody List<User> user) {
-        log.info("如果是 POST PUT 这种带 @RequestBody 的可以不用写 @ApiImplicitParam");
+        log.info ("If it is a POST PUT with a @RequestBody, you can not write a @ApiImplicitParam");
 
         return user;
     }
 
     @PostMapping("/array")
-    @ApiOperation(value = "添加用户（DONE）")
+    @ApiOperation (value = "DONE")
     public User[] array(@RequestBody User[] user) {
-        log.info("如果是 POST PUT 这种带 @RequestBody 的可以不用写 @ApiImplicitParam");
+        log.info ("If it is a POST PUT with a @RequestBody, you can not write a @ApiImplicitParam");
         return user;
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "修改用户（DONE）")
+    @ApiOperation (value = "DONE")
     public void put(@PathVariable Long id, @RequestBody User user) {
-        log.info("如果你不想写 @ApiImplicitParam 那么 swagger 也会使用默认的参数名作为描述信息 ");
+        log.info ("If you don't want to write @ApiImplicitParam then swagger will also use the default parameter name as the description information");
     }
 
     @PostMapping("/{id}/file")
-    @ApiOperation(value = "文件上传（DONE）")
+    @ApiOperation (value = "File upload (DONE)")
     public String file(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
         log.info(file.getContentType());
         log.info(file.getName());
@@ -199,12 +199,12 @@ public class UserController {
 
 ## ApiResponse.java
 
-> 主要演示了 实体类 的注解。
+> mainly demonstrates the annotation of entity classes.
 
 ```java
 /**
  * <p>
- * 通用API接口返回
+ * Generic API interface returns
  * </p>
  *
  * @author yangkai.shen
@@ -214,31 +214,31 @@ public class UserController {
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "通用PI接口返回", description = "Common Api Response")
+@ApiModel (value = "Common PI interface return", description = "Common Api Response")
 public class ApiResponse<T> implements Serializable {
     private static final long serialVersionUID = -8987146499044811408L;
     /**
-     * 通用返回状态
+     * Universal return status
      */
-    @ApiModelProperty(value = "通用返回状态", required = true)
+    @ApiModelProperty(value = "generic return status", required = true)
     private Integer code;
     /**
-     * 通用返回信息
+     * Generic return information
      */
-    @ApiModelProperty(value = "通用返回信息", required = true)
+    @ApiModelProperty (value = "generic return information", required = true)
     private String message;
     /**
-     * 通用返回数据
+     * Generic return data
      */
-    @ApiModelProperty(value = "通用返回数据", required = true)
+    @ApiModelProperty(value = "generic return data", required = true)
     private T data;
 }
 ```
 
-## 参考
+## Reference
 
-1. swagger 官方网站：https://swagger.io/
+1. Swagger official website: https://swagger.io/
 
-2. swagger 官方文档：https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Getting-started
+2. Swagger Official Documentation: https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Getting-started
 
-3. swagger 常用注解：https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations
+3. Swagger Common Note: https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations

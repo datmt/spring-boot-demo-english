@@ -4,7 +4,7 @@ import org.quartz.*;
 
 /**
  * <p>
- * Job 基类，主要是在 {@link org.quartz.Job} 上再封装一层，只让我们自己项目里的Job去实现
+ * Job base class, mainly encapsulated on {@link org.quartz.Job} another layer, only let us implement the Job in our own project
  * </p>
  *
  * @author yangkai.shen
@@ -27,7 +27,7 @@ public interface BaseJob extends Job {
      * execution.
      * </p>
      *
-     * @param context 上下文
+     * @param context context
      * @throws JobExecutionException if there is an exception while executing the job.
      */
     @Override

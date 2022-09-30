@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 用户实体类
+ * User entity class
  * </p>
  *
  * @author yangkai.shen
@@ -20,56 +20,56 @@ import java.util.Date;
 @Table(name = "orm_user")
 public class User implements Serializable {
     /**
-     * 主键
+     * Primary key
      */
     @Pk
     private Long id;
 
     /**
-     * 用户名
+     * Username
      */
     private String name;
 
     /**
-     * 加密后的密码
+     * Encrypted password
      */
     private String password;
 
     /**
-     * 加密使用的盐
+     * Salt used for encryption
      */
     private String salt;
 
     /**
-     * 邮箱
+     * Email
      */
     private String email;
 
     /**
-     * 手机号码
+     * Mobile phone number
      */
     @Column(name = "phone_number")
     private String phoneNumber;
 
     /**
-     * 状态，-1：逻辑删除，0：禁用，1：启用
+     * Status, -1: Tombstone, 0: Disabled, 1: Enabled
      */
     private Integer status;
 
     /**
-     * 创建时间
+     * Creation time
      */
     @Column(name = "create_time")
     private Date createTime;
 
     /**
-     * 上次登录时间
+     * Last login time
      */
     @Column(name = "last_login_time")
     private Date lastLoginTime;
 
     /**
-     * 上次更新时间
+     * Last updated
      */
     @Column(name = "last_update_time")
     private Date lastUpdateTime;

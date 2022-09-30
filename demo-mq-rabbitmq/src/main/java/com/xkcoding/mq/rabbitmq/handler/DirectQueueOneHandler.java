@@ -14,7 +14,7 @@ import java.io.IOException;
 
 /**
  * <p>
- * 直接队列1 处理器
+ * Direct queue 1 processor
  * </p>
  *
  * @author yangkai.shen
@@ -26,24 +26,24 @@ import java.io.IOException;
 public class DirectQueueOneHandler {
 
     /**
-     * 如果 spring.rabbitmq.listener.direct.acknowledge-mode: auto，则可以用这个方式，会自动ack
+     * If spring.rabbitmq.listener.direct.acknowledge-mode: auto, you can use this way, automatically ack
      */
-    // @RabbitHandler
+     @RabbitHandler
     public void directHandlerAutoAck(MessageStruct message) {
         log.info("直接队列处理器，接收消息：{}", JSONUtil.toJsonStr(message));
     }
 
     @RabbitHandler
     public void directHandlerManualAck(MessageStruct messageStruct, Message message, Channel channel) {
-        //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
+        If you acknowledge manually, the message will be listened to for consumption, but the message will still exist in the queue, and if acknowledge-mode is not configured, the default is that the ACK will be automatically dropped after consumption
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
             log.info("直接队列1，手动ACK，接收消息：{}", JSONUtil.toJsonStr(messageStruct));
-            // 通知 MQ 消息已被成功消费,可以ACK了
+            Notifying the MQ message has been successfully consumed and can ACK away
             channel.basicAck(deliveryTag, false);
         } catch (IOException e) {
             try {
-                // 处理失败,重新压入MQ
+                Processing failed, re-press MQ
                 channel.basicRecover();
             } catch (IOException e1) {
                 e1.printStackTrace();

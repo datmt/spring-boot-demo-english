@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 
 /**
  * <p>
- * 消息发送Controller
+ * Messages sent to the Controller
  * </p>
  *
  * @author yangkai.shen
@@ -39,10 +39,10 @@ public class MessageController {
     }
 
     /**
-     * 判断Bean是否为空对象或者空白字符串，空对象表示本身为<code>null</code>或者所有属性都为<code>null</code>
+     * Determine whether the bean is an empty object or a blank string, the empty object represents itself to be null or<code></code> all properties are <code>null</code>
      *
-     * @param bean Bean对象
-     * @return 是否为空，<code>true</code> - 空 / <code>false</code> - 非空
+     * @param bean bean object
+     * @return Whether it is empty, <code>true</code> - empty / <code>false</code> - non-empty
      */
     private boolean isBlank(Object bean) {
         if (null != bean) {

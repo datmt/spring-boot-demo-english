@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
  * <p>
- * 角色-权限 DAO
+ * Role-Permission DAO
  * </p>
  *
  * @author yangkai.shen

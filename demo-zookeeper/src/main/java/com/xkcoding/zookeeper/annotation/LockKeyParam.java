@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * <p>
- * 分布式锁动态key注解，配置之后key的值会动态获取参数内容
+ * Distributed lock dynamic key annotation, after the configuration of the key value will dynamically get the parameter content
  * </p>
  *
  * @author yangkai.shen
@@ -16,10 +16,10 @@ import java.lang.annotation.*;
 @Inherited
 public @interface LockKeyParam {
     /**
-     * 如果动态key在user对象中，那么就需要设置fields的值为user对象中的属性名可以为多个，基本类型则不需要设置该值
-     * <p>例1：public void count(@LockKeyParam({"id"}) User user)
-     * <p>例2：public void count(@LockKeyParam({"id","userName"}) User user)
-     * <p>例3：public void count(@LockKeyParam String userId)
+     * If the dynamic key is in the user object, then it is necessary to set the value of fields to the user property name in the object can be more than one, and the base type does not need to set the value
+     * <p>Example 1: public void count(@LockKeyParam({"id"}) User user)
+     * <p>Example 2: public void count(@LockKeyParam({"id","userName"}) User user)
+     * <p>Example 3: public void count (@LockKeyParam String userId)
      */
     String[] fields() default {};
 }

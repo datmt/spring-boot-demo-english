@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 首页
+ * Home
  * </p>
  *
  * @author yangkai.shen

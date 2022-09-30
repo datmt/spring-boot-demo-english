@@ -2,7 +2,7 @@ package com.xkcoding.websocket.socketio.config;
 
 /**
  * <p>
- * 事件常量
+ * Event constants
  * </p>
  *
  * @author yangkai.shen
@@ -10,22 +10,22 @@ package com.xkcoding.websocket.socketio.config;
  */
 public interface Event {
     /**
-     * 聊天事件
+     * Chat events
      */
     String CHAT = "chat";
 
     /**
-     * 广播消息
+     * Broadcast messages
      */
     String BROADCAST = "broadcast";
 
     /**
-     * 群聊
+     * Group chat
      */
     String GROUP = "group";
 
     /**
-     * 加入群聊
+     * Join a group chat
      */
     String JOIN = "join";
 

@@ -14,7 +14,7 @@ import com.xkcoding.ldap.request.LoginRequest;
 public interface PersonService {
 
     /**
-     * 登录
+     * Login
      *
      * @param request {@link LoginRequest}
      * @return {@link Result}
@@ -22,21 +22,21 @@ public interface PersonService {
     Result login(LoginRequest request);
 
     /**
-     * 查询全部
+     * Enquire all
      *
      * @return {@link Result}
      */
     Result listAllPerson();
 
     /**
-     * 保存
+     * Save
      *
      * @param person {@link Person}
      */
     void save(Person person);
 
     /**
-     * 删除
+     * Delete
      *
      * @param person {@link Person}
      */

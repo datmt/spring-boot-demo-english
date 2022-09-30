@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * <p>
- * Redis工具类
+ * Redis tool class
  * </p>
  *
  * @author yangkai.shen
@@ -30,12 +30,12 @@ public class RedisUtil {
     private StringRedisTemplate stringRedisTemplate;
 
     /**
-     * 分页获取指定格式key，使用 scan 命令代替 keys 命令，在大数据量的情况下可以提高查询效率
+     * Paging to get the specified format key, using the scan command instead of the keys command, can improve query efficiency in the case of large volumes
      *
-     * @param patternKey  key格式
-     * @param currentPage 当前页码
-     * @param pageSize    每页条数
-     * @return 分页获取指定格式key
+     * @param patternKey key format
+     * @param currentPage current page number
+     * @param pageSize per page
+     * @return Pagination gets the specified format key
      */
     public PageResult<String> findKeysForPage(String patternKey, int currentPage, int pageSize) {
         ScanOptions options = ScanOptions.scanOptions().match(patternKey).build();
@@ -67,18 +67,18 @@ public class RedisUtil {
     }
 
     /**
-     * 删除 Redis 中的某个key
+     * Delete a key in Redis
      *
-     * @param key 键
+     * @param key key
      */
     public void delete(String key) {
         stringRedisTemplate.delete(key);
     }
 
     /**
-     * 批量删除 Redis 中的某些key
+     * Bulk delete some keys in Redis
      *
-     * @param keys 键列表
+     * @param list of keys
      */
     public void delete(Collection<String> keys) {
         stringRedisTemplate.delete(keys);

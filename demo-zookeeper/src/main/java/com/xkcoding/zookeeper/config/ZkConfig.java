@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>
- * Zookeeper配置类
+ * Zookeeper configuration class
  * </p>
  *
  * @author yangkai.shen

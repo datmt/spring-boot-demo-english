@@ -2,7 +2,7 @@ package com.xkcoding.session.constants;
 
 /**
  * <p>
- * 常量池
+ * Constant pool
  * </p>
  *
  * @author yangkai.shen
@@ -10,7 +10,7 @@ package com.xkcoding.session.constants;
  */
 public interface Consts {
     /**
-     * session保存的key
+     * Session saved key
      */
     String SESSION_KEY = "key:session:token";
 }

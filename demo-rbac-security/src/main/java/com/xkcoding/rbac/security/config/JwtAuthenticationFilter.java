@@ -29,7 +29,7 @@ import java.util.Set;
 
 /**
  * <p>
- * Jwt 认证过滤器
+ * Jwt certified filter
  * </p>
  *
  * @author yangkai.shen
@@ -77,10 +77,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     /**
-     * 请求是否不需要进行权限拦截
+     * Whether the request does not require permission interception
      *
-     * @param request 当前请求
-     * @return true - 忽略，false - 不忽略
+     * @param request current request
+     * @return true - ignore, false - do not ignore
      */
     private boolean checkIgnores(HttpServletRequest request) {
         String method = request.getMethod();

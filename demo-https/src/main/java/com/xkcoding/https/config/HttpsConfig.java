@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>
- * HTTPS 配置类
+ * HTTPS configuration class
  * </p>
  *
  * @author Chen.Chao
@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class HttpsConfig {
     /**
-     * 配置 http(80) -> 强制跳转到 https(443)
+     * Configure http(80) - > Force jump to https(443)
      */
     @Bean
     public Connector connector() {

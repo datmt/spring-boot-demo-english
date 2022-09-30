@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * <p>
- * 通用状态码
+ * Universal status code
  * </p>
  *
  * @author yangkai.shen
@@ -13,92 +13,92 @@ import lombok.Getter;
 @Getter
 public enum Status implements IStatus {
     /**
-     * 操作成功！
+     * Operation Successful!
      */
     SUCCESS(200, "操作成功！"),
 
     /**
-     * 操作异常！
+     * Operation abnormality!
      */
     ERROR(500, "操作异常！"),
 
     /**
-     * 退出成功！
+     * Exit successfully!
      */
     LOGOUT(200, "退出成功！"),
 
     /**
-     * 请先登录！
+     * Please log in first!
      */
     UNAUTHORIZED(401, "请先登录！"),
 
     /**
-     * 暂无权限访问！
+     * No permission to access!
      */
     ACCESS_DENIED(403, "权限不足！"),
 
     /**
-     * 请求不存在！
+     * The request does not exist!
      */
     REQUEST_NOT_FOUND(404, "请求不存在！"),
 
     /**
-     * 请求方式不支持！
+     * Request method is not supported!
      */
     HTTP_BAD_METHOD(405, "请求方式不支持！"),
 
     /**
-     * 请求异常！
+     * Request an exception!
      */
     BAD_REQUEST(400, "请求异常！"),
 
     /**
-     * 参数不匹配！
+     * Parameter mismatch!
      */
     PARAM_NOT_MATCH(400, "参数不匹配！"),
 
     /**
-     * 参数不能为空！
+     * Parameter cannot be empty!
      */
     PARAM_NOT_NULL(400, "参数不能为空！"),
 
     /**
-     * 当前用户已被锁定，请联系管理员解锁！
+     * The current user is locked, please contact the administrator to unlock!
      */
     USER_DISABLED(403, "当前用户已被锁定，请联系管理员解锁！"),
 
     /**
-     * 用户名或密码错误！
+     * Wrong username or password!
      */
     USERNAME_PASSWORD_ERROR(5001, "用户名或密码错误！"),
 
     /**
-     * token 已过期，请重新登录！
+     * The token has expired, please log back in!
      */
     TOKEN_EXPIRED(5002, "token 已过期，请重新登录！"),
 
     /**
-     * token 解析失败，请尝试重新登录！
+     * Token resolution failed, please try to log in again!
      */
     TOKEN_PARSE_ERROR(5002, "token 解析失败，请尝试重新登录！"),
 
     /**
-     * 当前用户已在别处登录，请尝试更改密码或重新登录！
+     * The current user is already logged in elsewhere, please try changing your password or logging back in!
      */
     TOKEN_OUT_OF_CTRL(5003, "当前用户已在别处登录，请尝试更改密码或重新登录！"),
 
     /**
-     * 无法手动踢出自己，请尝试退出登录操作！
+     * Can't kick yourself out manually, please try logging out!
      */
     KICKOUT_SELF(5004, "无法手动踢出自己，请尝试退出登录操作！");
 
     /**
-     * 状态码
+     * Status code
      */
     private Integer code;
 
     /**
-     * 返回信息
+     * Return information
      */
     private String message;
 

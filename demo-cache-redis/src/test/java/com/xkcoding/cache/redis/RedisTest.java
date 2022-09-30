@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 
 /**
  * <p>
- * Redis测试
+ * Redis test
  * </p>
  *
  * @author yangkai.shen
@@ -30,11 +30,11 @@ public class RedisTest extends SpringBootDemoCacheRedisApplicationTests {
     private RedisTemplate<String, Serializable> redisCacheTemplate;
 
     /**
-     * 测试 Redis 操作
+     * Test Redis operations
      */
     @Test
     public void get() {
-        // 测试线程安全，程序结束查看redis中count的值是否为1000
+        To test thread safety, the program ends to see if the value of count in redis is 1000
         ExecutorService executorService = Executors.newFixedThreadPool(1000);
         IntStream.range(0, 1000).forEach(i -> executorService.execute(() -> stringRedisTemplate.opsForValue().increment("count", 1)));
 
@@ -42,10 +42,10 @@ public class RedisTest extends SpringBootDemoCacheRedisApplicationTests {
         String k1 = stringRedisTemplate.opsForValue().get("k1");
         log.debug("【k1】= {}", k1);
 
-        // 以下演示整合，具体Redis命令可以参考官方文档
+        The following demonstrates the integration, and the specific Redis command can refer to the official documentation
         String key = "xkcoding:user:1";
         redisCacheTemplate.opsForValue().set(key, new User(1L, "user1"));
-        // 对应 String（字符串）
+        Corresponding to String (string)
         User user = (User) redisCacheTemplate.opsForValue().get(key);
         log.debug("【user】= {}", user);
     }

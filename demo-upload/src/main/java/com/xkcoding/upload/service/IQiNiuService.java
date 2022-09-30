@@ -7,7 +7,7 @@ import java.io.File;
 
 /**
  * <p>
- * 七牛云上传Service
+ * Seven Cow Cloud Upload Service
  * </p>
  *
  * @author yangkai.shen
@@ -15,11 +15,11 @@ import java.io.File;
  */
 public interface IQiNiuService {
     /**
-     * 七牛云上传文件
+     * Seven Cow Cloud upload files
      *
-     * @param file 文件
-     * @return 七牛上传Response
-     * @throws QiniuException 七牛异常
+     * @param file file
+     * @return Seven Bulls upload Response
+     * @throws QiniuException Seven Bulls Exception
      */
     Response uploadFile(File file) throws QiniuException;
 }

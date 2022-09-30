@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * <p>
- * WebMvc 配置类
+ * WebMvc configuration class
  * </p>
  *
  * @author yangkai.shen
@@ -23,12 +23,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration sessionInterceptorRegistry = registry.addInterceptor(sessionInterceptor);
-        // 排除不需要拦截的路径
+        Exclude paths that do not need to be intercepted
         sessionInterceptorRegistry.excludePathPatterns("/page/login");
         sessionInterceptorRegistry.excludePathPatterns("/page/doLogin");
         sessionInterceptorRegistry.excludePathPatterns("/error");
 
-        // 需要拦截的路径
+        The path that needs to be intercepted
         sessionInterceptorRegistry.addPathPatterns("/**");
     }
 }

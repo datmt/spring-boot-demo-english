@@ -9,7 +9,7 @@ import java.util.Optional;
 
 /**
  * <p>
- * 用户 DAO
+ * User DAO
  * </p>
  *
  * @author yangkai.shen
@@ -17,20 +17,20 @@ import java.util.Optional;
  */
 public interface UserDao extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     /**
-     * 根据用户名、邮箱、手机号查询用户
+     * Query users based on user name, email address, and mobile phone number
      *
-     * @param username 用户名
-     * @param email    邮箱
-     * @param phone    手机号
-     * @return 用户信息
+     * @param username username
+     * @param email address
+     * @param phone number
+     * @return User information
      */
     Optional<User> findByUsernameOrEmailOrPhone(String username, String email, String phone);
 
     /**
-     * 根据用户名列表查询用户列表
+     * Query the list of users based on the list of user names
      *
-     * @param usernameList 用户名列表
-     * @return 用户列表
+     * @param usernameList list of usernames
+     * @return User list
      */
     List<User> findByUsernameIn(List<String> usernameList);
 }

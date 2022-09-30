@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 import java.security.KeyPair;
 
 /**
- * token 相关配置.
+ * Token related configuration.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 13:33
@@ -25,8 +25,8 @@ import java.security.KeyPair;
 public class Oauth2AuthorizationTokenConfig {
 
     /**
-     * 声明 内存 TokenStore 实现，用来存储 token 相关.
-     * 默认实现有 mysql、redis
+     * Declare the memory TokenStore implementation, which is used to store tokens related.
+     * The default implementation is mysql, redis
      *
      * @return InMemoryTokenStore
      */
@@ -37,9 +37,9 @@ public class Oauth2AuthorizationTokenConfig {
     }
 
     /**
-     * jwt 令牌 配置，非对称加密
+     * jwt token configured, asymmetric encryption
      *
-     * @return 转换器
+     * @return converter
      */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
@@ -49,8 +49,8 @@ public class Oauth2AuthorizationTokenConfig {
     }
 
     /**
-     * 密钥  keyPair.
-     * 可用于生成 jwt / jwk.
+     * Key keyPair.
+     * Can be used to generate jwt / jwk.
      *
      * @return keyPair
      */
@@ -61,9 +61,9 @@ public class Oauth2AuthorizationTokenConfig {
     }
 
     /**
-     * 加密方式，使用 BCrypt.
-     * 参数越大加密次数越多，时间越久.
-     * 默认为 10.
+     * Encryption, using BCrypt.
+     * The larger the parameter, the more encryption times, the longer the time.
+     * The default is 10.
      *
      * @return PasswordEncoder
      */

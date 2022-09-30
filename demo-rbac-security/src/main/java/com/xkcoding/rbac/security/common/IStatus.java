@@ -2,7 +2,7 @@ package com.xkcoding.rbac.security.common;
 
 /**
  * <p>
- * REST API 错误码接口
+ * REST API error code interface
  * </p>
  *
  * @author yangkai.shen
@@ -11,16 +11,16 @@ package com.xkcoding.rbac.security.common;
 public interface IStatus {
 
     /**
-     * 状态码
+     * Status code
      *
-     * @return 状态码
+     * @return status code
      */
     Integer getCode();
 
     /**
-     * 返回信息
+     * Return information
      *
-     * @return 返回信息
+     * @return Return information
      */
     String getMessage();
 

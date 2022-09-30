@@ -13,7 +13,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * <p>
- * 定时任务配置，配置线程池，使用不同线程执行任务，提升效率
+ * Scheduled task configuration, configure the thread pool, use different threads to perform tasks, improve efficiency
  * </p>
  *
  * @author yangkai.shen
@@ -29,7 +29,7 @@ public class TaskConfig implements SchedulingConfigurer {
     }
 
     /**
-     * 这里等同于配置文件配置
+     * This is equivalent to profile configuration
      * {@code spring.task.scheduling.pool.size=20} - Maximum allowed number of threads.
      * {@code spring.task.scheduling.thread-name-prefix=Job-Thread- } - Prefix to use for the names of newly created threads.
      * {@link org.springframework.boot.autoconfigure.task.TaskSchedulingProperties}

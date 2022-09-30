@@ -1,6 +1,6 @@
 # spring-boot-demo-properties
 
-> 本 demo 演示如何获取配置文件的自定义配置，以及如何多环境下的配置文件信息的获取
+> This demo demonstrates how to obtain a custom configuration of a configuration file and how to obtain configuration file information in multiple environments
 
 ## pom.xml
 
@@ -36,8 +36,8 @@
 		</dependency>
 
 		<!--
-		在 META-INF/additional-spring-configuration-metadata.json 中配置
-		可以去除 application.yml 中自定义配置的红线警告，并且为自定义配置添加 hint 提醒
+		Configured in META-INF/additional-spring-configuration-metadata.json
+		You can remove the redline warnings for custom configurations in application.yml and add hint reminders for custom configurations
 		 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -81,7 +81,7 @@
 ```java
 /**
  * <p>
- * 项目配置
+ * Project configuration
  * </p>
  *
  * @author yangkai.shen
@@ -102,7 +102,7 @@ public class ApplicationProperty {
 ```java
 /**
  * <p>
- * 开发人员配置信息
+ * Developer configuration information
  * </p>
  *
  * @author yangkai.shen
@@ -124,7 +124,7 @@ public class DeveloperProperty {
 ```java
 /**
  * <p>
- * 测试Controller
+ * Test Controller
  * </p>
  *
  * @author yangkai.shen
@@ -150,7 +150,7 @@ public class PropertyController {
 
 ## additional-spring-configuration-metadata.json
 
-> 位置： src/main/resources/META-INF/additional-spring-configuration-metadata.json
+> Location: src/main/resources/META-INF/additional-spring-configuration-metadata.json
 
 ```json
 {

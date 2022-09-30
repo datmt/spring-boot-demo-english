@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 通用字段填充
+ * Common field population
  * </p>
  *
  * @author yangkai.shen

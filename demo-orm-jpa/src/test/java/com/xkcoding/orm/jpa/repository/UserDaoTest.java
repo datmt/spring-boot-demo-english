@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * jpa 测试类
+ * jpa test class
  * </p>
  *
  * @author yangkai.shen
@@ -32,7 +32,7 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     private UserDao userDao;
 
     /**
-     * 测试保存
+     * Test save
      */
     @Test
     public void testSave() {
@@ -47,7 +47,7 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void testDelete() {
@@ -58,7 +58,7 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 测试修改
+     * Test modifications
      */
     @Test
     public void testUpdate() {
@@ -70,7 +70,7 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 测试查询单个
+     * Test query single
      */
     @Test
     public void testQueryOne() {
@@ -80,7 +80,7 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 测试查询所有
+     * Test query all
      */
     @Test
     public void testQueryAll() {
@@ -90,13 +90,13 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 测试分页排序查询
+     * Test paginated sort query
      */
     @Test
     public void testQueryPage() {
-        // 初始化数据
+        Initialize the data
         initData();
-        // JPA分页的时候起始页是页码减1
+        JPA pagination when the starting page is page number minus 1
         Integer currentPage = 0;
         Integer pageSize = 5;
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
@@ -109,7 +109,7 @@ public class UserDaoTest extends SpringBootDemoOrmJpaApplicationTests {
     }
 
     /**
-     * 初始化10条数据
+     * Initialize 10 pieces of data
      */
     private void initData() {
         List<User> userList = Lists.newArrayList();

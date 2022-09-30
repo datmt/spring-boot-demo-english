@@ -6,7 +6,7 @@ import java.math.BigInteger;
 
 /**
  * <p>
- * 实体类
+ * Entity class
  * </p>
  *
  * @author yangkai.shen
@@ -15,43 +15,43 @@ import java.math.BigInteger;
 @Data
 public class JobAndTrigger {
     /**
-     * 定时任务名称
+     * Scheduled task name
      */
     private String jobName;
     /**
-     * 定时任务组
+     * Timed task groups
      */
     private String jobGroup;
     /**
-     * 定时任务全类名
+     * Full class name of the scheduled task
      */
     private String jobClassName;
     /**
-     * 触发器名称
+     * Trigger name
      */
     private String triggerName;
     /**
-     * 触发器组
+     * Trigger group
      */
     private String triggerGroup;
     /**
-     * 重复间隔
+     * Repeat interval
      */
     private BigInteger repeatInterval;
     /**
-     * 触发次数
+     * Number of triggers
      */
     private BigInteger timesTriggered;
     /**
-     * cron 表达式
+     * cron expression
      */
     private String cronExpression;
     /**
-     * 时区
+     * Time zone
      */
     private String timeZoneId;
     /**
-     * 定时任务状态
+     * Timed task status
      */
     private String triggerState;
 }

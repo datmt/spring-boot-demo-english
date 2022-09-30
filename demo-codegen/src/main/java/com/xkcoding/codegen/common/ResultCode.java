@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * <p>
- * 通用状态枚举
+ * Generic state enumeration
  * </p>
  *
  * @author yangkai.shen
@@ -13,21 +13,21 @@ import lombok.Getter;
 @Getter
 public enum ResultCode implements IResultCode {
     /**
-     * 成功
+     * Success
      */
     OK(200, "成功"),
     /**
-     * 失败
+     * Failed
      */
     ERROR(500, "失败");
 
     /**
-     * 返回码
+     * Return code
      */
     private Integer code;
 
     /**
-     * 返回消息
+     * Returns the message
      */
     private String message;
 

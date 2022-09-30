@@ -6,7 +6,7 @@
  $ mvn spring-boot:run
 ```
 ##
-> 本 demo 演示如何使用 Spring Boot 写一个hello world
+> this demo demonstrates how to write a hello world using Spring Boot
 
 ### pom.xml
 ```xml
@@ -70,7 +70,7 @@
 ```java
 /**
  * <p>
- * SpringBoot启动类
+ * SpringBoot startup class
  * </p>
  *
  * @author yangkai.shen
@@ -87,7 +87,7 @@ public class SpringBootDemoHelloworldApplication {
 	/**
 	 * Hello，World
 	 *
-	 * @param who 参数，非必须
+	 * @param who parameter, optional
 	 * @return Hello, ${who}
 	 */
 	@GetMapping("/hello")

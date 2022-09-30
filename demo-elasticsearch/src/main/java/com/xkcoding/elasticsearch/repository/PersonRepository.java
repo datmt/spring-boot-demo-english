@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * <p>
- * 用户持久层
+ * User persistence layer
  * </p>
  *
  * @author yangkai.shen
@@ -16,11 +16,11 @@ import java.util.List;
 public interface PersonRepository extends ElasticsearchRepository<Person, Long> {
 
     /**
-     * 根据年龄区间查询
+     * Query based on age range
      *
-     * @param min 最小值
-     * @param max 最大值
-     * @return 满足条件的用户列表
+     * @param min minimum
+     * @param max value
+     * @return list of users who meet the criteria
      */
     List<Person> findByAgeBetween(Integer min, Integer max);
 }

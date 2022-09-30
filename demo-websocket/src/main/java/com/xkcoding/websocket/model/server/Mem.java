@@ -4,7 +4,7 @@ import cn.hutool.core.util.NumberUtil;
 
 /**
  * <p>
- * 內存相关信息实体
+ * Stored related information entity
  * </p>
  *
  * @author yangkai.shen
@@ -12,17 +12,17 @@ import cn.hutool.core.util.NumberUtil;
  */
 public class Mem {
     /**
-     * 内存总量
+     * Total amount of memory
      */
     private double total;
 
     /**
-     * 已用内存
+     * Used memory
      */
     private double used;
 
     /**
-     * 剩余内存
+     * Remaining memory
      */
     private double free;
 

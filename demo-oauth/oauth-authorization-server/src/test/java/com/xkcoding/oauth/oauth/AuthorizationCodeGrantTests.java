@@ -23,7 +23,7 @@ import static com.xkcoding.oauth.oauth.AuthorizationServerInfo.getUrl;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 授权码模式测试.
+ * Authorization code mode test.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 20:43
@@ -56,13 +56,13 @@ public class AuthorizationCodeGrantTests {
     }
 
     /**
-     * 这里不使用他提供的是因为很多地方不符合我们的需要
-     * 比如 csrf，比如许多有些是自己自定义的端点这些
-     * 所以只有我们一步一步的来进行测试拿到授权码
+     * The reason he provided is not used here is because many places do not meet our needs
+     * Such as csrf, such as many of the endpoints that are customized by themselves
+     * So only we have to test step by step to get the authorization code
      */
     @Test
     void testCodeAcquisitionWithCorrectContext() {
-        // 1. 请求登录页面获取 _csrf 的 value 以及 cookie
+         1. Request the login page to get the value of _csrf and cookies
         ResponseEntity<String> page = authorizationServerInfo.getForString("/oauth/login");
         assertNotNull(page.getBody());
         String cookie = page.getHeaders().getFirst("Set-Cookie");
@@ -71,13 +71,13 @@ public class AuthorizationCodeGrantTests {
         Matcher matcher = Pattern.compile("(?s).*name=\"_csrf\".*?value=\"([^\"]+).*").matcher(page.getBody());
         assertTrue(matcher.find());
 
-        // 2. 添加表单数据
+         2. Add form data
         MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
         form.add("username", "admin");
         form.add("password", "123456");
         form.add("_csrf", matcher.group(1));
 
-        // 3. 登录授权并获取登录成功的 cookie
+         3. Login authorization and obtain a cookie for successful login
         ResponseEntity<Void> response = authorizationServerInfo.postForStatus("/authorization/form", headers, form);
         assertNotNull(response);
         cookie = response.getHeaders().getFirst("Set-Cookie");
@@ -85,12 +85,12 @@ public class AuthorizationCodeGrantTests {
         headers.set("Cookie", cookie);
         headers.setAccept(Collections.singletonList(MediaType.ALL));
 
-        // 4. 请求到 确认授权页面 ，获取确认授权页面的 _csrf 的 value
+         4. Request to the Confirm Authorization page to get the value of the _csrf of the Confirm Authorization page
         ResponseEntity<String> confirm = authorizationServerInfo.getForString("/oauth/authorize?response_type=code&client_id=oauth2&redirect_uri=http://example.com&scope=READ", headers);
 
         headers = confirm.getHeaders();
-        // 确认过一次后，后面都会自动确认了，这里判断下是不是重定向请求
-        // 如果不是，就表示是第一次，需要确认授权
+        After confirming once, it will be automatically confirmed later, and here it is determined whether it is a redirect request
+        If not, it means that it is the first time that the authorization needs to be confirmed
         if (!confirm.getStatusCode().is3xxRedirection()) {
             assertNotNull(confirm.getBody());
             Matcher matcherConfirm = Pattern.compile("(?s).*name=\"_csrf\".*?value=\"([^\"]+).*").matcher(confirm.getBody());
@@ -99,13 +99,13 @@ public class AuthorizationCodeGrantTests {
             headers.set("Cookie", cookie);
             headers.setAccept(Collections.singletonList(MediaType.ALL));
 
-            // 5. 构建 同意授权 的表单
+             5. Build a form for consent authorization
             form = new LinkedMultiValueMap<>();
             form.add("user_oauth_approval", "true");
             form.add("scope.READ", "true");
             form.add("_csrf", matcherConfirm.group(1));
 
-            // 6. 请求授权，获取 授权码
+             6. Request authorization, obtain the authorization code
             headers = authorizationServerInfo.postForHeaders("/oauth/authorize", form, headers);
         }
 

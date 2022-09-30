@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * 订单表
+ * Order form
  * </p>
  *
  * @author yangkai.shen
@@ -21,20 +21,20 @@ import lombok.NoArgsConstructor;
 @TableName(value = "t_order")
 public class Order {
     /**
-     * 主键
+     * Primary key
      */
     private Long id;
     /**
-     * 用户id
+     * User ID
      */
     private Long userId;
 
     /**
-     * 订单id
+     * Order ID
      */
     private Long orderId;
     /**
-     * 备注
+     * Remarks
      */
     private String remark;
 }

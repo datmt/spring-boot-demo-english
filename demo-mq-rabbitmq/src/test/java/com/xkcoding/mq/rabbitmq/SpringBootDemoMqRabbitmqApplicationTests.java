@@ -17,7 +17,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     private RabbitTemplate rabbitTemplate;
 
     /**
-     * 测试直接模式发送
+     * Test direct mode sending
      */
     @Test
     public void sendDirect() {
@@ -25,7 +25,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     }
 
     /**
-     * 测试分列模式发送
+     * Test column mode sending
      */
     @Test
     public void sendFanout() {
@@ -33,7 +33,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     }
 
     /**
-     * 测试主题模式发送1
+     * Test theme mode send 1
      */
     @Test
     public void sendTopic1() {
@@ -41,7 +41,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     }
 
     /**
-     * 测试主题模式发送2
+     * Test theme mode send 2
      */
     @Test
     public void sendTopic2() {
@@ -49,7 +49,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     }
 
     /**
-     * 测试主题模式发送3
+     * Test theme mode send 3
      */
     @Test
     public void sendTopic3() {
@@ -57,7 +57,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     }
 
     /**
-     * 测试延迟队列发送
+     * Test delay queue sending
      */
     @Test
     public void sendDelay() {

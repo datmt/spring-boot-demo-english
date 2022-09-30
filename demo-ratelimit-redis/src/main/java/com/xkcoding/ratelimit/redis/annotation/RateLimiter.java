@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- * 限流注解，添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
+ * Flow restriction annotation, added {@link AliasFor} must be obtained via {@link AnnotationUtils} to take effect
  * </p>
  *
  * @author yangkai.shen
@@ -22,27 +22,27 @@ public @interface RateLimiter {
     long DEFAULT_REQUEST = 10;
 
     /**
-     * max 最大请求数
+     * max Maximum number of requests
      */
     @AliasFor("max") long value() default DEFAULT_REQUEST;
 
     /**
-     * max 最大请求数
+     * max Maximum number of requests
      */
     @AliasFor("value") long max() default DEFAULT_REQUEST;
 
     /**
-     * 限流key
+     * Flow restriction key
      */
     String key() default "";
 
     /**
-     * 超时时长，默认1分钟
+     * Timeout timeout, default 1 minute
      */
     long timeout() default 1;
 
     /**
-     * 超时时间单位，默认 分钟
+     * Timeout unit, default minutes
      */
     TimeUnit timeUnit() default TimeUnit.MINUTES;
 }

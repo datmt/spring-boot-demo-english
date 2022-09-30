@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p>
- * Hello服务实现
+ * Hello service implementation
  * </p>
  *
  * @author yangkai.shen
@@ -18,10 +18,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class HelloServiceImpl implements HelloService {
     /**
-     * 问好
+     * Say hello
      *
-     * @param name 姓名
-     * @return 问好
+     * @param name name
+     * @return Say hello
      */
     @Override
     public String sayHello(String name) {

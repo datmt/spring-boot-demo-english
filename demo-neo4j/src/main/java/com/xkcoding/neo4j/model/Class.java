@@ -10,7 +10,7 @@ import org.neo4j.ogm.annotation.Relationship;
 
 /**
  * <p>
- * 班级节点
+ * Class node
  * </p>
  *
  * @author yangkai.shen
@@ -24,20 +24,20 @@ import org.neo4j.ogm.annotation.Relationship;
 @NodeEntity
 public class Class {
     /**
-     * 主键
+     * Primary key
      */
     @Id
     @GeneratedValue(strategy = CustomIdStrategy.class)
     private String id;
 
     /**
-     * 班级名称
+     * Class name
      */
     @NonNull
     private String name;
 
     /**
-     * 班级的班主任
+     * Class teacher
      */
     @Relationship(NeoConsts.R_BOSS_OF_CLASS)
     @NonNull

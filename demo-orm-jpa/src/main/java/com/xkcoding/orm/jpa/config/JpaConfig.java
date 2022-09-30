@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 
 /**
  * <p>
- * JPA配置类
+ * JPA configuration class
  * </p>
  *
  * @author yangkai.shen

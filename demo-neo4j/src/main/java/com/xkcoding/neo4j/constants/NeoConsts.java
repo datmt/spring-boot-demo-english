@@ -2,7 +2,7 @@ package com.xkcoding.neo4j.constants;
 
 /**
  * <p>
- * 常量池
+ * Constant pool
  * </p>
  *
  * @author yangkai.shen
@@ -10,22 +10,22 @@ package com.xkcoding.neo4j.constants;
  */
 public interface NeoConsts {
     /**
-     * 关系：班级拥有的学生
+     * Relationship: Class owned students
      */
     String R_STUDENT_OF_CLASS = "R_STUDENT_OF_CLASS";
 
     /**
-     * 关系：班级的班主任
+     * Relationship: The class teacher of the class
      */
     String R_BOSS_OF_CLASS = "R_BOSS_OF_CLASS";
 
     /**
-     * 关系：课程的老师
+     * Relationship: The teacher of the course
      */
     String R_TEACHER_OF_LESSON = "R_TEACHER_OF_LESSON";
 
     /**
-     * 关系：学生选的课
+     * Relationship: The class selected by the student
      */
     String R_LESSON_OF_STUDENT = "R_LESSON_OF_STUDENT";
 

@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * 统一API对象返回
+ * Unified API object returns
  * </p>
  *
  * @author yangkai.shen
@@ -15,22 +15,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class R<T> {
     /**
-     * 状态码
+     * Status code
      */
     private Integer code;
 
     /**
-     * 返回消息
+     * Returns the message
      */
     private String message;
 
     /**
-     * 状态
+     * Status
      */
     private boolean status;
 
     /**
-     * 返回数据
+     * Returns data
      */
     private T data;
 

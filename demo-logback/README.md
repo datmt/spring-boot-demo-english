@@ -1,6 +1,6 @@
 # spring-boot-demo-logback
 
-> 此 demo 主要演示了如何使用 logback 记录程序运行过程中的日志，以及如何配置 logback，可以同时生成控制台日志和文件日志记录，文件日志以日期和大小进行拆分生成。
+> This demo mainly demonstrates how to use logback logs during the operation of the logback program, and how to configure logback, which can generate console logs and file log records at the same time, and file logs are split in date and size.
 
 ## pom.xml
 
@@ -66,7 +66,7 @@
 ```java
 /**
  * <p>
- * 启动类
+ * Startup class
  * </p>
  *
  * @author yangkai.shen
@@ -79,16 +79,16 @@ public class SpringBootDemoLogbackApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(SpringBootDemoLogbackApplication.class, args);
 		int length = context.getBeanDefinitionNames().length;
-		log.trace("Spring boot启动初始化了 {} 个 Bean", length);
-		log.debug("Spring boot启动初始化了 {} 个 Bean", length);
-		log.info("Spring boot启动初始化了 {} 个 Bean", length);
-		log.warn("Spring boot启动初始化了 {} 个 Bean", length);
-		log.error("Spring boot启动初始化了 {} 个 Bean", length);
+		log.trace("Spring boot started initialized {} beans", length);
+		log.debug ("Spring boot started initialized {} beans", length);
+		log.info ("Spring boot startup initialized {} beans", length);
+		log.warn("Spring boot started initialized {} beans", length);
+		log.error("Spring boot startup initialized {} beans", length);
 		try {
 			int i = 0;
 			int j = 1 / i;
 		} catch (Exception e) {
-			log.error("【SpringBootDemoLogbackApplication】启动异常：", e);
+			log.error("[SpringBootDemoLogbackApplication] startup exception:", e);
 		}
 	}
 }
@@ -111,27 +111,27 @@ public class SpringBootDemoLogbackApplication {
 	</appender>
 
 	<appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!--如果只是想要 Info 级别的日志，只是过滤 info 还是会输出 Error 日志，因为 Error 的级别高， 所以我们使用下面的策略，可以避免输出 Error 的日志-->
+		<!-- if you just want the Info level log, just filter info or output the Error log, because the level of Error is high, so we use the following strategy to avoid the output of the Error log - >
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<!--过滤 Error-->
+			<!-- filter Error-->
 			<level>ERROR</level>
-			<!--匹配到就禁止-->
+			<!-- matches to prohibit -->
 			<onMatch>DENY</onMatch>
-			<!--没有匹配到就允许-->
+			<!-- no match is allowed - >
 			<onMismatch>ACCEPT</onMismatch>
 		</filter>
-		<!--日志名称，如果没有File 属性，那么只会使用FileNamePattern的文件路径规则如果同时有<File>和<FileNamePattern>，那么当天日志是<File>，明天会自动把今天的日志改名为今天的日期。即，<File> 的日志都是当天的。-->
+		<!-- log name, if there is no File property, then only the file path rule of FileNamePattern is used If there is a sum at the same time, <File><FileNamePattern>then the current day log is<File>, tomorrow will automatically rename today's log to today's date. That is, the<File> logs are all of the same day. -->
 		<!--<File>logs/info.spring-boot-demo-logback.log</File>-->
-		<!--滚动策略，按照时间滚动 TimeBasedRollingPolicy-->
+		<!-- scrolling strategy, scroll by time TimeBasedRollingPolicy-->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间-->
+			<!-- file path defines how the log is split — archiving each day's log into a file to prevent the log from filling up the entire disk space – >
 			<FileNamePattern>logs/spring-boot-demo-logback/info.created_on_%d{yyyy-MM-dd}.part_%i.log</FileNamePattern>
-			<!--只保留最近90天的日志-->
+			<!-- only keep logs for the last 90 days - >
 			<maxHistory>90</maxHistory>
-			<!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志-->
+			<!-- used to specify the upper limit size of the log file, then at this value, the old log - > is deleted
 			<!--<totalSizeCap>1GB</totalSizeCap>-->
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<!-- maxFileSize:这是活动文件的大小，默认值是10MB,本篇设置为1KB，只是为了演示 -->
+				<!-- maxFileSize: This is the size of the active file, the default value is 10MB, this article is set to 1KB, just to demonstrate -->
 				<maxFileSize>2MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
@@ -140,31 +140,31 @@ public class SpringBootDemoLogbackApplication {
 		<!--</triggeringPolicy>-->
 		<encoder>
 			<pattern>%date [%thread] %-5level [%logger{50}] %file:%line - %msg%n</pattern>
-			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
+			<charset>UTF-8</charset> <!-- Set the character set here -->
 		</encoder>
 	</appender>
 
 	<appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!--如果只是想要 Error 级别的日志，那么需要过滤一下，默认是 info 级别的，ThresholdFilter-->
+		<!-- if you just want Error-level logs, you need to filter them, the default is info level, ThresholdFilter-->
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>Error</level>
 		</filter>
-		<!--日志名称，如果没有File 属性，那么只会使用FileNamePattern的文件路径规则如果同时有<File>和<FileNamePattern>，那么当天日志是<File>，明天会自动把今天的日志改名为今天的日期。即，<File> 的日志都是当天的。-->
+		<!-- log name, if there is no File property, then only the file path rule of FileNamePattern is used If there is a sum at the same time, <File><FileNamePattern>then the current day log is<File>, tomorrow will automatically rename today's log to today's date. That is, the<File> logs are all of the same day. -->
 		<!--<File>logs/error.spring-boot-demo-logback.log</File>-->
-		<!--滚动策略，按照时间滚动 TimeBasedRollingPolicy-->
+		<!-- scrolling strategy, scroll by time TimeBasedRollingPolicy-->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间-->
+			<!-- file path defines how the log is split — archiving each day's log into a file to prevent the log from filling up the entire disk space – >
 			<FileNamePattern>logs/spring-boot-demo-logback/error.created_on_%d{yyyy-MM-dd}.part_%i.log</FileNamePattern>
-			<!--只保留最近90天的日志-->
+			<!-- only keep logs for the last 90 days - >
 			<maxHistory>90</maxHistory>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<!-- maxFileSize:这是活动文件的大小，默认值是10MB,本篇设置为1KB，只是为了演示 -->
+				<!-- maxFileSize: This is the size of the active file, the default value is 10MB, this article is set to 1KB, just to demonstrate -->
 				<maxFileSize>2MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%date [%thread] %-5level [%logger{50}] %file:%line - %msg%n</pattern>
-			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
+			<charset>UTF-8</charset> <!-- Set the character set here -->
 		</encoder>
 	</appender>
 

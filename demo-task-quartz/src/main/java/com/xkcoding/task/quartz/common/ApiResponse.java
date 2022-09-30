@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 通用Api封装
+ * Universal API package
  * </p>
  *
  * @author yangkai.shen
@@ -16,12 +16,12 @@ import java.io.Serializable;
 @Data
 public class ApiResponse implements Serializable {
     /**
-     * 返回信息
+     * Return information
      */
     private String message;
 
     /**
-     * 返回数据
+     * Returns data
      */
     private Object data;
 
@@ -34,10 +34,10 @@ public class ApiResponse implements Serializable {
     }
 
     /**
-     * 通用封装获取ApiResponse对象
+     * Generic footprint gets the ApiResponse object
      *
-     * @param message 返回信息
-     * @param data    返回数据
+     * @param message returns information
+     * @param data returns data
      * @return ApiResponse
      */
     public static ApiResponse of(String message, Object data) {
@@ -45,9 +45,9 @@ public class ApiResponse implements Serializable {
     }
 
     /**
-     * 通用成功封装获取ApiResponse对象
+     * Generic successful encapsulation gets ApiResponse object
      *
-     * @param data 返回数据
+     * @param data returns data
      * @return ApiResponse
      */
     public static ApiResponse ok(Object data) {
@@ -55,9 +55,9 @@ public class ApiResponse implements Serializable {
     }
 
     /**
-     * 通用封装获取ApiResponse对象
+     * Generic footprint gets the ApiResponse object
      *
-     * @param message 返回信息
+     * @param message returns information
      * @return ApiResponse
      */
     public static ApiResponse msg(String message) {

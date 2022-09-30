@@ -33,7 +33,7 @@
 - [ ] demo-rbac-shiro (implementing RBAC-based permission model - shiro)
 - [x] ~~demo-session(unified Session Management)~~
 - [ ] demo-oauth (OAuth2 certification)
-- [x] ~~demo-social (integrated JustAuth implements third-party authorization verification, and implements third-party logins such as QQ, WeChat, GitHub, Google, Xiaomi, etc.)~~
+- [x] ~~demo-social (integrated JustAuth implements third-party authorization verification, and implements third-party logins such as QQ, WeChat, GitHub, Google, Xiaomi, etc.) ~~
 - [x] ~~demo-zookeeper (use zookeeper to implement distributed locks with AOP)~~
 - [x] ~~demo-mq-rabbitmq (integrated messaging middleware - RabbitMQ)~~
 - [ ] demo-mq-rocketmq (integrated messaging middleware - RocketMQ)

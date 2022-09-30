@@ -1,145 +1,145 @@
-> 公司：杭州涂鸦信息科技有限公司，是一个全球云开发平台、AI+IoT开发者平台，连接消费者、制造品牌、OEM厂商和连锁零售商的智能化需求，为开发者提供一站式人工智能物联网的PaaS级解决方案。并且涵盖了硬件开发工具、全球云、智慧商业平台开发三方面，提供从技术到营销渠道的全面生态赋能，打造世界领先的IoT OS。
+> Company: Hangzhou Tuya Information Technology Co., Ltd. is a global cloud development platform, AI+IoT developer platform, connecting the intelligent needs of consumers, manufacturing brands, OEMs and chain retailers, providing developers with one-stop artificial intelligence Internet of Things PaaS-level solutions. It also covers the development of hardware development tools, global cloud, and smart business platform, providing comprehensive ecological empowerment from technology to marketing channels, and creating a world-leading IoT OS.
 >
-> 团队：云端开发部/数据平台
+> Team: Cloud Development/Data Platform
 >
-> Base：杭州
+> Base: Hangzhou
 
-组内招人啦，HC 巨多 ~~ 感兴趣的小伙伴，简历发过来，:kissing_heart:
+The group recruits people, HC huge number of ~~ interested friends, resume sent over,:kissing_heart:
 
-> 微信：syk941020
+> WeChat: syk941020
 >
-> 邮箱：237497819@qq.com
+> E-mail: 237497819@qq.com
 >
-> 备注：内推+岗位
+> Remarks: internal push + post
 
 ---
 
-# 岗位列表
+# Job list
 
-* [岗位列表](#岗位列表)
-  * [高级java开发-大数据方向](#高级java开发-大数据方向)
-     * [【职位描述】](#职位描述)
-     * [【职位要求】](#职位要求)
-  * [高级java大数据平台开发工程师](#高级java大数据平台开发工程师)
-     * [【职位描述】](#职位描述-1)
-     * [【职位要求】](#职位要求-1)
-  * [大数据开发工程师(flink方向)](#大数据开发工程师flink方向)
-     * [【岗位职责】](#岗位职责)
-     * [【任职要求】](#任职要求)
-  * [高级数据仓库开发工程师](#高级数据仓库开发工程师)
-     * [【岗位描述】](#岗位描述)
-     * [【技能要求】](#技能要求)
-  * [bi分析师](#bi分析师)
-     * [【岗位职责】](#岗位职责-1)
-     * [【任职要求】](#任职要求-1)
-  * [大数据平台架构师](#大数据平台架构师)
-     * [【职位描述】](#职位描述-2)
-     * [【职位要求】](#职位要求-2)
+* [Job List](#岗位列表)
+  * [Advanced Java Development - Big Data Direction] (#高级java开发 - Big Data Direction)
+     * [[Job Description](#职位描述)
+     * [[Job Requirements](#职位要求)
+  * [Senior Java Big Data Platform Development Engineer](#高级java大数据平台开发工程师)
+     * [[Job Description](#职位描述-1)
+     * [[Job Requirements](#职位要求-1)
+  * [Big Data Development Engineer (flink)](#大数据开发工程师flink方向)
+     * [[Job Responsibilities](#岗位职责)
+     * [[Job Requirements](#任职要求)
+  * [Senior Data Warehouse Development Engineer] (#高级数据仓库开发工程师)
+     * [[Job Description](#岗位描述)
+     * [[Skill Requirements](#技能要求)
+  * [bi analyst] (#bi分析师)
+     * [[Job Responsibilities](#岗位职责-1)
+     * [[Job Requirements](#任职要求-1)
+  * [Big Data Platform Architect](#大数据平台架构师)
+     * [[Job Description](#职位描述-2)
+     * [[Job Requirements](#职位要求-2)
 
-## 高级java开发-大数据方向
+## Advanced Java Development - Big Data Direction
 
-### 【职位描述】
+### 【Job Description】
 
-1. 精通Java开源框架，Java开发语言
-3. 对新技术有出色的学习能力,掌握 mybatis, Spring MVC等技术
-3. 参与公司大数据产品、核心架构的研发和方向预演；
-4. 思维开阔喜问乐学，以提升自己的能力和效率；
+1. Proficient in Java open source framework, Java development language
+3. Excellent learning ability of new technologies, master mybatis, Spring MVC and other technologies
+3. Participate in the research and development and direction rehearsal of the company's big data products and core architecture;
+4. Broaden your mind and enjoy learning to improve your ability and efficiency;
 
-### 【职位要求】
+### 【Job Requirements】
 
-1. 精通Java语言，对相关技术领域的开源产品有深入的理解;
-2. 希望你有3年以上java相关经验；
-3. 熟悉Linux下的常用系统工具, 能利用工具排查CPU, 内存, IO等系统问题；
-4. 从事过大规模 Web 应用开发，熟悉代码重构，性能优化，系统安全和高可用性；
-5. 熟悉非关系型数据库如Redis、Hbase等。
-6. 有过hbase,elasticsearch,flink,tidb,clickhouse的开发经验，对这5者有一个深入研究者优先。
-7. 有过数据应用产品相关开发经验优先。
+1. Proficient in Java language, in-depth understanding of open source products in related technical fields;
+2. I hope you have more than 3 years of Java related experience;
+3. Familiar with common system tools under Linux, can use tools to troubleshoot CPU, memory, IO and other system problems;
+4. Engaged in large-scale Web application development, familiar with code refactoring, performance optimization, system security and high availability;
+5. Familiar with non-relational databases such as Redis, Hbase, etc.
+6. Have experience in the development of hbase, elasticsearch, flink, tidb, clickhouse, and have an in-depth researcher for these 5 is preferred.
+7. Experience in data application product development is preferred.
 
-## 高级java大数据平台开发工程师
+## Senior Java Big Data Platform Development Engineer
 
-### 【职位描述】
+### 【Job Description】
 
-1. 负责大数据平台的设计与开发实现
-2. 负责大数据应用相关产品需求分析、架构设计以及开发实现
-3. 负责数据产品的服务接口开发和维护
+1. Responsible for the design and development of big data platform
+2. Responsible for product requirements analysis, architecture design, and development and implementation of big data applications
+3. Responsible for the development and maintenance of service interfaces for data products
 
-### 【职位要求】
+### 【Job Requirements】
 
-1. 本科及以上学历，2年及以上大数据相关技术背景
-2. 熟练进行Java的代码编写，良好的代码编写素养，良好的数据结构算法技能。
-3. 熟悉spring boot、mybatis、dubbo等开发框架，熟悉前后端分离开发流程
-4. 有大数据平台开发经验，包括但不限于离线开发平台、数据质量中心、元数据管理、数据资产管理，实时流平台，可视化报表等
-5. 熟悉开源大数据平台如HBase、ES、Kylin、tidb、clickhouse等相关技术
-6. 有过使用flink做实时计算平台成功案例者和用过hera系统做过离线任务平台者优先。
+1. Bachelor degree or above, 2 years or above in big data related technical background
+2. Proficient in Java code writing, good code writing literacy, good data structure algorithm skills.
+3. Familiar with spring boot, mybatis, dubbo and other development frameworks, familiar with the front and back end separation development process
+4. Experience in big data platform development, including but not limited to offline development platform, data quality center, metadata management, data asset management, real-time streaming platform, visual reports, etc
+5. Familiar with open source big data platforms such as HBase, ES, Kylin, tidb, clickhouse and other related technologies
+6. Those who have used flink as a real-time computing platform success case and those who have used the hera system to do offline tasks are preferred.
 
-## 大数据开发工程师(flink方向)
+## Big Data Development Engineer (flink direction)
 
-### 【岗位职责】
+### 【Job Responsibilities】
 
-1. 负责业务数据和用户行为日志的实时采集、计算、存储、服务，为业务团队提供直接数据决策;
-2. 负责部门实时计算体系架构建设及实时计算平台开发改进。
-3. 负责即时分析相关技术方案的探索
-4. 负责实时数据仓库的建设，完善实时计算方案
+1. Responsible for real-time collection, calculation, storage and service of business data and user behavior logs, and provide direct data decision-making for business teams;
+2. Responsible for the construction of the department's real-time computing architecture and the development and improvement of the real-time computing platform.
+3. Responsible for the exploration of relevant technical solutions for real-time analysis
+4. Responsible for the construction of real-time data warehouse and improve the real-time computing solution
 
-### 【任职要求】
+### 【Job Requirements】
 
-1. 深入了解离线计算及相关开发，掌握实时计算技术体系包括数据采集、计算引擎flink等,对实时计算所涉及的事务、容错、可靠性有深入理解 并有实际项目经验；
-2. 熟悉 hadoop 生态包括 hdfs/mapreduce/hive/hbase,熟悉 kafka 等实时开源工具并有项目经验；
-3. 熟悉 mysql 等关系型数据库,熟悉 redis 内存数据库,熟悉 linux 系统;
-4. 掌握Java或Scala语言，如并发编程和JVM等，追求高标准的工程质量；
-5. 有flink实时计算开发经验,熟悉olap的相关技术。
-6. 有良好的沟通能力和自我驱动动力,具备出色的规划、执行力,强烈的责任感,以及优秀的学习能力,对技术有热情，愿意不断尝试新技术和业务挑战。
+1. In-depth understanding of offline computing and related development, master the real-time computing technology system including data collection, calculation engine flink, etc., have a deep understanding of the transactions, fault tolerance and reliability involved in real-time computing and have practical project experience;
+2. Familiar with the hadoop ecosystem including hdfs/mapreduce/hive/hbase, familiar with real-time open source tools such as kafka and project experience;
+3. Familiar with mysql and other relational databases, familiar with redis memory database, familiar with Linux system;
+4. Master Java or Scala languages such as concurrent programming and JVM, etc., and pursue high standards of engineering quality;
+5. Have experience in flink real-time computing development, familiar with the relevant technologies of olap.
+6. Have good communication skills and self-driving motivation, have excellent planning, execution, a strong sense of responsibility, and excellent learning ability, have enthusiasm for technology, and are willing to constantly try new technologies and business challenges.
 
-## 高级数据仓库开发工程师
+## Senior Data Warehouse Development Engineer
 
-### 【岗位描述】
+### 【Job Description】
 
-1. 负责数据仓库架构设计、建模和ETL开发；
-2. 参与数据治理工作，提升数据易用性及数据质量；
-3. 理解并合理抽象业务需求，发挥数据价值，与业务、BI团队紧密合作。
+1. Responsible for data warehouse architecture design, modeling and ETL development;
+2. Participate in data governance to improve data ease of use and data quality;
+3. Understand and reasonably abstract business requirements, exert data value, and work closely with business and BI teams.
 
-### 【技能要求】
+### 【Skill Requirements】
 
-1. 有数据仓库需求调研和需求分析经验，能根据业务需求设计数据仓库模型，并对数据仓库数据模型进行管理，保证数据质量。
-2. 精通sql开发，有较丰富的spark sql性能调优经验优先；
-3. 精通数据仓库实施方法论、深入了解数据仓库体系，并支撑过实际业务场景；
-4. 熟悉数据治理的相关环节、有相关开发经验或者实际应用场景；
-5. 具备较强的编码能力，熟悉sql，python，hive，spark，kafka，storm中的多项；
-6. 对数据敏感，认真细致，善于从数据中发现疑点；
-7. 善于沟通，具备优秀的技术与业务结合能力。
+1. Have experience in data warehouse requirements research and requirements analysis, design data warehouse models according to business needs, and manage data warehouse data models to ensure data quality.
+2. Proficient in sql development, rich experience in spark sql performance tuning is preferred;
+3. Proficient in data warehouse implementation methodology, in-depth understanding of data warehouse system, and support actual business scenarios;
+4. Familiar with the relevant aspects of data governance, relevant development experience or practical application scenarios;
+5. Have strong coding ability, familiar with many in sql, python, hive, spark, kafka, storm;
+6. Sensitive to data, careful and meticulous, good at finding doubts from data;
+7. Good at communication, with excellent technical and business combination ability.
 
-## bi分析师
+## bi analyst
 
-### 【岗位职责】
+### 【Job Responsibilities】
 
-1. 为公司技术，运营，产品，业务策略等提供数据支持；
-2. 维护,完善数据报表体系，及时,准确监控运营状况,并提供专业分析报告；
-3. 通过数据来发现业务、流程中的问题、机会，从数据角度为业务部门提出相应的优化建议，并与多方合作实现流程改善,推动相关业务目标达成；
-4. 沉淀分析思路与框架，提炼数据产品需求，与相关团队协作并推动数据产品的落地；
+1. Provide data support for the company's technology, operation, products, business strategies, etc.;
+2. Maintain and improve the data reporting system, timely and accurately monitor the operation status, and provide professional analysis reports;
+3. Discover problems and opportunities in business and process through data, put forward corresponding optimization suggestions for business departments from the perspective of data, and cooperate with multiple parties to achieve process improvement and promote the achievement of relevant business objectives;
+4. Precipitate analysis ideas and frameworks, refine data product requirements, collaborate with relevant teams and promote the landing of data products;
 
-### 【任职要求】
+### 【Job Requirements】
 
-1. 本科以上学历，2年以上工作经验，有过互联网数据分析经验者优先；
-2. 扎实的数据分析、数据统计理论，善于对抽象问题进行概括；
-3. 精通Excel，熟练SQL查询等操作,熟练使用至少一种数据分析工具（R、Python、SPSS等）者优先；
-4. 具有良好的学习能力、沟通表达能力和团队协作能力。
+1. Bachelor degree or above, more than 2 years working experience, Internet data analysis experience is preferred;
+2. Solid data analysis, data statistics theory, good at summarizing abstract problems;
+3. Proficient in Excel, proficient in SQL queries and other operations, proficient in using at least one data analysis tool (R, Python, SPSS, etc.) is preferred;
+4. Have good learning ability, communication and presentation ability and teamwork ability.
 
-## 大数据平台架构师
+## Big Data Platform Architect
 
-### 【职位描述】
+### 【Job Description】
 
-1. 负责涂鸦大数据平台的开发建设，建立数据生态服务，解决海量数据面临的挑战
-2. 参与大数据平台各类基础系统架构设计和引擎开发，集群优化，技术难点攻关
-3. 集群数据安全相关体系建设，各种存储，查询方案构建
-4. 协助管理、优化并维护Hadoop、Spark、flink等集群，保证集群规模持续、稳定；
-5. 负责大数据产品的自动化、离线与实时计算、即席计算、数据质量、数据安全等平台的设计和开发；
-6. 调研和把握当前的最新技术，将其中的先进技术引入到自己的平台中，改善产品，提升竞争力
+1. Responsible for the development and construction of Tuya big data platform, establish data ecological services, and solve the challenges faced by massive data
+2. Participate in the design and engine development of various basic system architectures of the big data platform, cluster optimization, and technical difficulties
+3. Construction of cluster data security related system, various storage, query scheme construction
+4. Assist in the management, optimization and maintenance of Hadoop, Spark, flink and other clusters to ensure that the cluster scale is continuous and stable;
+5. Responsible for the design and development of platforms such as automation, offline and real-time computing, ad-hoc computing, data quality, and data security of big data products;
+6. Investigate and grasp the current latest technology, introduce the advanced technology into their own platform, improve products, enhance competitiveness
 
-### 【职位要求】
+### 【Job Requirements】
 
-1. 本科及以上学历，5年以上工作经验，3年以上大数据领域工作经验，熟悉java,spark
-2. 熟悉开源大数据平台如HBase、ES、Kylin、Druid等，有实际的报表平台、多维度分析工具、etl平台、调度平台、实时平台中至少两种工具的实际建设经验。
-3. 有上述相关系统为基础的实际成功的复杂系统项目的架构和开发经验
-4. 热爱开源技术，熟悉一种或者多种大数据生态技术（Kafka、Hive、Hbase、Spark、Storm、Hadoop、Flink、kudu、clickhouse、tidb等），熟悉源码者优先
-5. 相关开源领域的活跃贡献者或大型互联网公司相关从业经验者优先.
-6. 有过使用flink做实时计算平台成功案例者和用过hera系统做过离线任务平台者优先。
+1. Bachelor degree or above, more than 5 years working experience, more than 3 years working experience in the field of big data, familiar with java, spark
+2. Familiar with open source big data platforms such as HBase, ES, Kylin, Druid, etc., with practical experience in the actual construction of reporting platforms, multi-dimensional analysis tools, etl platforms, scheduling platforms, and real-time platforms.
+3. Have experience in the architecture and development of practically successful complex system projects based on the relevant systems described above
+4. Love open source technology, familiar with one or more big data ecological technologies (Kafka, Hive, Hbase, Spark, Storm, Hadoop, Flink, kudu, clickhouse, tidb, etc.), familiar with the source code is preferred
+5. Active contributors in related open source fields or relevant experience in large Internet companies are preferred.
+6. Those who have used flink as a real-time computing platform success case and those who have used the hera system to do offline tasks are preferred.

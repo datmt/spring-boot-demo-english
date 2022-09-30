@@ -2,7 +2,7 @@ package com.xkcoding.websocket.common;
 
 /**
  * <p>
- * WebSocket常量
+ * WebSocket constant
  * </p>
  *
  * @author yangkai.shen

@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 群聊消息载荷
+ * Group chat message payload
  * </p>
  *
  * @author yangkai.shen
@@ -13,17 +13,17 @@ import lombok.Data;
 @Data
 public class GroupMessageRequest {
     /**
-     * 消息发送方用户id
+     * Message sender user ID
      */
     private String fromUid;
 
     /**
-     * 群组id
+     * Group ID
      */
     private String groupId;
 
     /**
-     * 消息内容
+     * Message content
      */
     private String message;
 }

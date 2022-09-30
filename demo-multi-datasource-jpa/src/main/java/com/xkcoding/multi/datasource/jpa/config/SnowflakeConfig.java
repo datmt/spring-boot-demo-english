@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>
- * 雪花算法生成器
+ * Snowflake algorithm generator
  * </p>
  *
  * @author yangkai.shen

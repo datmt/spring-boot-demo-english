@@ -1,6 +1,6 @@
 # spring-boot-demo-session
 
-> 此 demo 主要演示了 Spring Boot 如何通过 Spring Session 实现Session共享、重启程序Session不失效。
+> This demo mainly demonstrates how Spring Boot can achieve Session sharing through Spring Session and restart program Session without invalidation.
 
 ## pom.xml
 
@@ -44,7 +44,7 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!-- 对象池，使用redis时必须引入 -->
+        <!-- object pool, --> must be introduced when using redis
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
@@ -96,31 +96,31 @@ spring:
   redis:
     host: localhost
     port: 6379
-    # 连接超时时间（记得添加单位，Duration）
+    # Connection timeout (remember to add units, Duration)
     timeout: 10000ms
-    # Redis默认情况下有16个分片，这里配置具体使用的分片
+    # Redis has 16 shards by default, and here you configure the specific shards used
     # database: 0
     lettuce:
       pool:
-        # 连接池最大连接数（使用负值表示没有限制） 默认 8
+        # The maximum number of connections in the connection pool (using a negative value to indicate no limit) defaults to 8
         max-active: 8
-        # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+        # Connection pool maximum blocking wait time (using a negative value to indicate no limit) Default -1
         max-wait: -1ms
-        # 连接池中的最大空闲连接 默认 8
+        # Maximum idle connections in connection pool Default 8
         max-idle: 8
-        # 连接池中的最小空闲连接 默认 0
+        # Minimum idle connections in connection pool Default 0
         min-idle: 0
 ```
 
-## 测试
+## Test
 
-> 测试 重启程序，Session 不失效的场景
+> test the scenario where the program is restarted, Session does not fail
 
-1. 打开浏览器，访问首页：http://localhost:8080/demo/page/index
-2. 最开始未登录，所以会跳转到登录页：http://localhost:8080/demo/page/login?redirect=true 然后点击登录按钮
-3. 登录之后，跳转回首页，此时可以看到首页显示token信息。
-4. 重启程序。不关闭浏览器，直接刷新首页，此时不跳转到登录页。测试成功！
+1. Open a browser and visit Home: http://localhost:8080/demo/page/index
+2. You are not logged in at first, so you will be redirected to the login page: http://localhost:8080/demo/page/login?redirect=true and click the Sign In button
+3. After logging in, jump back to the homepage, and you can see that the homepage displays the token information.
+4. Restart the program. Without closing the browser, you can refresh the homepage directly, and do not jump to the login page. Test successful!
 
-## 参考
+## Reference
 
-- Spring Session 官方文档：https://docs.spring.io/spring-session/docs/current/reference/html5/guides/boot-redis.html#updating-dependencies
+- Spring Session Official Documentation: https://docs.spring.io/spring-session/docs/current/reference/html5/guides/boot-redis.html#updating-dependencies

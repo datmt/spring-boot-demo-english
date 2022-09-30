@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 客户团退出登录成功处理器.
+ * Customer group exits the processor successfully logged in.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @date 2020-01-06 22:11
@@ -23,7 +23,7 @@ public class ClientLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         response.setStatus(HttpStatus.FOUND.value());
-        // 跳转到客户端的回调地址
+        Jump to the client's callback address
         response.sendRedirect(request.getParameter("redirectUrl"));
     }
 

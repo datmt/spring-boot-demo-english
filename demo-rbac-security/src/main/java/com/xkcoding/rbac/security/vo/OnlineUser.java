@@ -8,7 +8,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 在线用户 VO
+ * Online user VO
  * </p>
  *
  * @author yangkai.shen
@@ -18,44 +18,44 @@ import lombok.Data;
 public class OnlineUser {
 
     /**
-     * 主键
+     * Primary key
      */
     private Long id;
 
     /**
-     * 用户名
+     * Username
      */
     private String username;
 
     /**
-     * 昵称
+     * Nickname
      */
     private String nickname;
 
     /**
-     * 手机
+     * Mobile phone
      */
     private String phone;
 
     /**
-     * 邮箱
+     * Email
      */
     private String email;
 
     /**
-     * 生日
+     * Birthday
      */
     private Long birthday;
 
     /**
-     * 性别，男-1，女-2
+     * Gender, male-1, female-2
      */
     private Integer sex;
 
     public static OnlineUser create(User user) {
         OnlineUser onlineUser = new OnlineUser();
         BeanUtil.copyProperties(user, onlineUser);
-        // 脱敏
+        Desensitization
         onlineUser.setPhone(StrUtil.hide(user.getPhone(), 3, 7));
         onlineUser.setEmail(StrUtil.hide(user.getEmail(), 1, StrUtil.indexOfIgnoreCase(user.getEmail(), Consts.SYMBOL_EMAIL)));
         return onlineUser;

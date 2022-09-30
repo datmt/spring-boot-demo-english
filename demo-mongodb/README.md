@@ -1,15 +1,15 @@
 # spring-boot-demo-mongodb
 
-> 此 demo 主要演示了 Spring Boot 如何集成 MongoDB，使用官方的 starter 实现增删改查。
+> This demo mainly demonstrates how Spring Boot integrates with MongoDB and uses the official starter to implement additions, deletions, and changes.
 
-## 注意
+## Note
 
-作者编写本demo时，MongoDB 最新版本为 `4.1`，使用 docker 运行，下面是所有步骤：
+When the author wrote this demo, the latest version of MongoDB was '4.1', running with docker, here are all the steps:
 
-1. 下载镜像：`docker pull mongo:4.1`
-2. 运行容器：`docker run -d -p 27017:27017 -v /Users/yangkai.shen/docker/mongo/data:/data/db --name mongo-4.1 mongo:4.1`
-3. 停止容器：`docker stop mongo-4.1`
-4. 启动容器：`docker start mongo-4.1`
+1. Download the image: 'docker pull mongo:4.1'
+2. Run the container: 'docker run -d -p 27017:27017 -v /Users/yangkai.shen/docker/mongo/data:/data/db --name mongo-4.1 mongo:4.1'
+3. Stop container: 'docker stop mongo-4.1'
+4. Start the container: 'docker start mongo-4.1'
 
 ## pom.xml
 
@@ -104,7 +104,7 @@ logging:
 ```java
 /**
  * <p>
- * 文章实体类
+ * Article entity class
  * </p>
  *
  * @author yangkai.shen
@@ -116,38 +116,38 @@ logging:
 @AllArgsConstructor
 public class Article {
     /**
-     * 文章id
+     * Article id
      */
     @Id
     private Long id;
 
     /**
-     * 文章标题
+     * Article title
      */
     private String title;
 
     /**
-     * 文章内容
+     * Article content
      */
     private String content;
 
     /**
-     * 创建时间
+     * Creation time
      */
     private Date createTime;
 
     /**
-     * 更新时间
+     * Update time
      */
     private Date updateTime;
 
     /**
-     * 点赞数量
+     * Number of likes
      */
     private Long thumbUp;
 
     /**
-     * 访客数量
+     * Number of visitors
      */
     private Long visits;
 
@@ -159,7 +159,7 @@ public class Article {
 ```java
 /**
  * <p>
- * 文章 Dao
+ * Article Dao
  * </p>
  *
  * @author yangkai.shen
@@ -167,10 +167,10 @@ public class Article {
  */
 public interface ArticleRepository extends MongoRepository<Article, Long> {
     /**
-     * 根据标题模糊查询
+     * Fuzzy query based on title
      *
-     * @param title 标题
-     * @return 满足条件的文章列表
+     * @param title title
+     * @return list of articles that meet the criteria
      */
     List<Article> findByTitleLike(String title);
 }
@@ -181,7 +181,7 @@ public interface ArticleRepository extends MongoRepository<Article, Long> {
 ```java
 /**
  * <p>
- * 测试操作 MongoDb
+ * Test operation MongoDb
  * </p>
  *
  * @author yangkai.shen
@@ -199,7 +199,7 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     private Snowflake snowflake;
 
     /**
-     * 测试新增
+     * New to testing
      */
     @Test
     public void testSave() {
@@ -210,7 +210,7 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     }
 
     /**
-     * 测试新增列表
+     * Test new list
      */
     @Test
     public void testSaveList() {
@@ -227,12 +227,12 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     }
 
     /**
-     * 测试更新
+     * Test updates
      */
     @Test
     public void testUpdate() {
         articleRepo.findById(1L).ifPresent(article -> {
-            article.setTitle(article.getTitle() + "更新之后的标题");
+            article.setTitle(article.getTitle() + "Updated title");
             article.setUpdateTime(DateUtil.date());
             articleRepo.save(article);
             log.info("【article】= {}", JSONUtil.toJsonStr(article));
@@ -240,19 +240,19 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
     }
 
     /**
-     * 测试删除
+     * Test removal
      */
     @Test
     public void testDelete() {
-        // 根据主键删除
+        Delete based on the primary key
         articleRepo.deleteById(1L);
 
-        // 全部删除
+        Delete All
         articleRepo.deleteAll();
     }
 
     /**
-     * 测试点赞数、访客数，使用save方式更新点赞、访客
+     * Test the number of likes and visitors, and use save to update likes and visitors
      */
     @Test
     public void testThumbUp() {
@@ -260,12 +260,12 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
             article.setThumbUp(article.getThumbUp() + 1);
             article.setVisits(article.getVisits() + 1);
             articleRepo.save(article);
-            log.info("【标题】= {}【点赞数】= {}【访客数】= {}", article.getTitle(), article.getThumbUp(), article.getVisits());
+            log.info("[title] = {}【Likes】= {}【Number of visitors】= {}", article.getTitle(), article.getThumbUp(), article.getVisits());
         });
     }
 
     /**
-     * 测试点赞数、访客数，使用更优雅/高效的方式更新点赞、访客
+     * Test likes, visitors, and update likes and visitors in a more elegant/efficient way
      */
     @Test
     public void testThumbUp2() {
@@ -277,41 +277,41 @@ public class ArticleRepositoryTest extends SpringBootDemoMongodbApplicationTests
         mongoTemplate.updateFirst(query, update, "article");
 
         articleRepo.findById(1L)
-                .ifPresent(article -> log.info("【标题】= {}【点赞数】= {}【访客数】= {}", article.getTitle(), article.getThumbUp(), article
+                .ifPresent(article-> log.info("[title]={}【Likes】= {}【Number of visitors】= {}", article.getTitle(), article.getThumbUp(), article
                         .getVisits()));
     }
 
     /**
-     * 测试分页排序查询
+     * Test paginated sort query
      */
     @Test
     public void testQuery() {
         Sort sort = Sort.by("thumbUp", "updateTime").descending();
         PageRequest pageRequest = PageRequest.of(0, 5, sort);
         Page<Article> all = articleRepo.findAll(pageRequest);
-        log.info("【总页数】= {}", all.getTotalPages());
-        log.info("【总条数】= {}", all.getTotalElements());
-        log.info("【当前页数据】= {}", JSONUtil.toJsonStr(all.getContent()
+        log.info("[Total pages] = {}", all.getTotalPages());
+        log.info("[Total Items] = {}", all.getTotalElements());
+        log.info("[Current page data] = {}", JSONUtil.toJsonStr(all.getContent()
                 .stream()
-                .map(article -> "文章标题：" + article.getTitle() + "点赞数：" + article.getThumbUp() + "更新时间：" + article.getUpdateTime())
+                .map(article -> "Article title:" + article.getTitle() + "Likes:" + article.getThumbUp() + "Update time:" + article.getUpdateTime())
                 .collect(Collectors.toList())));
     }
 
     /**
-     * 测试根据标题模糊查询
+     * Test fuzzy query based on title
      */
     @Test
     public void testFindByTitleLike() {
-        List<Article> articles = articleRepo.findByTitleLike("更新");
+        List<Article> articles = articleRepo.findByTitleLike ("Update");
         log.info("【articles】= {}", JSONUtil.toJsonStr(articles));
     }
 
 }
 ```
 
-## 参考
+## Reference
 
-1. Spring Data MongoDB 官方文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.2.RELEASE/reference/html/
-2. MongoDB 官方镜像地址：https://hub.docker.com/_/mongo
-3. MongoDB 官方快速入门：https://docs.mongodb.com/manual/tutorial/getting-started/
-4. MongoDB 官方文档：https://docs.mongodb.com/manual/
+1. Spring Data MongoDB Official Documentation: https://docs.spring.io/spring-data/mongodb/docs/2.1.2.RELEASE/reference/html/
+2. MongoDB official image address: https://hub.docker.com/_/mongo
+3. MongoDB Official Quickstart: https://docs.mongodb.com/manual/tutorial/getting-started/
+4. MongoDB Official Documentation: https://docs.mongodb.com/manual/

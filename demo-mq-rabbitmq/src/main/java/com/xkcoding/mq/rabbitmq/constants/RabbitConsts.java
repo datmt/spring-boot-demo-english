@@ -2,7 +2,7 @@ package com.xkcoding.mq.rabbitmq.constants;
 
 /**
  * <p>
- * RabbitMQ常量池
+ * RabbitMQ constant pool
  * </p>
  *
  * @author yangkai.shen
@@ -10,52 +10,52 @@ package com.xkcoding.mq.rabbitmq.constants;
  */
 public interface RabbitConsts {
     /**
-     * 直接模式1
+     * Direct mode 1
      */
     String DIRECT_MODE_QUEUE_ONE = "queue.direct.1";
 
     /**
-     * 队列2
+     * Queue 2
      */
     String QUEUE_TWO = "queue.2";
 
     /**
-     * 队列3
+     * Queue 3
      */
     String QUEUE_THREE = "3.queue";
 
     /**
-     * 分列模式
+     * Column mode
      */
     String FANOUT_MODE_QUEUE = "fanout.mode";
 
     /**
-     * 主题模式
+     * Theme mode
      */
     String TOPIC_MODE_QUEUE = "topic.mode";
 
     /**
-     * 路由1
+     * Route 1
      */
     String TOPIC_ROUTING_KEY_ONE = "queue.#";
 
     /**
-     * 路由2
+     * Route 2
      */
     String TOPIC_ROUTING_KEY_TWO = "*.queue";
 
     /**
-     * 路由3
+     * Route 3
      */
     String TOPIC_ROUTING_KEY_THREE = "3.queue";
 
     /**
-     * 延迟队列
+     * Delay queue
      */
     String DELAY_QUEUE = "delay.queue";
 
     /**
-     * 延迟队列交换器
+     * Delay queue switcher
      */
     String DELAY_MODE_QUEUE = "delay.mode";
 }

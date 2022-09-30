@@ -1,28 +1,28 @@
 # spring-boot-demo-mq-rabbitmq
 
-> 此 demo 主要演示了 Spring Boot 如何集成 RabbitMQ，并且演示了基于直接队列模式、分列模式、主题模式、延迟队列的消息发送和接收。
+> This demo demonstrates how Spring Boot integrates with RabbitMQ and demonstrates the sending and receiving of messages based on direct queue mode, column mode, topic mode, and delay queue.
 
-## 注意
+## Note
 
-作者编写本demo时，RabbitMQ 版本使用 `3.7.7-management`，使用 docker 运行，下面是所有步骤：
+When the author wrote this demo, the RabbitMQ version uses '3.7.7-management' and runs using docker, here are all the steps:
 
-1. 下载镜像：`docker pull rabbitmq:3.7.7-management`
+1. Download the image: 'docker pull rabbitmq:3.7.7-management'
 
-2. 运行容器：`docker run -d -p 5671:5617 -p 5672:5672 -p 4369:4369 -p 15671:15671 -p 15672:15672 -p 25672:25672 --name rabbit-3.7.7 rabbitmq:3.7.7-management`
+2. Run container: 'docker run -d -p 5671:5617 -p 5672:5672 -p 4369:4369 -p 15671:15671 -p 15672:15672 -p 25672:25672 --name rabbit-3.7.7 rabbitmq:3.7.7-management'
 
-3. 进入容器：`docker exec -it rabbit-3.7.7 /bin/bash`
+3. Enter the container: 'docker exec -it rabbit-3.7.7 /bin/bash'
 
-4. 给容器安装 下载工具 wget：`apt-get install -y wget`
+4. Install the container Download tool wget:'apt-get install -y wget'
 
-5. 下载插件包，因为我们的 `RabbitMQ` 版本为 `3.7.7` 所以我们安装 `3.7.x` 版本的延迟队列插件
+5. Download the plugin package as our 'RabbitMQ' version is '3.7.7' so we install the '3.7.x' version of the Delay Queue plugin
 
    ```bash
    root@f72ac937f2be:/plugins# wget https://dl.bintray.com/rabbitmq/community-plugins/3.7.x/rabbitmq_delayed_message_exchange/rabbitmq_delayed_message_exchange-20171201-3.7.x.zip
    ```
 
-6. 给容器安装 解压工具 unzip：`apt-get install -y unzip`
+6. Install the unzipping tool unzip for the container: 'apt-get install -y unzip'
 
-7. 解压插件包
+7. Unzip the plugin package
 
    ```bash
    root@f72ac937f2be:/plugins# unzip rabbitmq_delayed_message_exchange-20171201-3.7.x.zip
@@ -30,7 +30,7 @@
      inflating: rabbitmq_delayed_message_exchange-20171201-3.7.x.ez
    ```
 
-8. 启动延迟队列插件
+8. Start the Delay Queue plug-in
 
    ```yaml
    root@f72ac937f2be:/plugins# rabbitmq-plugins enable rabbitmq_delayed_message_exchange
@@ -46,11 +46,11 @@
    started 1 plugins.
    ```
 
-9. 退出容器：`exit`
+9. Exit the container: 'exit'
 
-10. 停止容器：`docker stop rabbit-3.7.7`
+10. Stop Container: 'docker stop rabbit-3.7.7'
 
-11. 启动容器：`docker start rabbit-3.7.7`
+11. Start the container: 'docker start rabbit-3.7.7'
 
 ## pom.xml
 
@@ -140,7 +140,7 @@ spring:
     username: guest
     password: guest
     virtual-host: /
-    # 手动提交消息
+    # Submit the message manually
     listener:
       simple:
         acknowledge-mode: manual
@@ -153,7 +153,7 @@ spring:
 ```java
 /**
  * <p>
- * RabbitMQ常量池
+ * RabbitMQ constant pool
  * </p>
  *
  * @author yangkai.shen
@@ -161,52 +161,52 @@ spring:
  */
 public interface RabbitConsts {
     /**
-     * 直接模式1
+     * Direct mode 1
      */
     String DIRECT_MODE_QUEUE_ONE = "queue.direct.1";
 
     /**
-     * 队列2
+     * Queue 2
      */
     String QUEUE_TWO = "queue.2";
 
     /**
-     * 队列3
+     * Queue 3
      */
     String QUEUE_THREE = "3.queue";
 
     /**
-     * 分列模式
+     * Column mode
      */
     String FANOUT_MODE_QUEUE = "fanout.mode";
 
     /**
-     * 主题模式
+     * Theme mode
      */
     String TOPIC_MODE_QUEUE = "topic.mode";
 
     /**
-     * 路由1
+     * Route 1
      */
     String TOPIC_ROUTING_KEY_ONE = "queue.#";
 
     /**
-     * 路由2
+     * Route 2
      */
     String TOPIC_ROUTING_KEY_TWO = "*.queue";
 
     /**
-     * 路由3
+     * Route 3
      */
     String TOPIC_ROUTING_KEY_THREE = "3.queue";
 
     /**
-     * 延迟队列
+     * Delay queue
      */
     String DELAY_QUEUE = "delay.queue";
 
     /**
-     * 延迟队列交换器
+     * Delay queue switcher
      */
     String DELAY_MODE_QUEUE = "delay.mode";
 }
@@ -214,16 +214,16 @@ public interface RabbitConsts {
 
 ## RabbitMqConfig.java
 
-> RoutingKey规则
+> RoutingKey rules
 >
-> - 路由格式必须以 `.` 分隔，比如 `user.email` 或者 `user.aaa.email`
-> - 通配符 `*` ，代表一个占位符，或者说一个单词，比如路由为 `user.*`，那么 **`user.email`** 可以匹配，但是 *`user.aaa.email`* 就匹配不了
-> - 通配符 `#` ，代表一个或多个占位符，或者说一个或多个单词，比如路由为 `user.#`，那么 **`user.email`** 可以匹配，**`user.aaa.email `** 也可以匹配
+> - The routing format must be separated by '.', such as 'user.email' or 'user.aaa.email'
+> - The wildcard character '*' represents a placeholder, or a word, such as 'user.*' for a route, then **'user.email' can match, but *'user.aaa.email'* does not
+> - The wildcard character '#' represents one or more placeholders, or one or more words, such as 'user.#', if the route is 'user.#', then **'user.email' can be matched, and **'user.aaa.email' '** can also be matched
 
 ```java
 /**
  * <p>
- * RabbitMQ配置，主要是配置队列，如果提前存在该队列，可以省略本配置类
+ * RabbitMQ configuration, mainly configuration queue, if the queue exists in advance, you can omit this configuration class
  * </p>
  *
  * @author yangkai.shen
@@ -239,13 +239,13 @@ public class RabbitMqConfig {
         connectionFactory.setPublisherReturns(true);
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMandatory(true);
-        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> log.info("消息发送成功:correlationData({}),ack({}),cause({})", correlationData, ack, cause));
-        rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> log.info("消息丢失:exchange({}),route({}),replyCode({}),replyText({}),message:{}", exchange, routingKey, replyCode, replyText, message));
+        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> log.info ("Message sent successfully:correlationData({}),ack({}),cause({})", correlationData, ack, cause));
+        rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> log.info("Message lost:exchange({}),route({}),replyCode({}),replyText({}),message:{}", exchange, routingKey, replyCode, replyText, message));
         return rabbitTemplate;
     }
 
     /**
-     * 直接模式队列1
+     * Direct mode queue 1
      */
     @Bean
     public Queue directOneQueue() {
@@ -253,7 +253,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 队列2
+     * Queue 2
      */
     @Bean
     public Queue queueTwo() {
@@ -261,7 +261,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 队列3
+     * Queue 3
      */
     @Bean
     public Queue queueThree() {
@@ -269,7 +269,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 分列模式队列
+     * Column mode queue
      */
     @Bean
     public FanoutExchange fanoutExchange() {
@@ -277,10 +277,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 分列模式绑定队列1
+     * Column mode bind queue 1
      *
-     * @param directOneQueue 绑定队列1
-     * @param fanoutExchange 分列模式交换器
+     * @param directOneQueue bound queue 1
+     * @param fanoutExchange Split Mode Switch
      */
     @Bean
     public Binding fanoutBinding1(Queue directOneQueue, FanoutExchange fanoutExchange) {
@@ -288,10 +288,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 分列模式绑定队列2
+     * Column mode bind queue 2
      *
-     * @param queueTwo       绑定队列2
-     * @param fanoutExchange 分列模式交换器
+     * @param queueTwo bound queue 2
+     * @param fanoutExchange Split Mode Switch
      */
     @Bean
     public Binding fanoutBinding2(Queue queueTwo, FanoutExchange fanoutExchange) {
@@ -299,10 +299,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 主题模式队列
-     * <li>路由格式必须以 . 分隔，比如 user.email 或者 user.aaa.email</li>
-     * <li>通配符 * ，代表一个占位符，或者说一个单词，比如路由为 user.*，那么 user.email 可以匹配，但是 user.aaa.email 就匹配不了</li>
-     * <li>通配符 # ，代表一个或多个占位符，或者说一个或多个单词，比如路由为 user.#，那么 user.email 可以匹配，user.aaa.email 也可以匹配</li>
+     * Topic mode queues
+     * <li>The routing format must be separated by . , such as user.email or user.aaa.email</li>
+     * <li>wildcard character * , represents a placeholder, or a word, such as the route is user.*, then the user.email can match, but user.aaa.email can not match</li>
+     * <li>The wildcard character # represents one or more placeholders, or one or more words, such as a route as user.#, then user.email can match, user.aaa.email can also match</li>
      */
     @Bean
     public TopicExchange topicExchange() {
@@ -311,10 +311,10 @@ public class RabbitMqConfig {
 
 
     /**
-     * 主题模式绑定分列模式
+     * Theme mode binding column mode
      *
-     * @param fanoutExchange 分列模式交换器
-     * @param topicExchange  主题模式交换器
+     * @param fanoutExchange Split Mode Switch
+     * @param topicExchange topic mode switcher
      */
     @Bean
     public Binding topicBinding1(FanoutExchange fanoutExchange, TopicExchange topicExchange) {
@@ -322,10 +322,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 主题模式绑定队列2
+     * Topic mode binding queue 2
      *
-     * @param queueTwo      队列2
-     * @param topicExchange 主题模式交换器
+     * @param queueTwo queue 2
+     * @param topicExchange topic mode switcher
      */
     @Bean
     public Binding topicBinding2(Queue queueTwo, TopicExchange topicExchange) {
@@ -333,10 +333,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 主题模式绑定队列3
+     * Topic mode binding queue 3
      *
-     * @param queueThree    队列3
-     * @param topicExchange 主题模式交换器
+     * @param queue three queue 3
+     * @param topicExchange topic mode switcher
      */
     @Bean
     public Binding topicBinding3(Queue queueThree, TopicExchange topicExchange) {
@@ -344,7 +344,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 延迟队列
+     * Delay queue
      */
     @Bean
     public Queue delayQueue() {
@@ -352,7 +352,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 延迟队列交换器, x-delayed-type 和 x-delayed-message 固定
+     * Delay queue switchers, x-delayed-type and x-delayed-message fixed
      */
     @Bean
     public CustomExchange delayExchange() {
@@ -362,10 +362,10 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 延迟队列绑定自定义交换器
+     * Delay queue binding custom switch
      *
-     * @param delayQueue    队列
-     * @param delayExchange 延迟交换器
+     * @param delayQueue queue
+     * @param delayExchange delay switcher
      */
     @Bean
     public Binding delayBinding(Queue delayQueue, CustomExchange delayExchange) {
@@ -375,18 +375,18 @@ public class RabbitMqConfig {
 }
 ```
 
-## 消息处理器
+## Message processor
 
-> 只展示直接队列模式的消息处理，其余模式请看源码
+> only shows the message processing of the direct queue mode, and the rest of the modes can be found in the source code
 >
-> 需要注意：如果 `spring.rabbitmq.listener.direct.acknowledge-mode: auto`，则会自动Ack，否则需要手动Ack
+> Note: If 'spring.rabbitmq.listener.direct.acknowledge-mode', it is automatically acked, otherwise a manual ack is required
 
 ### DirectQueueOneHandler.java
 
 ```java
 /**
  * <p>
- * 直接队列1 处理器
+ * Direct queue 1 processor
  * </p>
  *
  * @author yangkai.shen
@@ -398,24 +398,24 @@ public class RabbitMqConfig {
 public class DirectQueueOneHandler {
 
     /**
-     * 如果 spring.rabbitmq.listener.direct.acknowledge-mode: auto，则可以用这个方式，会自动ack
+     * If spring.rabbitmq.listener.direct.acknowledge-mode: auto, you can use this way, automatically ack
      */
-    // @RabbitHandler
+     @RabbitHandler
     public void directHandlerAutoAck(MessageStruct message) {
-        log.info("直接队列处理器，接收消息：{}", JSONUtil.toJsonStr(message));
+        log.info ("Direct queue processor, receiving message: {}", JSONUtil.toJsonStr(message));
     }
 
     @RabbitHandler
     public void directHandlerManualAck(MessageStruct messageStruct, Message message, Channel channel) {
-        //  如果手动ACK,消息会被监听消费,但是消息在队列中依旧存在,如果 未配置 acknowledge-mode 默认是会在消费完毕后自动ACK掉
+        If you acknowledge manually, the message will be listened to for consumption, but the message will still exist in the queue, and if acknowledge-mode is not configured, the default is that the ACK will be automatically dropped after consumption
         final long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
-            log.info("直接队列1，手动ACK，接收消息：{}", JSONUtil.toJsonStr(messageStruct));
-            // 通知 MQ 消息已被成功消费,可以ACK了
+            log.info ("Direct queue 1, manual ACK, receive message: {}", JSONUtil.toJsonStr(messageStruct));
+            Notifying the MQ message has been successfully consumed and can ACK away
             channel.basicAck(deliveryTag, false);
         } catch (IOException e) {
             try {
-                // 处理失败,重新压入MQ
+                Processing failed, re-press MQ
                 channel.basicRecover();
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -435,7 +435,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     private RabbitTemplate rabbitTemplate;
 
     /**
-     * 测试直接模式发送
+     * Test direct mode sending
      */
     @Test
     public void sendDirect() {
@@ -443,7 +443,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     }
 
     /**
-     * 测试分列模式发送
+     * Test column mode sending
      */
     @Test
     public void sendFanout() {
@@ -451,7 +451,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     }
 
     /**
-     * 测试主题模式发送1
+     * Test theme mode send 1
      */
     @Test
     public void sendTopic1() {
@@ -459,7 +459,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     }
 
     /**
-     * 测试主题模式发送2
+     * Test theme mode send 2
      */
     @Test
     public void sendTopic2() {
@@ -467,7 +467,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     }
 
     /**
-     * 测试主题模式发送3
+     * Test theme mode send 3
      */
     @Test
     public void sendTopic3() {
@@ -475,7 +475,7 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
     }
 
     /**
-     * 测试延迟队列发送
+     * Test delay queue sending
      */
     @Test
     public void sendDelay() {
@@ -499,36 +499,36 @@ public class SpringBootDemoMqRabbitmqApplicationTests {
 }
 ```
 
-## 运行效果
+## Run effect
 
-### 直接模式
+### Direct mode
 
-![image-20190107103229408](http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063315-1.jpg)
+! [image-20190107103229408] (http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063315-1.jpg)
 
-### 分列模式
+### Column mode
 
-![image-20190107103258291](http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063315.jpg)
+! [image-20190107103258291] (http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063315.jpg)
 
-### 主题模式
+### Theme mode
 
 #### RoutingKey：`queue.#`
 
-![image-20190107103358744](http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063316.jpg)
+! [image-20190107103358744] (http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063316.jpg)
 
 #### RoutingKey：`*.queue`
 
-![image-20190107103429430](http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063312.jpg)
+! [image-20190107103429430] (http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063312.jpg)
 
 #### RoutingKey：`3.queue`
 
-![image-20190107103451240](http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063313.jpg)
+! [image-20190107103451240] (http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063313.jpg)
 
-### 延迟队列
+### Delay queue
 
-![image-20190107103509943](http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063314.jpg)
+! [image-20190107103509943] (http://static.xkcoding.com/spring-boot-demo/mq/rabbitmq/063314.jpg)
 
-## 参考
+## Reference
 
-1. SpringQP 官方文档：https://docs.spring.io/spring-amqp/docs/2.1.0.RELEASE/reference/html/
-2. RabbitMQ 官网：http://www.rabbitmq.com/
-3. RabbitMQ延迟队列：https://www.cnblogs.com/vipstone/p/9967649.html
+1. SpringQP Official Documentation: https://docs.spring.io/spring-amqp/docs/2.1.0.RELEASE/reference/html/
+2. RabbitMQ official website: http://www.rabbitmq.com/
+3. RabbitMQ delay queue: https://www.cnblogs.com/vipstone/p/9967649.html

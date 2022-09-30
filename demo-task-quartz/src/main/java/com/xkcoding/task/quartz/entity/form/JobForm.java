@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * <p>
- * 定时任务详情
+ * Scheduled task details
  * </p>
  *
  * @author yangkai.shen
@@ -17,17 +17,17 @@ import javax.validation.constraints.NotBlank;
 @Accessors(chain = true)
 public class JobForm {
     /**
-     * 定时任务全类名
+     * Full class name of the scheduled task
      */
     @NotBlank(message = "类名不能为空")
     private String jobClassName;
     /**
-     * 任务组名
+     * Task group name
      */
     @NotBlank(message = "任务组名不能为空")
     private String jobGroupName;
     /**
-     * 定时任务cron表达式
+     * Scheduled task cron expression
      */
     @NotBlank(message = "cron表达式不能为空")
     private String cronExpression;

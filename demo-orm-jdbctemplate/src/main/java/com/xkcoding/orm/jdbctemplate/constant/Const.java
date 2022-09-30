@@ -2,7 +2,7 @@ package com.xkcoding.orm.jdbctemplate.constant;
 
 /**
  * <p>
- * 常量池
+ * Constant pool
  * </p>
  *
  * @author yangkai.shen
@@ -10,12 +10,12 @@ package com.xkcoding.orm.jdbctemplate.constant;
  */
 public interface Const {
     /**
-     * 加密盐前缀
+     * Encryption salt prefix
      */
     String SALT_PREFIX = "::SpringBootDemo::";
 
     /**
-     * 逗号分隔符
+     * Comma separator
      */
     String SEPARATOR_COMMA = ",";
 }

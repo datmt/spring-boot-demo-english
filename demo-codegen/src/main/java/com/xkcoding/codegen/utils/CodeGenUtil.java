@@ -28,7 +28,7 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * <p>
- * 代码生成器   工具类
+ * Code generator tool class
  * </p>
  *
  * @author yangkai.shen
@@ -60,15 +60,15 @@ public class CodeGenUtil {
     }
 
     /**
-     * 生成代码
+     * Generate code
      */
     public void generatorCode(GenConfig genConfig, Entity table, List<Entity> columns, ZipOutputStream zip) {
-        //配置信息
+        Configuration information
         Props propsDB2Java = getConfig("generator.properties");
         Props propsDB2Jdbc = getConfig("jdbc_type.properties");
 
         boolean hasBigDecimal = false;
-        //表信息
+        Table information
         TableEntity tableEntity = new TableEntity();
         tableEntity.setTableName(table.getStr("tableName"));
 
@@ -85,12 +85,12 @@ public class CodeGenUtil {
             tablePrefix = propsDB2Java.getStr("tablePrefix");
         }
 
-        //表名转换成Java类名
+        Table names are converted to Java class names
         String className = tableToJava(tableEntity.getTableName(), tablePrefix);
         tableEntity.setCaseClassName(className);
         tableEntity.setLowerClassName(StrUtil.lowerFirst(className));
 
-        //列信息
+        Column information
         List<ColumnEntity> columnList = Lists.newArrayList();
         for (Entity column : columns) {
             ColumnEntity columnEntity = new ColumnEntity();
@@ -99,12 +99,12 @@ public class CodeGenUtil {
             columnEntity.setComments(column.getStr("columnComment"));
             columnEntity.setExtra(column.getStr("extra"));
 
-            //列名转换成Java属性名
+            The column names are converted to Java property names
             String attrName = columnToJava(columnEntity.getColumnName());
             columnEntity.setCaseAttrName(attrName);
             columnEntity.setLowerAttrName(StrUtil.lowerFirst(attrName));
 
-            //列的数据类型，转换成Java类型
+            The data type of the column, converted to Java type
             String attrType = propsDB2Java.getStr(columnEntity.getDataType(), "unknownType");
             columnEntity.setAttrType(attrType);
             String jdbcType = propsDB2Jdbc.getStr(columnEntity.getDataType(), "unknownType");
@@ -112,7 +112,7 @@ public class CodeGenUtil {
             if (!hasBigDecimal && "BigDecimal".equals(attrType)) {
                 hasBigDecimal = true;
             }
-            //是否主键
+            Whether the primary key
             if ("PRI".equalsIgnoreCase(column.getStr("columnKey")) && tableEntity.getPk() == null) {
                 tableEntity.setPk(columnEntity);
             }
@@ -121,16 +121,16 @@ public class CodeGenUtil {
         }
         tableEntity.setColumns(columnList);
 
-        //没主键，则第一个字段为主键
+        If there is no primary key, the first field is the primary key
         if (tableEntity.getPk() == null) {
             tableEntity.setPk(tableEntity.getColumns().get(0));
         }
 
-        //设置velocity资源加载器
+        Set the velocity resource loader
         Properties prop = new Properties();
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
-        //封装模板数据
+        Encapsulate template data
         Map<String, Object> map = new HashMap<>(16);
         map.put("tableName", tableEntity.getTableName());
         map.put("pk", tableEntity.getPk());
@@ -169,16 +169,16 @@ public class CodeGenUtil {
         }
         VelocityContext context = new VelocityContext(map);
 
-        //获取模板列表
+        Gets a list of templates
         List<String> templates = getTemplates();
         for (String template : templates) {
-            //渲染模板
+            Render the template
             StringWriter sw = new StringWriter();
             Template tpl = Velocity.getTemplate(template, CharsetUtil.UTF_8);
             tpl.merge(context, sw);
 
             try {
-                //添加到zip
+                Add to zip
                 zip.putNextEntry(new ZipEntry(Objects.requireNonNull(getFileName(template, tableEntity.getCaseClassName(), map.get("package").toString(), map.get("moduleName").toString()))));
                 IoUtil.write(zip, StandardCharsets.UTF_8, false, sw.toString());
                 IoUtil.close(sw);
@@ -191,14 +191,14 @@ public class CodeGenUtil {
 
 
     /**
-     * 列名转换成Java属性名
+     * Column names are converted to Java property names
      */
     private String columnToJava(String columnName) {
         return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "");
     }
 
     /**
-     * 表名转换成Java类名
+     * Table name converted to Java class name
      */
     private String tableToJava(String tableName, String tablePrefix) {
         if (StrUtil.isNotBlank(tablePrefix)) {
@@ -208,7 +208,7 @@ public class CodeGenUtil {
     }
 
     /**
-     * 获取配置信息
+     * Get configuration information
      */
     private Props getConfig(String fileName) {
         Props props = new Props(fileName);
@@ -217,14 +217,14 @@ public class CodeGenUtil {
     }
 
     /**
-     * 获取文件名
+     * Get the file name
      */
     private String getFileName(String template, String className, String packageName, String moduleName) {
-        // 包路径
+        The package path
         String packagePath = GenConstants.SIGNATURE + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
-        // 资源路径
+        The resource path
         String resourcePath = GenConstants.SIGNATURE + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
-        // api路径
+        APIs
         String apiPath = GenConstants.SIGNATURE + File.separator + "api" + File.separator;
 
         if (StrUtil.isNotBlank(packageName)) {

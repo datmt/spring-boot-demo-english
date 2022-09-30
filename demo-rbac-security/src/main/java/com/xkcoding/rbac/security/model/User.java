@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 /**
  * <p>
- * 用户
+ * Users
  * </p>
  *
  * @author yangkai.shen
@@ -21,59 +21,59 @@ import javax.persistence.Table;
 public class User {
 
     /**
-     * 主键
+     * Primary key
      */
     @Id
     private Long id;
 
     /**
-     * 用户名
+     * Username
      */
     private String username;
 
     /**
-     * 密码
+     * Password
      */
     private String password;
 
     /**
-     * 昵称
+     * Nickname
      */
     private String nickname;
 
     /**
-     * 手机
+     * Mobile phone
      */
     private String phone;
 
     /**
-     * 邮箱
+     * Email
      */
     private String email;
 
     /**
-     * 生日
+     * Birthday
      */
     private Long birthday;
 
     /**
-     * 性别，男-1，女-2
+     * Gender, male-1, female-2
      */
     private Integer sex;
 
     /**
-     * 状态，启用-1，禁用-0
+     * Status, enabled -1, disabled -0
      */
     private Integer status;
 
     /**
-     * 创建时间
+     * Creation time
      */
     @Column(name = "create_time")
     private Long createTime;
 
     /**
-     * 更新时间
+     * Update time
      */
     @Column(name = "update_time")
     private Long updateTime;

@@ -2,7 +2,7 @@ package com.xkcoding.dubbo.common.service;
 
 /**
  * <p>
- * Hello服务接口
+ * Hello service interface
  * </p>
  *
  * @author yangkai.shen
@@ -10,10 +10,10 @@ package com.xkcoding.dubbo.common.service;
  */
 public interface HelloService {
     /**
-     * 问好
+     * Say hello
      *
-     * @param name 姓名
-     * @return 问好
+     * @param name name
+     * @return Say hello
      */
     String sayHello(String name);
 }

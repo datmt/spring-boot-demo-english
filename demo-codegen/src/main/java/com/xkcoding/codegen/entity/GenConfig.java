@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 生成配置
+ * Build configuration
  * </p>
  *
  * @author yangkai.shen
@@ -13,31 +13,31 @@ import lombok.Data;
 @Data
 public class GenConfig {
     /**
-     * 请求参数
+     * Request parameters
      */
     private TableRequest request;
     /**
-     * 包名
+     * Package name
      */
     private String packageName;
     /**
-     * 作者
+     * Author
      */
     private String author;
     /**
-     * 模块名称
+     * Module name
      */
     private String moduleName;
     /**
-     * 表前缀
+     * Table prefix
      */
     private String tablePrefix;
     /**
-     * 表名称
+     * Table name
      */
     private String tableName;
     /**
-     * 表备注
+     * Table remarks
      */
     private String comments;
 }

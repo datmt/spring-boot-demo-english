@@ -1,6 +1,6 @@
 # spring-boot-demo-zookeeper
 
-> 此 demo 主要演示了如何使用 Spring Boot 集成 Zookeeper 结合AOP实现分布式锁。
+> This demo mainly demonstrates how to use Spring Boot integrated Zookeeper to implement distributed locks in conjunction with AOP.
 
 ## pom.xml
 
@@ -46,8 +46,8 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!-- curator 版本4.1.0 对应 zookeeper 版本 3.5.x -->
-        <!-- curator 与 zookeeper 版本对应关系：https://curator.apache.org/zk-compatibility.html -->
+        <!-- curator version 4.1.0 corresponds to zookeeper version 3.5.x -->
+        <!-- curator corresponds to the zookeeper version: https://curator.apache.org/zk-compatibility.html -->
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
@@ -90,7 +90,7 @@
 ```java
 /**
  * <p>
- * Zookeeper 配置项
+ * Zookeeper configuration items
  * </p>
  *
  * @author yangkai.shen
@@ -100,17 +100,17 @@
 @ConfigurationProperties(prefix = "zk")
 public class ZkProps {
     /**
-     * 连接地址
+     * Connection address
      */
     private String url;
 
     /**
-     * 超时时间(毫秒)，默认1000
+     * Timeout (milliseconds), default 1000
      */
     private int timeout = 1000;
 
     /**
-     * 重试次数，默认3
+     * Number of retries, default 3
      */
     private int retry = 3;
 }
@@ -135,7 +135,7 @@ zk:
 ```java
 /**
  * <p>
- * Zookeeper配置类
+ * Zookeeper configuration class
  * </p>
  *
  * @author yangkai.shen
@@ -163,13 +163,13 @@ public class ZkConfig {
 
 ## ZooLock.java
 
-> 分布式锁的关键注解
+> key note for distributed locks
 
 ```java
 /**
  * <p>
- * 基于Zookeeper的分布式锁注解
- * 在需要加锁的方法上打上该注解后，AOP会帮助你统一管理这个方法的锁
+ * Zookeeper-based distributed lock annotations
+ * After you make this note on the method that needs to be locked, AOP will help you manage the lock of that method uniformly
  * </p>
  *
  * @author yangkai.shen
@@ -181,17 +181,17 @@ public class ZkConfig {
 @Inherited
 public @interface ZooLock {
     /**
-     * 分布式锁的键
+     * Distributed lock key
      */
     String key();
 
     /**
-     * 锁释放时间，默认五秒
+     * Lock release time, default 5 seconds
      */
     long timeout() default 5 * 1000;
 
     /**
-     * 时间格式，默认：毫秒
+     * Time format, default: milliseconds
      */
     TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
 }
@@ -199,12 +199,12 @@ public @interface ZooLock {
 
 ## LockKeyParam.java
 
-> 分布式锁动态key的关键注解
+> key note for the dynamic key of distributed locks
 
 ```java
 /**
  * <p>
- * 分布式锁动态key注解，配置之后key的值会动态获取参数内容
+ * Distributed lock dynamic key annotation, after the configuration of the key value will dynamically get the parameter content
  * </p>
  *
  * @author yangkai.shen
@@ -216,10 +216,10 @@ public @interface ZooLock {
 @Inherited
 public @interface LockKeyParam {
     /**
-     * 如果动态key在user对象中，那么就需要设置fields的值为user对象中的属性名可以为多个，基本类型则不需要设置该值
-     * <p>例1：public void count(@LockKeyParam({"id"}) User user)
-     * <p>例2：public void count(@LockKeyParam({"id","userName"}) User user)
-     * <p>例3：public void count(@LockKeyParam String userId)
+     * If the dynamic key is in the user object, then it is necessary to set the value of fields to the user property name in the object can be more than one, and the base type does not need to set the value
+     * <p>Example 1: public void count(@LockKeyParam({"id"}) User user)
+     * <p>Example 2: public void count(@LockKeyParam({"id","userName"}) User user)
+     * <p>Example 3: public void count (@LockKeyParam String userId)
      */
     String[] fields() default {};
 }
@@ -227,12 +227,12 @@ public @interface LockKeyParam {
 
 ## ZooLockAspect.java
 
-> 分布式锁的关键部分
+> a key part of distributed locks
 
 ```java
 /**
  * <p>
- * 使用 aop 切面记录请求日志信息
+ * Use aop slices to record request log information
  * </p>
  *
  * @author yangkai.shen
@@ -254,7 +254,7 @@ public class ZooLockAspect {
     }
 
     /**
-     * 切入点
+     * Entry point
      */
     @Pointcut("@annotation(com.xkcoding.zookeeper.annotation.ZooLock)")
     public void doLock() {
@@ -262,11 +262,11 @@ public class ZooLockAspect {
     }
 
     /**
-     * 环绕操作
+     * Wrap operation
      *
-     * @param point 切入点
-     * @return 原方法返回值
-     * @throws Throwable 异常信息
+     * @param point pointcut
+     * @return Original method return value
+     * @throws Throwable exception information
      */
     @Around("doLock()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
@@ -275,16 +275,16 @@ public class ZooLockAspect {
         Object[] args = point.getArgs();
         ZooLock zooLock = method.getAnnotation(ZooLock.class);
         if (StrUtil.isBlank(zooLock.key())) {
-            throw new RuntimeException("分布式锁键不能为空");
+            throw new RuntimeException ("distributed lock keys cannot be empty");
         }
         String lockKey = buildLockKey(zooLock, method, args);
         InterProcessMutex lock = new InterProcessMutex(zkClient, lockKey);
         try {
-            // 假设上锁成功，以后拿到的都是 false
+            Assuming that the lock is successful, everything you get later is false
             if (lock.acquire(zooLock.timeout(), zooLock.timeUnit())) {
                 return point.proceed();
             } else {
-                throw new RuntimeException("请勿重复提交");
+                throw new RuntimeException ("Do not repeat submissions");
             }
         } finally {
             lock.release();
@@ -292,11 +292,11 @@ public class ZooLockAspect {
     }
 
     /**
-     * 构造分布式锁的键
+     * The key to construct a distributed lock
      *
-     * @param lock   注解
-     * @param method 注解标记的方法
-     * @param args   方法上的参数
+     * @param lock annotation
+     * @param method annotates the method of markup
+     * @param parameters on the args method
      * @return
      * @throws NoSuchFieldException
      * @throws IllegalAccessException
@@ -304,27 +304,27 @@ public class ZooLockAspect {
     private String buildLockKey(ZooLock lock, Method method, Object[] args) throws NoSuchFieldException, IllegalAccessException {
         StringBuilder key = new StringBuilder(KEY_SEPARATOR + KEY_PREFIX + lock.key());
 
-        // 迭代全部参数的注解，根据使用LockKeyParam的注解的参数所在的下标，来获取args中对应下标的参数值拼接到前半部分key上
+        Iteration of the annotation of all parameters, according to the subscript of the parameter of the annotation using LockKeyParam, to obtain the parameter value of the corresponding subscript in args and spliced to the first half of the key
         Annotation[][] parameterAnnotations = method.getParameterAnnotations();
 
         for (int i = 0; i < parameterAnnotations.length; i++) {
-            // 循环该参数全部注解
+            Loop through all annotations for this parameter
             for (Annotation annotation : parameterAnnotations[i]) {
-                // 注解不是 @LockKeyParam
+                The annotation is not @LockKeyParam
                 if (!annotation.annotationType().isInstance(LockKeyParam.class)) {
                     continue;
                 }
 
-                // 获取所有fields
+                Get all fields
                 String[] fields = ((LockKeyParam) annotation).fields();
                 if (ArrayUtil.isEmpty(fields)) {
-                    // 普通数据类型直接拼接
+                    Normal data types are directly stitched
                     if (ObjectUtil.isNull(args[i])) {
-                        throw new RuntimeException("动态参数不能为null");
+                        throw new RuntimeException("Dynamic parameters cannot be null");
                     }
                     key.append(KEY_SEPARATOR).append(args[i]);
                 } else {
-                    // @LockKeyParam的fields值不为null，所以当前参数应该是对象类型
+                    The fields value of the @LockKeyParam is not null, so the current parameter should be the object type
                     for (String field : fields) {
                         Class<?> clazz = args[i].getClass();
                         Field declaredField = clazz.getDeclaredField(field);
@@ -343,7 +343,7 @@ public class ZooLockAspect {
 
 ## SpringBootDemoZookeeperApplicationTests.java
 
-> 测试分布式锁
+> Test distributed locks
 
 ```java
 @RunWith(SpringRunner.class)
@@ -362,21 +362,21 @@ public class SpringBootDemoZookeeperApplicationTests {
     private CuratorFramework zkClient;
 
     /**
-     * 不使用分布式锁，程序结束查看count的值是否为0
+     * Without using a distributed lock, the program ends to see if the value of count is 0
      */
     @Test
     public void test() throws InterruptedException {
         IntStream.range(0, 10000).forEach(i -> executorService.execute(this::doBuy));
         TimeUnit.MINUTES.sleep(1);
-        log.error("count值为{}", count);
+        log.error("count value is {}", count);
     }
 
     /**
-     * 测试AOP分布式锁
+     * Test AOP distributed locks
      */
     @Test
     public void testAopLock() throws InterruptedException {
-        // 测试类中使用AOP需要手动代理
+        Using AOP in the test class requires a manual proxy
         SpringBootDemoZookeeperApplicationTests target = new SpringBootDemoZookeeperApplicationTests();
         AspectJProxyFactory factory = new AspectJProxyFactory(target);
         ZooLockAspect aspect = new ZooLockAspect(zkClient);
@@ -384,24 +384,24 @@ public class SpringBootDemoZookeeperApplicationTests {
         SpringBootDemoZookeeperApplicationTests proxy = factory.getProxy();
         IntStream.range(0, 10000).forEach(i -> executorService.execute(() -> proxy.aopBuy(i)));
         TimeUnit.MINUTES.sleep(1);
-        log.error("count值为{}", proxy.getCount());
+        log.error("count value is {}", proxy.getCount());
     }
 
     /**
-     * 测试手动加锁
+     * Test manual locking
      */
     @Test
     public void testManualLock() throws InterruptedException {
         IntStream.range(0, 10000).forEach(i -> executorService.execute(this::manualBuy));
         TimeUnit.MINUTES.sleep(1);
-        log.error("count值为{}", count);
+        log.error("count value is {}", count);
     }
 
     @ZooLock(key = "buy", timeout = 1, timeUnit = TimeUnit.MINUTES)
     public void aopBuy(int userId) {
-        log.info("{} 正在出库。。。", userId);
+        log.info ("{} is out of the library..." , userId);
         doBuy();
-        log.info("{} 扣库存成功。。。", userId);
+        log.info ("{} Deduction inventory successfully..." , userId);
     }
 
     public void manualBuy() {
@@ -424,13 +424,13 @@ public class SpringBootDemoZookeeperApplicationTests {
 
     public void doBuy() {
         count--;
-        log.info("count值为{}", count);
+        log.info ("count value is {}", count);
     }
 
 }
 ```
 
-## 参考
+## Reference
 
-1. [如何在测试类中使用 AOP](https://stackoverflow.com/questions/11436600/unit-testing-spring-around-aop-methods)
-2. zookeeper 实现分布式锁：《Spring Boot 2精髓 从构建小系统到架构分布式大系统》李家智 - 第16章 - Spring Boot 和 Zoo Keeper - 16.3 实现分布式锁
+1. [How to use AOP in test classes] (https://stackoverflow.com/questions/11436600/unit-testing-spring-around-aop-methods)
+2. zookeeper implements distributed locks: The essence of Spring Boot 2 From building small systems to architecting distributed large systems, Li Jiazhi - Chapter 16 - Spring Boot and Zoo Keeper - 16.3 Implementing distributed locks

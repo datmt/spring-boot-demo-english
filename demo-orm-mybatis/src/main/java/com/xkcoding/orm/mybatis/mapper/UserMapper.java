@@ -21,35 +21,35 @@ import java.util.List;
 public interface UserMapper {
 
     /**
-     * 查询所有用户
+     * Query all users
      *
-     * @return 用户列表
+     * @return User list
      */
     @Select("SELECT * FROM orm_user")
     List<User> selectAllUser();
 
     /**
-     * 根据id查询用户
+     * Query users based on id
      *
-     * @param id 主键id
-     * @return 当前id的用户，不存在则是 {@code null}
+     * @param id primary key id
+     * @return user with current id, if not present, {@code null}
      */
     @Select("SELECT * FROM orm_user WHERE id = #{id}")
     User selectUserById(@Param("id") Long id);
 
     /**
-     * 保存用户
+     * Save users
      *
-     * @param user 用户
-     * @return 成功 - {@code 1} 失败 - {@code 0}
+     * @param user user
+     * @return Success - {@code 1} Failed - {@code 0}
      */
     int saveUser(@Param("user") User user);
 
     /**
-     * 删除用户
+     * Delete users
      *
-     * @param id 主键id
-     * @return 成功 - {@code 1} 失败 - {@code 0}
+     * @param id primary key id
+     * @return Success - {@code 1} Failed - {@code 0}
      */
     int deleteById(@Param("id") Long id);
 

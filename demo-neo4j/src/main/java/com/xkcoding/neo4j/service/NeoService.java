@@ -51,11 +51,11 @@ public class NeoService {
     private SessionFactory sessionFactory;
 
     /**
-     * 初始化数据
+     * Initialize data
      */
     @Transactional
     public void initData() {
-        // 初始化老师
+        Initialize the teacher
         Teacher akai = Teacher.of("迈特凯");
         Teacher kakaxi = Teacher.of("旗木卡卡西");
         Teacher zilaiye = Teacher.of("自来也");
@@ -67,7 +67,7 @@ public class NeoService {
         teacherRepo.save(gangshou);
         teacherRepo.save(dashewan);
 
-        // 初始化课程
+        Initialize the course
         Lesson tishu = Lesson.of("体术", akai);
         Lesson huanshu = Lesson.of("幻术", kakaxi);
         Lesson shoulijian = Lesson.of("手里剑", kakaxi);
@@ -83,13 +83,13 @@ public class NeoService {
         lessonRepo.save(yiliao);
         lessonRepo.save(zhouyin);
 
-        // 初始化班级
+        Initialize the class
         Class three = Class.of("第三班", akai);
         Class seven = Class.of("第七班", kakaxi);
         classRepo.save(three);
         classRepo.save(seven);
 
-        // 初始化学生
+        Initialize students
         List<Student> threeClass = Lists.newArrayList(Student.of("漩涡鸣人", Lists.newArrayList(tishu, shoulijian, luoxuanwan, xianshu), seven), Student.of("宇智波佐助", Lists.newArrayList(huanshu, zhouyin, shoulijian), seven), Student.of("春野樱", Lists.newArrayList(tishu, yiliao, shoulijian), seven));
         List<Student> sevenClass = Lists.newArrayList(Student.of("李洛克", Lists.newArrayList(tishu), three), Student.of("日向宁次", Lists.newArrayList(tishu), three), Student.of("天天", Lists.newArrayList(tishu), three));
 
@@ -99,11 +99,11 @@ public class NeoService {
     }
 
     /**
-     * 删除数据
+     * Delete data
      */
     @Transactional
     public void delete() {
-        // 使用语句删除
+        Use the statement to delete
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.query("match (n)-[r]-() delete n,r", Maps.newHashMap());
@@ -111,7 +111,7 @@ public class NeoService {
         session.query("match (n) delete n", Maps.newHashMap());
         transaction.commit();
 
-        // 使用 repository 删除
+        Use repository to delete
         studentRepo.deleteAll();
         classRepo.deleteAll();
         lessonRepo.deleteAll();
@@ -119,11 +119,11 @@ public class NeoService {
     }
 
     /**
-     * 根据学生姓名查询所选课程
+     * Query the selected course based on the student's name
      *
-     * @param studentName 学生姓名
-     * @param depth       深度
-     * @return 课程列表
+     * @param studentName Student Name
+     * @param depth depth
+     * @return Course List
      */
     public List<Lesson> findLessonsFromStudent(String studentName, int depth) {
         List<Lesson> lessons = Lists.newArrayList();
@@ -132,9 +132,9 @@ public class NeoService {
     }
 
     /**
-     * 查询全校学生数
+     * Check the number of students in the whole school
      *
-     * @return 学生总数
+     * @return Total number of students
      */
     public Long studentCount(String className) {
         if (StrUtil.isBlank(className)) {
@@ -145,9 +145,9 @@ public class NeoService {
     }
 
     /**
-     * 查询同学关系，根据课程
+     * Enquire about classmate relationships, according to course
      *
-     * @return 返回同学关系
+     * @return Return to classmate relationships
      */
     public Map<String, List<Student>> findClassmatesGroupByLesson() {
         List<ClassmateInfoGroupByLesson> groupByLesson = studentRepo.findByClassmateGroupByLesson();
@@ -159,9 +159,9 @@ public class NeoService {
     }
 
     /**
-     * 查询所有师生关系，包括班主任/学生，任课老师/学生
+     * Enquire about all teacher-student relationships, including homeroom teacher/student, classroom teacher/student
      *
-     * @return 师生关系
+     * @return Teacher-student relationship
      */
     public Map<String, Set<Student>> findTeacherStudent() {
         List<TeacherStudent> teacherStudentByClass = studentRepo.findTeacherStudentByClass();

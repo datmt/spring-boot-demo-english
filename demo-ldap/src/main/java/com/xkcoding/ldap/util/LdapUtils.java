@@ -15,30 +15,30 @@ import java.security.NoSuchAlgorithmException;
 public class LdapUtils {
 
     /**
-     * 校验密码
+     * Verify password
      *
-     * @param ldapPassword  ldap 加密密码
-     * @param inputPassword 用户输入
+     * @param ldapPassword ldap encryption password
+     * @param inputPassword user input
      * @return boolean
-     * @throws NoSuchAlgorithmException 加解密异常
+     * @throws NoSuchAlgorithmException encryption and decryption exception
      */
     public static boolean verify(String ldapPassword, String inputPassword) throws NoSuchAlgorithmException {
 
-        // MessageDigest 提供了消息摘要算法，如 MD5 或 SHA，的功能，这里LDAP使用的是SHA-1
+        MessageDigest provides the functionality of message digest algorithms, such as MD5 or SHA, where LDAP uses SHA-1
         MessageDigest md = MessageDigest.getInstance("SHA-1");
 
-        // 取出加密字符
+        Check out the encrypting characters
         if (ldapPassword.startsWith("{SSHA}")) {
             ldapPassword = ldapPassword.substring(6);
         } else if (ldapPassword.startsWith("{SHA}")) {
             ldapPassword = ldapPassword.substring(5);
         }
-        // 解码BASE64
+        Decode BASE64
         byte[] ldapPasswordByte = Base64.decode(ldapPassword);
         byte[] shaCode;
         byte[] salt;
 
-        // 前20位是SHA-1加密段，20位后是最初加密时的随机明文
+        The first 20 bits are the SHA-1 encryption segment, and after the 20 bits is the random plaintext at the time of the initial encryption
         if (ldapPasswordByte.length <= 20) {
             shaCode = ldapPasswordByte;
             salt = new byte[0];
@@ -48,23 +48,23 @@ public class LdapUtils {
             System.arraycopy(ldapPasswordByte, 0, shaCode, 0, 20);
             System.arraycopy(ldapPasswordByte, 20, salt, 0, salt.length);
         }
-        // 把用户输入的密码添加到摘要计算信息
+        Adds the user-entered password to the summary calculation information
         md.update(inputPassword.getBytes());
-        // 把随机明文添加到摘要计算信息
+        Add random plaintext to the summary calculation information
         md.update(salt);
 
-        // 按SSHA把当前用户密码进行计算
+        Calculate the current user password by pressing SSHA
         byte[] inputPasswordByte = md.digest();
 
-        // 返回校验结果
+        Returns the validation results
         return MessageDigest.isEqual(shaCode, inputPasswordByte);
     }
 
     /**
-     * Ascii转换为字符串
+     * Ascii converted to string
      *
-     * @param value Ascii串
-     * @return 字符串
+     * @param value Ascii string
+     * @return string
      */
     public static String asciiToString(String value) {
         StringBuilder sbu = new StringBuilder();

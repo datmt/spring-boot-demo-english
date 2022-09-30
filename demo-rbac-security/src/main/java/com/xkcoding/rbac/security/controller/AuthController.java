@@ -22,7 +22,7 @@ import javax.validation.Valid;
 
 /**
  * <p>
- * 认证 Controller，包括用户注册，用户登录请求
+ * Authentication Controller, including user registration, user login requests
  * </p>
  *
  * @author yangkai.shen
@@ -40,7 +40,7 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     /**
-     * 登录
+     * Login
      */
     @PostMapping("/login")
     public ApiResponse login(@Valid @RequestBody LoginRequest loginRequest) {
@@ -55,7 +55,7 @@ public class AuthController {
     @PostMapping("/logout")
     public ApiResponse logout(HttpServletRequest request) {
         try {
-            // 设置JWT过期
+            Set JWT to expire
             jwtUtil.invalidateJWT(request);
         } catch (SecurityException e) {
             throw new SecurityException(Status.UNAUTHORIZED);

@@ -1,8 +1,8 @@
 # spring-boot-demo-websocket
 
-> 此 demo 主要演示了 Spring Boot 如何集成 WebSocket，实现后端主动往前端推送数据。网上大部分websocket的例子都是聊天室，本例主要是推送服务器状态信息。前端页面基于vue和element-ui实现。
+> This demo mainly demonstrates how Spring Boot integrates WebSocket to enable the backend to actively push data to the front end. Most examples of websockets on the web are chat rooms, and this example mainly pushes server status information. The front-end page is based on the vue and element-ui implementations.
 
-## 1. 代码
+## 1. code
 
 ### 1.1. pom.xml
 
@@ -89,7 +89,7 @@
 ```java
 /**
  * <p>
- * WebSocket配置
+ * WebSocket configuration
  * </p>
  *
  * @author yangkai.shen
@@ -102,32 +102,32 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // 注册一个 /notification 端点，前端通过这个端点进行连接
+        Registers a /notification endpoint through which the front end connects
         registry.addEndpoint("/notification")
-                //解决跨域问题
+                Resolve cross-domain issues
                 .setAllowedOrigins("*")
                 .withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        //定义了一个客户端订阅地址的前缀信息，也就是客户端接收服务端发送消息的前缀信息
+        Defines the prefix information of a client subscription address, that is, the prefix information of the message sent by the client receiving the server
         registry.enableSimpleBroker("/topic");
     }
 
 }
 ```
 
-### 1.3. 服务器相关实体
+### 1.3. Server-related entities
 
-> 此部分实体 参见包路径 [com.xkcoding.websocket.model](./src/main/java/com/xkcoding/websocket/model)
+> This part of the entity See package path [com.xkcoding.websocket.model](./src/main/java/com/xkcoding/websocket/model)
 
 ### 1.4. ServerTask.java
 
 ```java
 /**
  * <p>
- * 服务器定时推送任务
+ * Server timing push task
  * </p>
  *
  * @author yangkai.shen
@@ -140,18 +140,18 @@ public class ServerTask {
     private SimpMessagingTemplate wsTemplate;
 
     /**
-     * 按照标准时间来算，每隔 2s 执行一次
+     * Performed every 2s in standard time
      */
     @Scheduled(cron = "0/2 * * * * ?")
     public void websocket() throws Exception {
-        log.info("【推送消息】开始执行：{}", DateUtil.formatDateTime(new Date()));
-        // 查询服务器状态
+        log.info ("[push message] start execution :{}", DateUtil.formatDateTime(new Date()));
+        Query the server status
         Server server = new Server();
         server.copyTo();
         ServerVO serverVO = ServerUtil.wrapServerVO(server);
         Dict dict = ServerUtil.wrapServerDict(serverVO);
         wsTemplate.convertAndSend(WebSocketConsts.PUSH_SERVER, JSONUtil.toJsonStr(dict));
-        log.info("【推送消息】执行结束：{}", DateUtil.formatDateTime(new Date()));
+        log.info ("[push message] execution end:{}", DateUtil.formatDateTime(new Date()));
     }
 }
 ```
@@ -163,7 +163,7 @@ public class ServerTask {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>服务器信息</title>
+    <title>Server information</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.4.11/theme-chalk/index.css" rel="stylesheet">
     <style>
         .el-row {
@@ -187,20 +187,20 @@ public class ServerTask {
 <div id="app">
     <el-container>
         <el-header>
-            <el-button @click="_initSockJs" type="primary" :disabled="isConnected">手动连接</el-button>
-            <el-button @click="_destroySockJs" type="danger" :disabled="!isConnected">断开连接</el-button>
+            <el-button @click="_initSockJs" type="primary" :d isabled="isConnected"> manual connection</el-button>
+            <el-button @click="_destroySockJs" type="danger" :d isabled="!isConnected"> disconnected</el-button>
         </el-header>
         <el-main>
             <el-row :gutter="20">
                 <el-col :span="12">
                     <el-card>
                         <div slot="header">
-                            <span>CPU信息</span>
+                            <span>CPU information</span>
                         </div>
                         <el-table size="small" border :data="server.cpu" style="width: 100%">
-                            <el-table-column prop="key" label="属性">
+                            <el-table-column prop="key" label="property">
                             </el-table-column>
-                            <el-table-column prop="value" label="值">
+                            <el-table-column prop="value" label="value">
                             </el-table-column>
                         </el-table>
                     </el-card>
@@ -208,12 +208,12 @@ public class ServerTask {
                 <el-col :span="12">
                     <el-card>
                         <div slot="header">
-                            <span>内存信息</span>
+                            <span>Memory information</span>
                         </div>
                         <el-table size="small" border :data="server.mem" style="width: 100%">
-                            <el-table-column prop="key" label="属性">
+                            <el-table-column prop="key" label="property">
                             </el-table-column>
-                            <el-table-column prop="value" label="值">
+                            <el-table-column prop="value" label="value">
                             </el-table-column>
                         </el-table>
                     </el-card>
@@ -223,12 +223,12 @@ public class ServerTask {
                 <el-col :span="24">
                     <el-card>
                         <div slot="header">
-                            <span>服务器信息</span>
+                            <span>Server information</span>
                         </div>
                         <el-table size="small" border :data="server.sys" style="width: 100%">
-                            <el-table-column prop="key" label="属性">
+                            <el-table-column prop="key" label="property">
                             </el-table-column>
-                            <el-table-column prop="value" label="值">
+                            <el-table-column prop="value" label="value">
                             </el-table-column>
                         </el-table>
                     </el-card>
@@ -238,12 +238,12 @@ public class ServerTask {
                 <el-col :span="24">
                     <el-card>
                         <div slot="header">
-                            <span>Java虚拟机信息</span>
+                            <span>Java Virtual Machine Information</span>
                         </div>
                         <el-table size="small" border :data="server.jvm" style="width: 100%">
-                            <el-table-column prop="key" label="属性">
+                            <el-table-column prop="key" label="property">
                             </el-table-column>
-                            <el-table-column prop="value" label="值">
+                            <el-table-column prop="value" label="value">
                             </el-table-column>
                         </el-table>
                     </el-card>
@@ -253,13 +253,13 @@ public class ServerTask {
                 <el-col :span="24">
                     <el-card>
                         <div slot="header">
-                            <span>磁盘状态</span>
+                            <span>Disk status</span>
                         </div>
                         <div class="sysFile" v-for="(item,index) in server.sysFile" :key="index">
                             <el-table size="small" border :data="item" style="width: 100%">
-                                <el-table-column prop="key" label="属性">
+                                <el-table-column prop="key" label="property">
                                 </el-table-column>
-                                <el-table-column prop="value" label="值">
+                                <el-table-column prop="value" label="value">
                                 </el-table-column>
                             </el-table>
                         </div>
@@ -308,11 +308,11 @@ public class ServerTask {
                 this.stompClient = Stomp.over(this.socket);
 
                 this.stompClient.connect({}, (frame) => {
-                    console.log('websocket连接成功:' + frame);
+                    console.log ('websocket connection successful:' + frame);
                     this.isConnected = true;
-                    this.$message('websocket服务器连接成功');
+                    this.$message ('websocket server connection successful');
 
-                    // 另外再注册一下消息推送
+                    Also register for a message push
                     this.stompClient.subscribe(wsTopic, (response) => {
                         this.server = JSON.parse(response.body);
                     });
@@ -332,8 +332,8 @@ public class ServerTask {
                     this.server.sys = [];
                     this.server.sysFile = [];
                 }
-                console.log('websocket断开成功！');
-                this.$message.error('websocket断开成功！');
+                console.log ('websocket disconnected successful!) ');
+                this.$message.error('websocket disconnected successful!) ');
             }
         },
         mounted() {
@@ -348,32 +348,32 @@ public class ServerTask {
 </html>
 ```
 
-## 2. 运行方式
+## 2. Operates in
 
-1. 启动 `SpringBootDemoWebsocketApplication.java`
-2. 访问 http://localhost:8080/demo/server.html
+1. Start 'SpringBootDemoWebsocketApplication.java'
+2. Access http://localhost:8080/demo/server.html
 
-## 3. 运行效果
+## 3. Run the effect
 
-![image-20181217110240322](http://static.xkcoding.com/spring-boot-demo/websocket/064107.jpg)
+! [image-20181217110240322] (http://static.xkcoding.com/spring-boot-demo/websocket/064107.jpg)
 
-![image-20181217110304065](http://static.xkcoding.com/spring-boot-demo/websocket/064108.jpg)
+! [image-20181217110304065] (http://static.xkcoding.com/spring-boot-demo/websocket/064108.jpg)
 
-![image-20181217110328810](http://static.xkcoding.com/spring-boot-demo/websocket/064109.jpg)
+! [image-20181217110328810] (http://static.xkcoding.com/spring-boot-demo/websocket/064109.jpg)
 
-![image-20181217110336017](http://static.xkcoding.com/spring-boot-demo/websocket/064109-1.jpg)
+! [image-20181217110336017] (http://static.xkcoding.com/spring-boot-demo/websocket/064109-1.jpg)
 
-## 4. 参考
+## 4. reference
 
-### 4.1. 后端
+### 4.1. back end
 
-1. Spring Boot 整合 Websocket 官方文档：https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/web.html#websocket
-2. 服务器信息采集 oshi 使用：https://github.com/oshi/oshi
+1. Spring Boot integrates Websocket official documentation: https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/web.html#websocket
+2. Server Information Collection oshi Usage: https://github.com/oshi/oshi
 
-### 4.2. 前端
+### 4.2. Front
 
-1. vue.js 语法：https://cn.vuejs.org/v2/guide/
-2. element-ui 用法：http://element-cn.eleme.io/#/zh-CN
-3. stomp.js 用法：https://github.com/jmesnil/stomp-websocket
-4. sockjs 用法：https://github.com/sockjs/sockjs-client
-5. axios.js 用法：https://github.com/axios/axios#example
+1. vue.js Syntax:https://cn.vuejs.org/v2/guide/
+2. element-ui usage: http://element-cn.eleme.io/#/zh-CN
+3. stomp.js Usage: https://github.com/jmesnil/stomp-websocket
+4. Sockjs usage: https://github.com/sockjs/sockjs-client
+5. axios.js Usage: https://github.com/axios/axios#example

@@ -14,7 +14,7 @@ import java.util.Collection;
 
 /**
  * <p>
- * 认证工具
+ * Certification tool
  * </p>
  *
  * @author yangkai.shen

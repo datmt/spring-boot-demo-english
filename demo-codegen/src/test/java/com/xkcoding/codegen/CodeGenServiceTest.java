@@ -20,7 +20,7 @@ import java.io.OutputStream;
 
 /**
  * <p>
- * 代码生成service测试
+ * Code generation service test
  * </p>
  *
  * @author yangkai.shen

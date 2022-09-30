@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>
- * 代码生成器
+ * Code generator
  * </p>
  *
  * @author yangkai.shen
@@ -27,10 +27,10 @@ public class CodeGenController {
     private final CodeGenService codeGenService;
 
     /**
-     * 列表
+     * List
      *
-     * @param request 参数集
-     * @return 数据库表
+     * @param request parameter set
+     * @return Database tables
      */
     @GetMapping("/table")
     public R listTables(TableRequest request) {
@@ -38,7 +38,7 @@ public class CodeGenController {
     }
 
     /**
-     * 生成代码
+     * Generate code
      */
     @SneakyThrows
     @PostMapping("")

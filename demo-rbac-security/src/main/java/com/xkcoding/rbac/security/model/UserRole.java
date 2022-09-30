@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 /**
  * <p>
- * 用户角色关联
+ * User role association
  * </p>
  *
  * @author yangkai.shen
@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "sec_user_role")
 public class UserRole {
     /**
-     * 主键
+     * Primary key
      */
     @EmbeddedId
     private UserRoleKey id;

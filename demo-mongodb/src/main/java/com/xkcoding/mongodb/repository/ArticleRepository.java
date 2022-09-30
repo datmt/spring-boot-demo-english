@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * <p>
- * 文章 Dao
+ * Article Dao
  * </p>
  *
  * @author yangkai.shen
@@ -15,10 +15,10 @@ import java.util.List;
  */
 public interface ArticleRepository extends MongoRepository<Article, Long> {
     /**
-     * 根据标题模糊查询
+     * Fuzzy query based on title
      *
-     * @param title 标题
-     * @return 满足条件的文章列表
+     * @param title title
+     * @return list of articles that meet the criteria
      */
     List<Article> findByTitleLike(String title);
 }

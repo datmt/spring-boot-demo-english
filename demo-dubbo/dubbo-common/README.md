@@ -1,6 +1,6 @@
 # spring-boot-demo-dubbo-common
 
-> 此 module 主要是用于公共部分，主要存放工具类，实体，以及服务提供方/调用方的接口定义
+> This module is primarily used for public parts, primarily for utility classes, entities, and interface definitions for service providers/callers
 
 ## pom.xml
 
@@ -36,7 +36,7 @@
 ```java
 /**
  * <p>
- * Hello服务接口
+ * Hello service interface
  * </p>
  *
  * @author yangkai.shen
@@ -44,10 +44,10 @@
  */
 public interface HelloService {
     /**
-     * 问好
+     * Say hello
      *
-     * @param name 姓名
-     * @return 问好
+     * @param name name
+     * @return Say hello
      */
     String sayHello(String name);
 }

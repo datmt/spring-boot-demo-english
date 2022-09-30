@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 
 /**
  * <p>
- * Beetl数据源配置
+ * Beetl data source configuration
  * </p>
  *
  * @author yangkai.shen
@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 public class BeetlConfig {
 
     /**
-     * Beetl需要显示的配置数据源，方可启动项目，大坑，切记！
+     * Beettl needs to display the configuration data source to start the project, big pit, remember!
      */
     @Bean(name = "datasource")
     public DataSource getDataSource(Environment env) {

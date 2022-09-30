@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * LdapDemoApplication Ldap demo 启动类
+ * LdapDemoApplication Ldap demo startup class
  *
  * @author fxbin
  * @version v1.0

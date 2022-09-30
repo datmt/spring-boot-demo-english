@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * User实体类
+ * User entity class
  * </p>
  *
  * @author yangkai.shen
@@ -27,18 +27,18 @@ public class User implements Serializable {
     private static final long serialVersionUID = -1923859222295750467L;
 
     /**
-     * 主键
+     * Primary key
      */
     @TableId(type = IdType.ID_WORKER)
     private Long id;
 
     /**
-     * 姓名
+     * Name
      */
     private String name;
 
     /**
-     * 年龄
+     * Age
      */
     private Integer age;
 }

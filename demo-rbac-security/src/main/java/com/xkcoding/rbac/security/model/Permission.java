@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 /**
  * <p>
- * 权限
+ * Permissions
  * </p>
  *
  * @author yangkai.shen
@@ -20,43 +20,43 @@ import javax.persistence.Table;
 @Table(name = "sec_permission")
 public class Permission {
     /**
-     * 主键
+     * Primary key
      */
     @Id
     private Long id;
 
     /**
-     * 权限名
+     * Permission name
      */
     private String name;
 
     /**
-     * 类型为页面时，代表前端路由地址，类型为按钮时，代表后端接口地址
+     * Represents the front-end routing address when the type is Page, and represents the back-end interface address when the type is Button
      */
     private String url;
 
     /**
-     * 权限类型，页面-1，按钮-2
+     * Permission type, page-1, button-2
      */
     private Integer type;
 
     /**
-     * 权限表达式
+     * Permission expression
      */
     private String permission;
 
     /**
-     * 后端接口访问方式
+     * Backend interface access mode
      */
     private String method;
 
     /**
-     * 排序
+     * Sort
      */
     private Integer sort;
 
     /**
-     * 父级id
+     * Parent ID
      */
     @Column(name = "parent_id")
     private Long parentId;

@@ -8,7 +8,7 @@ import java.util.Collection;
 
 /**
  * <p>
- * 部门实体类
+ * Department entity class
  * </p>
  *
  * @author 76peter
@@ -25,35 +25,35 @@ import java.util.Collection;
 public class Department extends AbstractAuditModel {
 
     /**
-     * 部门名
+     * Department name
      */
     @Column(name = "name", columnDefinition = "varchar(255) not null")
     private String name;
 
     /**
-     * 上级部门id
+     * Parent department id
      */
     @ManyToOne(cascade = {CascadeType.REFRESH}, optional = true)
     @JoinColumn(name = "superior", referencedColumnName = "id")
     private Department superior;
     /**
-     * 所属层级
+     * Level
      */
     @Column(name = "levels", columnDefinition = "int not null default 0")
     private Integer levels;
     /**
-     * 排序
+     * Sort
      */
     @Column(name = "order_no", columnDefinition = "int not null default 0")
     private Integer orderNo;
     /**
-     * 子部门集合
+     * Sub-department collection
      */
     @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.REMOVE}, fetch = FetchType.EAGER, mappedBy = "superior")
     private Collection<Department> children;
 
     /**
-     * 部门下用户集合
+     * Collection of users under the department
      */
     @ManyToMany(mappedBy = "departmentList")
     private Collection<User> userList;

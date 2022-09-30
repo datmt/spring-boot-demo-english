@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 /**
- * 启动器.
+ * Launcher.
  *
  * @author <a href="https://echocow.cn">EchoCow</a>
  * @version V1.0

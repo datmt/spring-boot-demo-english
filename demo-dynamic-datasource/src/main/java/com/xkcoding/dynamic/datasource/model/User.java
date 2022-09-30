@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 用户
+ * Users
  * </p>
  *
  * @author yangkai.shen
@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Table(name = "test_user")
 public class User implements Serializable {
     /**
-     * 主键
+     * Primary key
      */
     @Id
     @Column(name = "`id`")
@@ -28,7 +28,7 @@ public class User implements Serializable {
     private Long id;
 
     /**
-     * 姓名
+     * Name
      */
     @Column(name = "`name`")
     private String name;

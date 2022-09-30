@@ -1,6 +1,6 @@
 # spring-boot-demo-war
 
-> 本 demo 主要演示了如何将 Spring Boot 项目打包成传统的 war 包程序。
+> This demo demonstrates how to package a Spring Boot project into a traditional war package program.
 
 ## pom.xml
 
@@ -12,7 +12,7 @@
 
     <artifactId>spring-boot-demo-war</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <!-- 若需要打成 war 包，则需要将打包方式改成 war -->
+    <!-- If you need to make a war package, you need to change the packaging method to war -->
     <packaging>war</packaging>
 
     <name>spring-boot-demo-war</name>
@@ -36,7 +36,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- 若需要打成 war 包，则需要将 tomcat 引入，scope 设置为 provided -->
+        <!-- If you need to make a war package, you need to introduce tomcat and scope is set to provided -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
@@ -68,7 +68,7 @@
 ```java
 /**
  * <p>
- * 启动器
+ * Launcher
  * </p>
  *
  * @author yangkai.shen
@@ -82,7 +82,7 @@ public class SpringBootDemoWarApplication extends SpringBootServletInitializer {
     }
 
     /**
-     * 若需要打成 war 包，则需要写一个类继承 {@link SpringBootServletInitializer} 并重写 {@link SpringBootServletInitializer#configure(SpringApplicationBuilder)}
+     * If you need to type into a war package, you need to write a class inheritance {@link SpringBootServletInitializer} and rewrite {@link SpringBootServletInitializer#configure(SpringApplicationBuilder)}
      */
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -91,7 +91,7 @@ public class SpringBootDemoWarApplication extends SpringBootServletInitializer {
 }
 ```
 
-## 参考
+## Reference
 
 https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#howto-create-a-deployable-war-file
 

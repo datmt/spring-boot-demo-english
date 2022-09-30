@@ -1,8 +1,8 @@
 # spring-boot-demo-ratelimit-redis
 
-> 此 demo 主要演示了 Spring Boot 项目如何通过 AOP 结合 Redis + Lua 脚本实现分布式限流，旨在保护 API 被恶意频繁访问的问题，是 `spring-boot-demo-ratelimit-guava` 的升级版。
+> This demo mainly demonstrates how the Spring Boot project implements distributed throttling through AOP combined with Redis + Lua scripts, aiming to protect the API from malicious and frequent access, and is an upgraded version of 'spring-boot-demo-ratelimit-guava'.
 
-## 1. 主要代码
+## 1. Primary code
 
 ### 1.1. pom.xml
 
@@ -47,7 +47,7 @@
       <artifactId>spring-boot-starter-data-redis</artifactId>
     </dependency>
 
-    <!-- 对象池，使用redis时必须引入 -->
+    <!-- object pool, --> must be introduced when using redis
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-pool2</artifactId>
@@ -84,12 +84,12 @@
 </project>
 ```
 
-### 1.2. 限流注解
+### 1.2. Flow restriction annotations
 
 ```java
 /**
  * <p>
- * 限流注解，添加了 {@link AliasFor} 必须通过 {@link AnnotationUtils} 获取，才会生效
+ * Flow restriction annotation, added {@link AliasFor} must be obtained via {@link AnnotationUtils} to take effect
  * </p>
  *
  * @author yangkai.shen
@@ -103,38 +103,38 @@ public @interface RateLimiter {
     long DEFAULT_REQUEST = 10;
 
     /**
-     * max 最大请求数
+     * max Maximum number of requests
      */
     @AliasFor("max") long value() default DEFAULT_REQUEST;
 
     /**
-     * max 最大请求数
+     * max Maximum number of requests
      */
     @AliasFor("value") long max() default DEFAULT_REQUEST;
 
     /**
-     * 限流key
+     * Flow restriction key
      */
     String key() default "";
 
     /**
-     * 超时时长，默认1分钟
+     * Timeout timeout, default 1 minute
      */
     long timeout() default 1;
 
     /**
-     * 超时时间单位，默认 分钟
+     * Timeout unit, default minutes
      */
     TimeUnit timeUnit() default TimeUnit.MINUTES;
 }
 ```
 
-### 1.3. AOP处理限流
+### 1.3. AOP handles stream throttling
 
 ```java
 /**
  * <p>
- * 限流切面
+ * Flow restriction slices
  * </p>
  *
  * @author yangkai.shen
@@ -159,16 +159,16 @@ public class RateLimiterAspect {
     public Object pointcut(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
-        // 通过 AnnotationUtils.findAnnotation 获取 RateLimiter 注解
+        Get RateLimiter annotations via AnnotationUtils.findAnnotation
         RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
         if (rateLimiter != null) {
             String key = rateLimiter.key();
-            // 默认用类名+方法名做限流的 key 前缀
+            By default, the class name + method name is used as the key prefix for throttling
             if (StrUtil.isBlank(key)) {
                 key = method.getDeclaringClass().getName()+StrUtil.DOT+method.getName();
             }
-            // 最终限流的 key 为 前缀 + IP地址
-            // TODO: 此时需要考虑局域网多用户访问的情况，因此 key 后续需要加上方法参数更加合理
+            The key of the final throttling is prefix + IP address
+            TODO: At this time, you need to consider the case of multi-user access on the local area network, so it is more reasonable for key to add method parameters later
             key = key + SEPARATOR + IpUtil.getIpAddr();
 
             long max = rateLimiter.max();
@@ -176,7 +176,7 @@ public class RateLimiterAspect {
             TimeUnit timeUnit = rateLimiter.timeUnit();
             boolean limited = shouldLimited(key, max, timeout, timeUnit);
             if (limited) {
-                throw new RuntimeException("手速太快了，慢点儿吧~");
+                throw new RuntimeException ("Hand speed is too fast, slow down~");
             }
         }
 
@@ -184,23 +184,23 @@ public class RateLimiterAspect {
     }
 
     private boolean shouldLimited(String key, long max, long timeout, TimeUnit timeUnit) {
-        // 最终的 key 格式为：
-        // limit:自定义key:IP
-        // limit:类名.方法名:IP
+        The final key format is:
+        limit:custom key:IP
+        limit:class name. Method name: IP
         key = REDIS_LIMIT_KEY_PREFIX + key;
-        // 统一使用单位毫秒
+        Use units milliseconds uniformly
         long ttl = timeUnit.toMillis(timeout);
-        // 当前时间毫秒数
+        The number of milliseconds at the current time
         long now = Instant.now().toEpochMilli();
         long expired = now - ttl;
-        // 注意这里必须转为 String,否则会报错 java.lang.Long cannot be cast to java.lang.String
+        Note that you must switch to String here, otherwise you will report an error java.lang.Long cannot be cast to java.lang.String
         Long executeTimes = stringRedisTemplate.execute(limitRedisScript, Collections.singletonList(key), now + "", ttl + "", expired + "", max + "");
         if (executeTimes != null) {
             if (executeTimes == 0) {
-                log.error("【{}】在单位时间 {} 毫秒内已达到访问上限，当前接口上限 {}", key, ttl, max);
+                log.error("[{}]The upper limit of access has been reached in {} milliseconds per unit time, the current interface limit {}", key, ttl, max);
                 return true;
             } else {
-                log.info("【{}】在单位时间 {} 毫秒内访问 {} 次", key, ttl, executeTimes);
+                log.info("[{}]Access {} 次", key, ttl, executeTimes);
                 return false;
             }
         }
@@ -209,44 +209,44 @@ public class RateLimiterAspect {
 }
 ```
 
-### 1.4. lua 脚本
+### 1.4. lua script
 
 ```lua
--- 下标从 1 开始
+-- Subscripts start at 1
 local key = KEYS[1]
 local now = tonumber(ARGV[1])
 local ttl = tonumber(ARGV[2])
 local expired = tonumber(ARGV[3])
--- 最大访问量
+-- Maximum number of visits
 local max = tonumber(ARGV[4])
 
--- 清除过期的数据
--- 移除指定分数区间内的所有元素，expired 即已经过期的 score
--- 根据当前时间毫秒数 - 超时毫秒数，得到过期时间 expired
+-- Purge outdated data
+-- Remove all elements within the specified score interval, and expired is the expired score
+-- Based on the current time milliseconds - the number of milliseconds that have been timed out, the expiration time expired
 redis.call('zremrangebyscore', key, 0, expired)
 
--- 获取 zset 中的当前元素个数
+-- Gets the current number of elements in zset
 local current = tonumber(redis.call('zcard', key))
 local next = current + 1
 
 if next > max then
-  -- 达到限流大小 返回 0
+  -- Stream limit size reached Returns 0
   return 0;
 else
-  -- 往 zset 中添加一个值、得分均为当前时间戳的元素，[value,score]
+  -- Add a value to zset with an element with a score of the current timestamp, [value,score]
   redis.call("zadd", key, now, now)
-  -- 每次访问均重新设置 zset 的过期时间，单位毫秒
+  -- The expiration time of zset is reset for each access, in milliseconds
   redis.call("pexpire", key, ttl)
   return next
 end
 ```
 
-### 1.5. 接口测试
+### 1.5. Interface testing
 
 ```java
 /**
  * <p>
- * 测试
+ * Test
  * </p>
  *
  * @author yangkai.shen
@@ -259,38 +259,38 @@ public class TestController {
     @RateLimiter(value = 5)
     @GetMapping("/test1")
     public Dict test1() {
-        log.info("【test1】被执行了。。。。。");
-        return Dict.create().set("msg", "hello,world!").set("description", "别想一直看到我，不信你快速刷新看看~");
+        log.info ("[test1] was executed....) );
+        return Dict.create().set("msg", "hello,world!"). set("description", "Don't want to see me all the time, don't believe you quickly refresh to see ~");
     }
 
     @GetMapping("/test2")
     public Dict test2() {
-        log.info("【test2】被执行了。。。。。");
-        return Dict.create().set("msg", "hello,world!").set("description", "我一直都在，卟离卟弃");
+        log.info ("[test2] was executed....") );
+        return Dict.create().set("msg", "hello,world!"). set ("description", "I have always been there, porphyrinum away from porphyria");
     }
 
-    @RateLimiter(value = 2, key = "测试自定义key")
+    @RateLimiter (value = 2, key = "Test custom key")
     @GetMapping("/test3")
     public Dict test3() {
-        log.info("【test3】被执行了。。。。。");
-        return Dict.create().set("msg", "hello,world!").set("description", "别想一直看到我，不信你快速刷新看看~");
+        log.info ("[test3] was executed....) );
+        return Dict.create().set("msg", "hello,world!"). set("description", "Don't want to see me all the time, don't believe you quickly refresh to see ~");
     }
 }
 ```
 
-### 1.6. 其余代码参见 demo
+### 1.6. For the rest of the code, see demo
 
-## 2. 测试
+## 2. Test
 
-- 触发限流时控制台打印
+- Console printing when the flow limit is triggered
 
-![image-20190930155856711](http://static.xkcoding.com/spring-boot-demo/ratelimit/redis/063812.jpg)
+! [image-20190930155856711] (http://static.xkcoding.com/spring-boot-demo/ratelimit/redis/063812.jpg)
 
-- 触发限流的时候 Redis 的数据
+- Redis data when the flow throttling is triggered
 
-![image-20190930155735300](http://static.xkcoding.com/spring-boot-demo/ratelimit/redis/063813.jpg)
+! [image-20190930155735300] (http://static.xkcoding.com/spring-boot-demo/ratelimit/redis/063813.jpg)
 
-## 3. 参考
+## 3. reference
 
-- [mica-plus-redis 的分布式限流实现](https://github.com/lets-mica/mica/tree/master/mica-plus-redis)
-- [Java并发：分布式应用限流 Redis + Lua 实践](https://segmentfault.com/a/1190000016042927)
+- [distributed current-limiting implementation of mica-plus-redis] (https://github.com/lets-mica/mica/tree/master/mica-plus-redis)
+- [Java Concurrency: Redis + Lua Practice for Distributed Application Throttling] (https://segmentfault.com/a/1190000016042927)

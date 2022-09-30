@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 用户 model
+ * User model
  * </p>
  *
  * @author yangkai.shen

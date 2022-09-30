@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * Hello服务API
+ * Hello service API
  * </p>
  *
  * @author yangkai.shen

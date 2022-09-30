@@ -1,48 +1,48 @@
 # spring-boot-demo-task-xxl-job
 
-> 此 demo 主要演示了 Spring Boot 如何集成 XXL-JOB 实现分布式定时任务，并提供绕过 `xxl-job-admin` 对定时任务的管理的方法，包括定时任务列表，触发器列表，新增定时任务，删除定时任务，停止定时任务，启动定时任务，修改定时任务，手动触发定时任务。
+> This demo mainly demonstrates how Spring Boot integrates XXL-JOB to implement distributed scheduled tasks, and provides a way to bypass the management of scheduled tasks by 'xxl-job-admin', including scheduled task list, trigger list, new scheduled task, delete scheduled task, stop scheduled task, start scheduled task, modify scheduled task, manually trigger scheduled task.
 
-## 1. xxl-job-admin调度中心
+## 1. xxl-job-admin dispatch center
 
 > https://github.com/xuxueli/xxl-job.git
 
-克隆 调度中心代码
+Clone the dispatch center code
 
 ```bash
 $ git clone https://github.com/xuxueli/xxl-job.git
 ```
 
-### 1.1. 创建调度中心的表结构
+### 1.1. Create a table structure for the dispatch center
 
-数据库脚本地址：`/xxl-job/doc/db/tables_xxl_job.sql`
+Database script address: '/xxl-job/doc/db/tables_xxl_job.sql'
 
-### 1.2. 修改 application.properties
+### 1.2. Modify application.properties
 
 ```properties
 server.port=18080
 
-spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_job?Unicode=true&characterEncoding=UTF-8&useSSL=false
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_job? Unicode=true&characterEncoding=UTF-8&useSSL=false
 spring.datasource.username=root
 spring.datasource.password=root
 ```
 
-### 1.3. 修改日志配置文件 logback.xml
+### 1.3. Modify the log configuration file logback.xml
 
 ```xml
 <property name="log.path" value="logs/xxl-job/xxl-job-admin.log"/>
 ```
 
-### 1.4. 启动调度中心
+### 1.4. Start the dispatch center
 
 Run `XxlJobAdminApplication`
 
-默认用户名密码：admin/admin
+Default username password: admin/admin
 
-![image-20190808105554414](https://static.xkcoding.com/spring-boot-demo/2019-08-08-025555.png)
+! [image-20190808105554414] (https://static.xkcoding.com/spring-boot-demo/2019-08-08-025555.png)
 
-![image-20190808105628852](https://static.xkcoding.com/spring-boot-demo/2019-08-08-025629.png)
+! [image-20190808105628852] (https://static.xkcoding.com/spring-boot-demo/2019-08-08-025629.png)
 
-## 2. 编写执行器项目
+## 2. Write an executor project
 
 ### 2.1. pom.xml
 
@@ -127,12 +127,12 @@ Run `XxlJobAdminApplication`
 </project>
 ```
 
-### 2.2. 编写 配置类 XxlJobProps.java
+### 2.2. Write the configuration class XxlJobProps.java
 
 ```java
 /**
  * <p>
- * xxl-job 配置
+ * xxl-job configuration
  * </p>
  *
  * @author yangkai.shen
@@ -142,24 +142,24 @@ Run `XxlJobAdminApplication`
 @ConfigurationProperties(prefix = "xxl.job")
 public class XxlJobProps {
     /**
-     * 调度中心配置
+     * Dispatch center configuration
      */
     private XxlJobAdminProps admin;
 
     /**
-     * 执行器配置
+     * Actuator configuration
      */
     private XxlJobExecutorProps executor;
 
     /**
-     * 与调度中心交互的accessToken
+     * Access token for interacting with the dispatch center
      */
     private String accessToken;
 
     @Data
     public static class XxlJobAdminProps {
         /**
-         * 调度中心地址
+         * Dispatch center address
          */
         private String address;
     }
@@ -167,34 +167,34 @@ public class XxlJobProps {
     @Data
     public static class XxlJobExecutorProps {
         /**
-         * 执行器名称
+         * Actuator name
          */
         private String appName;
 
         /**
-         * 执行器 IP
+         * Actuator IP
          */
         private String ip;
 
         /**
-         * 执行器端口
+         * Actuator port
          */
         private int port;
 
         /**
-         * 执行器日志
+         * Actuator logs
          */
         private String logPath;
 
         /**
-         * 执行器日志保留天数，-1
+         * Number of days executor log retention, -1
          */
         private int logRetentionDays;
     }
 }
 ```
 
-### 2.3. 编写配置文件 application.yml
+### 2.3. Write the configuration file application.yml
 
 ```yaml
 server:
@@ -203,30 +203,30 @@ server:
     context-path: /demo
 xxl:
   job:
-    # 执行器通讯TOKEN [选填]：非空时启用；
+    # Executor communication TOKEN [optional]: Enabled when not empty;
     access-token:
     admin:
-      # 调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
+      # Dispatch center deployment and address [optional]: If there are multiple addresses in the dispatch center cluster deployment, separate them with commas. The executor will use this address for "Actuator Heartbeat Registration" and "Task Result Callback"; Empty to turn off auto-registration;
       address: http://localhost:18080/xxl-job-admin
     executor:
-      # 执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
+      # Actuator AppName [optional]: Actuator heartbeat registration group by; Empty turns off auto-registration
       app-name: spring-boot-demo-task-xxl-job-executor
-      # 执行器IP [选填]：默认为空表示自动获取IP，多网卡时可手动设置指定IP，该IP不会绑定Host仅作为通讯实用；地址信息用于 "执行器注册" 和 "调度中心请求并触发任务"；
+      # Actuator IP [optional]: The default is empty to indicate that the IP is automatically obtained, and the specified IP can be manually set when multiple network cards, and the IP will not be bound to Host only as a communication utility; Address information is used for "executor registration" and "dispatch center requests and triggers tasks";
       ip:
-      # 执行器端口号 [选填]：小于等于0则自动获取；默认端口为9999，单机部署多个执行器时，注意要配置不同执行器端口；
+      # Actuator port number [optional]: less than or equal to 0 will be obtained automatically; The default port is 9999, when deploying multiple actuators on a single machine, pay attention to configuring different actuator ports;
       port: 9999
-      # 执行器运行日志文件存储磁盘路径 [选填] ：需要对该路径拥有读写权限；为空则使用默认路径；
+      # Executor running log file storage disk path [optional]: You need to have read and write permissions to this path; Null uses the default path;
       log-path: logs/spring-boot-demo-task-xxl-job/task-log
-      # 执行器日志保存天数 [选填] ：值大于3时生效，启用执行器Log文件定期清理功能，否则不生效；
+      # The number of days that the executor log is saved [optional]: It takes effect when the value is greater than 3, and the function of periodic cleaning of the executor log file is enabled, otherwise it will not take effect;
       log-retention-days: -1
 ```
 
-### 2.4. 编写自动装配类 XxlConfig.java
+### 2.4. Write the autoassembly class XxlConfig.java
 
 ```java
 /**
  * <p>
- * xxl-job 自动装配
+ * xxl-job automatic assembly
  * </p>
  *
  * @author yangkai.shen
@@ -257,12 +257,12 @@ public class XxlJobConfig {
 }
 ```
 
-### 2.5. 编写具体的定时逻辑 DemoTask.java
+### 2.5. Write specific timing logic .java DemoTask
 
 ```java
 /**
  * <p>
- * 测试定时任务
+ * Test scheduled tasks
  * </p>
  *
  * @author yangkai.shen
@@ -276,13 +276,13 @@ public class DemoTask extends IJobHandler {
     /**
      * execute handler, invoked when executor receives a scheduling request
      *
-     * @param param 定时任务参数
-     * @return 执行状态
-     * @throws Exception 任务异常
+     * @param param timing task parameters
+     * @return Execution status
+     * @throws Exception task exception
      */
     @Override
     public ReturnT<String> execute(String param) throws Exception {
-        // 可以动态获取传递过来的参数，根据参数不同，当前调度的任务不同
+        You can dynamically get the parameters passed over, depending on the parameters, the currently scheduled task is different
         log.info("【param】= {}", param);
         XxlJobLogger.log("demo task run at : {}", DateUtil.now());
         return RandomUtil.randomInt(1, 11) % 2 == 0 ? SUCCESS : FAIL;
@@ -290,54 +290,54 @@ public class DemoTask extends IJobHandler {
 }
 ```
 
-### 2.6. 启动执行器
+### 2.6. Start the executor
 
 Run `SpringBootDemoTaskXxlJobApplication`
 
-## 3. 配置定时任务
+## 3. Configure scheduled tasks
 
-### 3.1. 将启动的执行器添加到调度中心
+### 3.1. Add the started executor to the dispatch center
 
-执行器管理 - 新增执行器
+Actuator Management - Added executors
 
-![image-20190808105910203](https://static.xkcoding.com/spring-boot-demo/2019-08-08-025910.png)
+! [image-20190808105910203] (https://static.xkcoding.com/spring-boot-demo/2019-08-08-025910.png)
 
-### 3.2. 添加定时任务
+### 3.2. Add a scheduled task
 
-任务管理 - 新增 - 保存
+Task Management - New - Save
 
-![image-20190808110127956](https://static.xkcoding.com/spring-boot-demo/2019-08-08-030128.png)
+! [image-20190808110127956] (https://static.xkcoding.com/spring-boot-demo/2019-08-08-030128.png)
 
-### 3.3. 启停定时任务
+### 3.3. Start and stop scheduled tasks
 
-任务列表的操作列，拥有以下操作：执行、启动/停止、日志、编辑、删除
+The Actions column of the task list, which has the following actions: Execute, Start/Stop, Log, Edit, Delete
 
-执行：单次触发任务，不影响定时逻辑
+Execution: Triggers the task once without affecting the timing logic
 
-启动：启动定时任务
+Start: Starts the scheduled task
 
-停止：停止定时任务
+Stop: Stops the scheduled task
 
-日志：查看当前任务执行日志
+Log: View the current task execution log
 
-编辑：更新定时任务
+Edit: Updates the scheduled task
 
-删除：删除定时任务
+Delete: Deletes the scheduled task
 
-## 4. 使用API添加定时任务
+## 4. Use the API to add scheduled tasks
 
-> 实际场景中，如果添加定时任务都需要手动在 xxl-job-admin 去操作，这样可能比较麻烦，用户更希望在自己的页面，添加定时任务参数、定时调度表达式，然后通过 API 的方式添加定时任务
+> the actual scenario, if you add a scheduled task needs to manually operate in xxl-job-admin, this may be more troublesome, users prefer to add timing task parameters, timing scheduling expressions on their own pages, and then add timing tasks through APIs
 
-### 4.1. 改造xxl-job-admin
+### 4.1. Transform xxl-job-admin
 
-#### 4.1.1. 修改 JobGroupController.java
+#### 4.1.1. Modify the JobGroupController .java
 
 ```java
 ...
-// 添加执行器列表
+Add a list of executors
 @RequestMapping("/list")
 @ResponseBody
-// 去除权限校验
+Remove the permission check
 @PermissionLimit(limit = false)
 public ReturnT<List<XxlJobGroup>> list(){
 		return  new ReturnT<>(xxlJobGroupDao.findAll());
@@ -345,21 +345,21 @@ public ReturnT<List<XxlJobGroup>> list(){
 ...
 ```
 
-#### 4.1.2. 修改 JobInfoController.java
+#### 4.1.2. Modify the JobInfoController .java
 
 ```java
-// 分别在 pageList、add、update、remove、pause、start、triggerJob 方法上添加注解，去除权限校验
+Add annotations to pageList, add, update, remove, pause, start, and triggerJob methods to remove the permission check
 @PermissionLimit(limit = false)
 ```
 
-### 4.2. 改造 执行器项目
+### 4.2. Retrofit actuator projects
 
-#### 4.2.1. 添加手动触发类
+#### 4.2.1. Add a manual trigger class
 
 ```java
 /**
  * <p>
- * 手动操作 xxl-job
+ * Manual operation xxl-job
  * </p>
  *
  * @author yangkai.shen
@@ -375,7 +375,7 @@ public class ManualOperateController {
     private final static String JOB_GROUP_URI = "/jobgroup";
 
     /**
-     * 任务组列表，xxl-job叫做触发器列表
+     * Task group list, xxl-job is called trigger list
      */
     @GetMapping("/group")
     public String xxlJobGroup() {
@@ -385,11 +385,11 @@ public class ManualOperateController {
     }
 
     /**
-     * 分页任务列表
+     * Pagination task list
      *
-     * @param page 当前页，第一页 -> 0
-     * @param size 每页条数，默认10
-     * @return 分页任务列表
+     * @param page current page, first page -> 0
+     * @param size per page, default 10
+     * @return Pagination task list
      */
     @GetMapping("/list")
     public String xxlJobList(Integer page, Integer size) {
@@ -405,18 +405,18 @@ public class ManualOperateController {
     }
 
     /**
-     * 测试手动保存任务
+     * Test saving tasks manually
      */
     @GetMapping("/add")
     public String xxlJobAdd() {
         Map<String, Object> jobInfo = Maps.newHashMap();
         jobInfo.put("jobGroup", 2);
         jobInfo.put("jobCron", "0 0/1 * * * ? *");
-        jobInfo.put("jobDesc", "手动添加的任务");
+        jobInfo.put("jobDesc", "manually added tasks");
         jobInfo.put("author", "admin");
         jobInfo.put("executorRouteStrategy", "ROUND");
         jobInfo.put("executorHandler", "demoTask");
-        jobInfo.put("executorParam", "手动添加的任务的参数");
+        jobInfo.put("executorParam", "Manually added parameters for tasks");
         jobInfo.put("executorBlockStrategy", ExecutorBlockStrategyEnum.SERIAL_EXECUTION);
         jobInfo.put("glueType", GlueTypeEnum.BEAN);
 
@@ -426,7 +426,7 @@ public class ManualOperateController {
     }
 
     /**
-     * 测试手动触发一次任务
+     * Test manually triggering a task
      */
     @GetMapping("/trigger")
     public String xxlJobTrigger() {
@@ -440,7 +440,7 @@ public class ManualOperateController {
     }
 
     /**
-     * 测试手动删除任务
+     * Test manual deletion of tasks
      */
     @GetMapping("/remove")
     public String xxlJobRemove() {
@@ -453,7 +453,7 @@ public class ManualOperateController {
     }
 
     /**
-     * 测试手动停止任务
+     * Test manually stop the task
      */
     @GetMapping("/stop")
     public String xxlJobStop() {
@@ -466,7 +466,7 @@ public class ManualOperateController {
     }
 
     /**
-     * 测试手动启动任务
+     * Test manual start task
      */
     @GetMapping("/start")
     public String xxlJobStart() {
@@ -481,9 +481,9 @@ public class ManualOperateController {
 }
 ```
 
-> 后端其余代码请 clone 本项目，查看具体代码
+> the rest of the code of the backend, please clone this project, to see the specific code
 
-## 参考
+## Reference
 
-- [《分布式任务调度平台xxl-job》](http://www.xuxueli.com/xxl-job/#/)
+- [Distributed Task Scheduling Platform xxl-job] (http://www.xuxueli.com/xxl-job/#/)
 

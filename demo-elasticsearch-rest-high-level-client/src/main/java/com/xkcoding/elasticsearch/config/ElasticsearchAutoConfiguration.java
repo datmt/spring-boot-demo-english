@@ -67,7 +67,7 @@ public class ElasticsearchAutoConfiguration {
      */
     private static RestHighLevelClient getRestHighLevelClient(RestClientBuilder builder, ElasticsearchProperties elasticsearchProperties) {
 
-        // Callback used the default {@link RequestConfig} being set to the {@link CloseableHttpClient}
+         Callback used the default {@link RequestConfig} being set to the {@link CloseableHttpClient}
         builder.setRequestConfigCallback(requestConfigBuilder -> {
             requestConfigBuilder.setConnectTimeout(elasticsearchProperties.getConnectTimeout());
             requestConfigBuilder.setSocketTimeout(elasticsearchProperties.getSocketTimeout());
@@ -75,14 +75,14 @@ public class ElasticsearchAutoConfiguration {
             return requestConfigBuilder;
         });
 
-        // Callback used to customize the {@link CloseableHttpClient} instance used by a {@link RestClient} instance.
+         Callback used to customize the {@link CloseableHttpClient} instance used by a {@link RestClient} instance.
         builder.setHttpClientConfigCallback(httpClientBuilder -> {
             httpClientBuilder.setMaxConnTotal(elasticsearchProperties.getMaxConnectTotal());
             httpClientBuilder.setMaxConnPerRoute(elasticsearchProperties.getMaxConnectPerRoute());
             return httpClientBuilder;
         });
 
-        // Callback used the basic credential auth
+         Callback used the basic credential auth
         ElasticsearchProperties.Account account = elasticsearchProperties.getAccount();
         if (!StringUtils.isEmpty(account.getUsername()) && !StringUtils.isEmpty(account.getUsername())) {
             final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();

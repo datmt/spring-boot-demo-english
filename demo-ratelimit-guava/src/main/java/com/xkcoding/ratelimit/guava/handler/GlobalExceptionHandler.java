@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * <p>
- * 全局异常拦截
+ * Global exception blocking
  * </p>
  *
  * @author yangkai.shen

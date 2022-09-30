@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 /**
  * <p>
- * JPA多数据源配置 - 次数据源
+ * JPA Multiple Data Source Configuration - Secondary Data Source
  * </p>
  *
  * @author yangkai.shen
@@ -21,9 +21,9 @@ import javax.sql.DataSource;
 public class SecondDataSourceConfig {
 
     /**
-     * 扫描spring.datasource.second开头的配置信息
+     * Scan the configuration information at the beginning of spring.datasource.second
      *
-     * @return 数据源配置信息
+     * @return data source configuration information
      */
     @Bean(name = "secondDataSourceProperties")
     @ConfigurationProperties(prefix = "spring.datasource.second")
@@ -32,10 +32,10 @@ public class SecondDataSourceConfig {
     }
 
     /**
-     * 获取主库数据源对象
+     * Get the main library data source object
      *
-     * @param dataSourceProperties 注入名为secondDataSourceProperties的bean
-     * @return 数据源对象
+     * @param dataSourceProperties injects a bean called secondDataSourceProperties
+     * @return data source object
      */
     @Bean(name = "secondDataSource")
     public DataSource dataSource(@Qualifier("secondDataSourceProperties") DataSourceProperties dataSourceProperties) {
@@ -43,10 +43,10 @@ public class SecondDataSourceConfig {
     }
 
     /**
-     * 该方法仅在需要使用JdbcTemplate对象时选用
+     * This method is only used when a JdbcTemplate object is required
      *
-     * @param dataSource 注入名为secondDataSource的bean
-     * @return 数据源JdbcTemplate对象
+     * @param dataSource injects a bean named secondDataSource
+     * @return data source JdbcTemplate object
      */
     @Bean(name = "secondJdbcTemplate")
     public JdbcTemplate jdbcTemplate(@Qualifier("secondDataSource") DataSource dataSource) {

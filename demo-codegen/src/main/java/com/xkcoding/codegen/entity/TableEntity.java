@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * <p>
- * 表属性： https://blog.csdn.net/lkforce/article/details/79557482
+ * Table Attributes: https://blog.csdn.net/lkforce/article/details/79557482
  * </p>
  *
  * @author yangkai.shen
@@ -15,27 +15,27 @@ import java.util.List;
 @Data
 public class TableEntity {
     /**
-     * 名称
+     * Name
      */
     private String tableName;
     /**
-     * 备注
+     * Remarks
      */
     private String comments;
     /**
-     * 主键
+     * Primary key
      */
     private ColumnEntity pk;
     /**
-     * 列名
+     * Column names
      */
     private List<ColumnEntity> columns;
     /**
-     * 驼峰类型
+     * Hump type
      */
     private String caseClassName;
     /**
-     * 普通类型
+     * Normal type
      */
     private String lowerClassName;
 }

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 自定义UserDetails查询
+ * Custom UserDetails query
  * </p>
  *
  * @author yangkai.shen

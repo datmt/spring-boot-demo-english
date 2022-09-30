@@ -1,6 +1,6 @@
 # spring-boot-demo-upload
 
-> 本 demo 演示了 Spring Boot 如何实现本地文件上传以及如何上传文件至七牛云平台。前端使用 vue 和 iview 实现上传页面。
+> This demo demonstrates how Spring Boot can upload files locally and how to upload files to the Qiniu Cloud platform. The front-end uses vue and iview to implement uploading pages.
 
 ## pom.xml
 
@@ -82,7 +82,7 @@
 ```java
 /**
  * <p>
- * 上传配置
+ * Upload configuration
  * </p>
  *
  * @author yangkai.shen
@@ -107,7 +107,7 @@ public class UploadConfig {
    }
 
    /**
-    * 上传配置
+    * Upload configuration
     */
    @Bean
    @ConditionalOnMissingBean
@@ -116,7 +116,7 @@ public class UploadConfig {
    }
 
    /**
-    * 注册解析器
+    * Register the parser
     */
    @Bean(name = DispatcherServlet.MULTIPART_RESOLVER_BEAN_NAME)
    @ConditionalOnMissingBean(MultipartResolver.class)
@@ -127,7 +127,7 @@ public class UploadConfig {
    }
 
    /**
-    * 华东机房
+    * East China computer room
     */
    @Bean
    public com.qiniu.storage.Configuration qiniuConfig() {
@@ -135,7 +135,7 @@ public class UploadConfig {
    }
 
    /**
-    * 构建一个七牛上传工具实例
+    * Build an instance of the Seven Bulls Upload Tool
     */
    @Bean
    public UploadManager uploadManager() {
@@ -143,7 +143,7 @@ public class UploadConfig {
    }
 
    /**
-    * 认证信息实例
+    * Authentication information instance
     */
    @Bean
    public Auth auth() {
@@ -151,7 +151,7 @@ public class UploadConfig {
    }
 
    /**
-    * 构建七牛空间管理实例
+    * Build a Seven Bulls Space Management instance
     */
    @Bean
    public BucketManager bucketManager() {
@@ -165,7 +165,7 @@ public class UploadConfig {
 ```java
 /**
  * <p>
- * 文件上传 Controller
+ * File upload Controller
  * </p>
  *
  * @author yangkai.shen
@@ -191,7 +191,7 @@ public class UploadController {
    @PostMapping(value = "/local", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
    public Dict local(@RequestParam("file") MultipartFile file) {
       if (file.isEmpty()) {
-         return Dict.create().set("code", 400).set("message", "文件内容为空");
+         return Dict.create().set("code", 400).set("message", "file content is empty");
       }
       String fileName = file.getOriginalFilename();
       String rawFileName = StrUtil.subBefore(fileName, ".", true);
@@ -200,18 +200,18 @@ public class UploadController {
       try {
          file.transferTo(new File(localFilePath));
       } catch (IOException e) {
-         log.error("【文件上传至本地】失败，绝对路径：{}", localFilePath);
-         return Dict.create().set("code", 500).set("message", "文件上传失败");
+         log.error("[File uploaded to local] failed, absolute path: {}", localFilePath);
+         return Dict.create().set("code", 500).set("message", "File upload failed");
       }
 
-      log.info("【文件上传至本地】绝对路径：{}", localFilePath);
-      return Dict.create().set("code", 200).set("message", "上传成功").set("data", Dict.create().set("fileName", fileName).set("filePath", localFilePath));
+      log.info ("[File uploaded to local] absolute path: {}", localFilePath);
+      return Dict.create().set("code", 200).set("message", "upload successful").set("data", Dict.create().set("fileName", fileName).set("filePath", localFilePath));
    }
 
    @PostMapping(value = "/yun", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
    public Dict yun(@RequestParam("file") MultipartFile file) {
       if (file.isEmpty()) {
-         return Dict.create().set("code", 400).set("message", "文件内容为空");
+         return Dict.create().set("code", 400).set("message", "file content is empty");
       }
       String fileName = file.getOriginalFilename();
       String rawFileName = StrUtil.subBefore(fileName, ".", true);
@@ -228,16 +228,16 @@ public class UploadController {
 
             FileUtil.del(new File(localFilePath));
 
-            log.info("【文件上传至七牛云】绝对路径：{}", yunFilePath);
-            return Dict.create().set("code", 200).set("message", "上传成功").set("data", Dict.create().set("fileName", yunFileName).set("filePath", yunFilePath));
+            log.info ("[File uploaded to Qiniu Yun] absolute path: {}", yunFilePath);
+            return Dict.create().set("code", 200).set("message", "upload successful").set("data", Dict.create().set("fileName", yunFileName).set("filePath", yunFilePath));
          } else {
-            log.error("【文件上传至七牛云】失败，{}", JSONUtil.toJsonStr(response));
+            log.error("[File uploaded to Qiniu Yun] failed,{}", JSONUtil.toJsonStr(response));
             FileUtil.del(new File(localFilePath));
-            return Dict.create().set("code", 500).set("message", "文件上传失败");
+            return Dict.create().set("code", 500).set("message", "File upload failed");
          }
       } catch (IOException e) {
-         log.error("【文件上传至七牛云】失败，绝对路径：{}", localFilePath);
-         return Dict.create().set("code", 500).set("message", "文件上传失败");
+         log.error("[File uploaded to Qiniu Cloud] failed, absolute path: {}", localFilePath);
+         return Dict.create().set("code", 500).set("message", "File upload failed");
       }
    }
 }
@@ -248,7 +248,7 @@ public class UploadController {
 ```java
 /**
  * <p>
- * 七牛云上传Service
+ * Seven Cow Cloud Upload Service
  * </p>
  *
  * @author yangkai.shen
@@ -273,11 +273,11 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
    }
 
    /**
-    * 七牛云上传文件
+    * Seven Cow Cloud upload files
     *
-    * @param file 文件
-    * @return 七牛上传Response
-    * @throws QiniuException 七牛异常
+    * @param file file
+    * @return Seven Bulls upload Response
+    * @throws QiniuException Seven Bulls Exception
     */
    @Override
    public Response uploadFile(File file) throws QiniuException {
@@ -297,9 +297,9 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
    }
 
    /**
-    * 获取上传凭证
+    * Get upload credentials
     *
-    * @return 上传凭证
+    * @return Upload credentials
     */
    private String getUploadToken() {
       return this.auth.uploadToken(bucket, null, 3600, putPolicy);
@@ -332,7 +332,7 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
          <Card style="height: 300px">
             <p slot="title">
                <Icon type="ios-cloud-upload"></Icon>
-               本地上传
+               Upload locally
             </p>
             <div style="text-align: center;">
                <Upload
@@ -342,20 +342,20 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
                      :on-success="handleLocalSuccess"
                      :on-error="handleLocalError"
                >
-                  <i-button icon="ios-cloud-upload-outline">选择文件</i-button>
+                  <i-button icon="ios-cloud-upload-outline"> select the file</i-button>
                </Upload>
                <i-button
                      type="primary"
                      @click="localUpload"
                      :loading="local.loadingStatus"
                      :disabled="!local.file">
-                  {{ local.loadingStatus ? '本地文件上传中' : '本地上传' }}
+                  {{ local.loadingStatus ? 'Local file upload' : 'Local upload' }}
                </i-button>
             </div>
             <div>
-               <div v-if="local.log.status != 0">状态：{{local.log.message}}</div>
-               <div v-if="local.log.status === 200">文件名：{{local.log.fileName}}</div>
-               <div v-if="local.log.status === 200">文件路径：{{local.log.filePath}}</div>
+               <div v-if="local.log.status != 0"> status: {{local.log.message}}</div>
+               <div v-if="local.log.status === 200">filename:{{local.log.fileName}}</div>
+               <div v-if="local.log.status === 200">file path: {{local.log.filePath}}</div>
             </div>
          </Card>
       </i-col>
@@ -363,7 +363,7 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
          <Card style="height: 300px;">
             <p slot="title">
                <Icon type="md-cloud-upload"></Icon>
-               七牛云上传
+               Seven cow cloud upload
             </p>
             <div style="text-align: center;">
                <Upload
@@ -373,20 +373,20 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
                      :on-success="handleYunSuccess"
                      :on-error="handleYunError"
                >
-                  <i-button icon="ios-cloud-upload-outline">选择文件</i-button>
+                  <i-button icon="ios-cloud-upload-outline"> select the file</i-button>
                </Upload>
                <i-button
                      type="primary"
                      @click="yunUpload"
                      :loading="yun.loadingStatus"
                      :disabled="!yun.file">
-                  {{ yun.loadingStatus ? '七牛云文件上传中' : '七牛云上传' }}
+                  {{ yun.loadingStatus ? 'Seven Cow Cloud File Upload' : 'Seven Cow Cloud Upload' }}
                </i-button>
             </div>
             <div>
-               <div v-if="yun.log.status != 0">状态：{{yun.log.message}}</div>
-               <div v-if="yun.log.status === 200">文件名：{{yun.log.fileName}}</div>
-               <div v-if="yun.log.status === 200">文件路径：{{yun.log.filePath}}</div>
+               <div v-if="yun.log.status != 0"> status: {{yun.log.message}}</div>
+               <div v-if="yun.log.status === 200">filename:{{yun.log.fileName}}</div>
+               <div v-if="yun.log.status === 200"> file path: {{yun.log.filePath}}</div>
             </div>
          </Card>
       </i-col>
@@ -397,9 +397,9 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
       el: '#app',
       data: {
          local: {
-            // 选择文件后，将 beforeUpload 返回的 file 保存在这里，后面会用到
+            After selecting the file, save the file returned by beforeUpload here, which will be used later
             file: null,
-            // 标记上传状态
+            Mark the upload status
             loadingStatus: false,
             log: {
                status: 0,
@@ -409,9 +409,9 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
             }
          },
          yun: {
-            // 选择文件后，将 beforeUpload 返回的 file 保存在这里，后面会用到
+            After selecting the file, save the file returned by beforeUpload here, which will be used later
             file: null,
-            // 标记上传状态
+            Mark the upload status
             loadingStatus: false,
             log: {
                status: 0,
@@ -422,18 +422,18 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
          }
       },
       methods: {
-         // beforeUpload 在返回 false 或 Promise 时，会停止自动上传，这里我们将选择好的文件 file 保存在 data里，并 return false
+         beforeUpload will stop automatic upload when false or promise is returned, here we will select the good file file in data and return false
          handleLocalUpload(file) {
             this.local.file = file;
             return false;
          },
-         // 这里是手动上传，通过 $refs 获取到 Upload 实例，然后调用私有方法 .post()，把保存在 data 里的 file 上传。
-         // iView 的 Upload 组件在调用 .post() 方法时，就会继续上传了。
+         Here is a manual upload, get the Upload instance through $refs, and then call the private method .post() to upload the file saved in data.
+         The Upload component of iView continues to upload when it calls the .post() method.
          localUpload() {
-            this.local.loadingStatus = true;  // 标记上传状态
+            this.local.loadingStatus = true;  Mark the upload status
             this.$refs.localUploadRef.post(this.local.file);
          },
-         // 上传成功后，清空 data 里的 file，并修改上传状态
+         After the upload is successful, clear the file in data and modify the upload status
          handleLocalSuccess(response) {
             this.local.file = null;
             this.local.loadingStatus = false;
@@ -450,24 +450,24 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
                this.local.log.message = response.message;
             }
          },
-         // 上传失败后，清空 data 里的 file，并修改上传状态
+         After the upload fails, empty the file in data and modify the upload status
          handleLocalError() {
             this.local.file = null;
             this.local.loadingStatus = false;
-            this.$Message.error('上传失败');
+            this.$Message.error;
          },
-         // beforeUpload 在返回 false 或 Promise 时，会停止自动上传，这里我们将选择好的文件 file 保存在 data里，并 return false
+         beforeUpload will stop automatic upload when false or promise is returned, here we will select the good file file in data and return false
          handleYunUpload(file) {
             this.yun.file = file;
             return false;
          },
-         // 这里是手动上传，通过 $refs 获取到 Upload 实例，然后调用私有方法 .post()，把保存在 data 里的 file 上传。
-         // iView 的 Upload 组件在调用 .post() 方法时，就会继续上传了。
+         Here is a manual upload, get the Upload instance through $refs, and then call the private method .post() to upload the file saved in data.
+         The Upload component of iView continues to upload when it calls the .post() method.
          yunUpload() {
-            this.yun.loadingStatus = true;  // 标记上传状态
+            this.yun.loadingStatus = true;  Mark the upload status
             this.$refs.yunUploadRef.post(this.yun.file);
          },
-         // 上传成功后，清空 data 里的 file，并修改上传状态
+         After the upload is successful, clear the file in data and modify the upload status
          handleYunSuccess(response) {
             this.yun.file = null;
             this.yun.loadingStatus = false;
@@ -484,11 +484,11 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
                this.yun.log.message = response.message;
             }
          },
-         // 上传失败后，清空 data 里的 file，并修改上传状态
+         After the upload fails, empty the file in data and modify the upload status
          handleYunError() {
             this.yun.file = null;
             this.yun.loadingStatus = false;
-            this.$Message.error('上传失败');
+            this.$Message.error;
          }
       }
    })
@@ -497,8 +497,8 @@ public class QiNiuServiceImpl implements IQiNiuService, InitializingBean {
 </html>
 ```
 
-## 参考
+## Reference
 
-1. Spring 官方文档：https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#howto-multipart-file-upload-configuration
-2. 七牛云官方文档：https://developer.qiniu.com/kodo/sdk/1239/java#5
+1. Spring Official Documentation: https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#howto-multipart-file-upload-configuration
+2. Qiniu Cloud Official Document: https://developer.qiniu.com/kodo/sdk/1239/java#5
 

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * <p>
- * 测试Controller
+ * Test Controller
  * </p>
  *
  * @author yangkai.shen

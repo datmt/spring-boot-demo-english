@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /**
  * <p>
- * JSON异常
+ * JSON exception
  * </p>
  *
  * @author yangkai.shen

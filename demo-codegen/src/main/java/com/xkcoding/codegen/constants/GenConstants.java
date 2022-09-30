@@ -2,7 +2,7 @@ package com.xkcoding.codegen.constants;
 
 /**
  * <p>
- * 常量池
+ * Constant pool
  * </p>
  *
  * @author yangkai.shen
@@ -10,7 +10,7 @@ package com.xkcoding.codegen.constants;
  */
 public interface GenConstants {
     /**
-     * 签名
+     * Signature
      */
     String SIGNATURE = "xkcoding代码生成";
 }

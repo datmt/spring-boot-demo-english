@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
- * 测试Controller
+ * Test Controller
  * </p>
  *
  * @author yangkai.shen

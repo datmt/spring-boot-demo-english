@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * redis配置
+ * Redis configuration
  * </p>
  *
  * @author yangkai.shen
@@ -31,7 +31,7 @@ import java.io.Serializable;
 public class RedisConfig {
 
     /**
-     * 默认情况下的模板只能支持RedisTemplate<String, String>，也就是只能存入字符串，因此支持序列化
+     * By default, templates can only support RedisTemplate<String, String>, that is, only strings can be saved, so serialization is supported
      */
     @Bean
     public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -43,11 +43,11 @@ public class RedisConfig {
     }
 
     /**
-     * 配置使用注解的时候缓存配置，默认是序列化反序列化的形式，加上此配置则为 json 形式
+     * When configuring the cache configuration when using annotations, the default is serialized deserialized form, plus this configuration is in json form
      */
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory factory) {
-        // 配置序列化
+        Configure serialization
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
         RedisCacheConfiguration redisCacheConfiguration = config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer())).serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 

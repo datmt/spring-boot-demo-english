@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 
 /**
  * <p>
- * 数据源选择器切面
+ * Data source selector slice
  * </p>
  *
  * @author yangkai.shen
@@ -37,7 +37,7 @@ public class DatasourceSelectorAspect {
     }
 
     /**
-     * 前置操作，拦截具体请求，获取header里的数据源id，设置线程变量里，用于后续切换数据源
+     * Front-end operation, intercept specific requests, get the data source id in the header, set the thread variable, and use it for subsequent switching data sources
      */
     @Before("datasourcePointcut()")
     public void doBefore(JoinPoint joinPoint) {
@@ -45,7 +45,7 @@ public class DatasourceSelectorAspect {
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
 
-        // 排除不可切换数据源的方法
+        Excludes methods that do not switch data sources
         DefaultDatasource annotation = method.getAnnotation(DefaultDatasource.class);
         if (null != annotation) {
             DatasourceConfigContextHolder.setDefaultDatasource();
@@ -64,7 +64,7 @@ public class DatasourceSelectorAspect {
     }
 
     /**
-     * 后置操作，设置回默认的数据源id
+     * Post-operation, set back to the default data source id
      */
     @AfterReturning("datasourcePointcut()")
     public void doAfter() {

@@ -10,7 +10,7 @@ package com.xkcoding.elasticsearch.contants;
 public interface ElasticsearchConstant {
 
     /**
-     * 索引名称
+     * Index name
      */
     String INDEX_NAME = "person";
 

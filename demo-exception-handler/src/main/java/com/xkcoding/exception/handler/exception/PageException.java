@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /**
  * <p>
- * 页面异常
+ * Page exceptions
  * </p>
  *
  * @author yangkai.shen

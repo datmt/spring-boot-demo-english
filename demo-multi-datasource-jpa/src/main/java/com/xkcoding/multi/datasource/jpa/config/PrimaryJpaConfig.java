@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 
 /**
  * <p>
- * JPA多数据源配置 - 主 JPA 配置
+ * JPA Multi-Data Source Configuration - Primary JPA configuration
  * </p>
  *
  * @author yangkai.shen
@@ -28,11 +28,11 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    // repository包名
+    repository package name
     basePackages = PrimaryJpaConfig.REPOSITORY_PACKAGE,
-    // 实体管理bean名称
+    The entity manages the bean name
     entityManagerFactoryRef = "primaryEntityManagerFactory",
-    // 事务管理bean名称
+    Transaction management bean name
     transactionManagerRef = "primaryTransactionManager")
 public class PrimaryJpaConfig {
     static final String REPOSITORY_PACKAGE = "com.xkcoding.multi.datasource.jpa.repository.primary";
@@ -40,9 +40,9 @@ public class PrimaryJpaConfig {
 
 
     /**
-     * 扫描spring.jpa.primary开头的配置信息
+     * Scan configuration information starting with spring.jpa.primary
      *
-     * @return jpa配置信息
+     * @return jpa configuration information
      */
     @Primary
     @Bean(name = "primaryJpaProperties")
@@ -52,32 +52,32 @@ public class PrimaryJpaConfig {
     }
 
     /**
-     * 获取主库实体管理工厂对象
+     * Get the master library entity management factory object
      *
-     * @param primaryDataSource 注入名为primaryDataSource的数据源
-     * @param jpaProperties     注入名为primaryJpaProperties的jpa配置信息
-     * @param builder           注入EntityManagerFactoryBuilder
-     * @return 实体管理工厂对象
+     * @param primaryDataSource injects a data source called primaryDataSource
+     * @param jpaProperties injects jpa configuration information called primaryJpaProperties
+     * @param builder injected into EntityManagerFactoryBuilder
+     * @return Entity management factory objects
      */
     @Primary
     @Bean(name = "primaryEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("primaryDataSource") DataSource primaryDataSource, @Qualifier("primaryJpaProperties") JpaProperties jpaProperties, EntityManagerFactoryBuilder builder) {
         return builder
-            // 设置数据源
+            Set up the data source
             .dataSource(primaryDataSource)
-            // 设置jpa配置
+            Set the jpa configuration
             .properties(jpaProperties.getProperties())
-            // 设置实体包名
+            Set the entity package name
             .packages(ENTITY_PACKAGE)
-            // 设置持久化单元名，用于@PersistenceContext注解获取EntityManager时指定数据源
+            Sets the persistence unit name that specifies the data source when @PersistenceContext annotation gets EntityManager
             .persistenceUnit("primaryPersistenceUnit").build();
     }
 
     /**
-     * 获取实体管理对象
+     * Get the entity management object
      *
-     * @param factory 注入名为primaryEntityManagerFactory的bean
-     * @return 实体管理对象
+     * @param factory injects a bean called primaryEntityManagerFactory
+     * @return Entity management objects
      */
     @Primary
     @Bean(name = "primaryEntityManager")
@@ -86,10 +86,10 @@ public class PrimaryJpaConfig {
     }
 
     /**
-     * 获取主库事务管理对象
+     * Get the main library transaction management object
      *
-     * @param factory 注入名为primaryEntityManagerFactory的bean
-     * @return 事务管理对象
+     * @param factory injects a bean called primaryEntityManagerFactory
+     * @return Transaction management objects
      */
     @Primary
     @Bean(name = "primaryTransactionManager")

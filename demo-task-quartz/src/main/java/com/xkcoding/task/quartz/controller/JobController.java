@@ -37,7 +37,7 @@ public class JobController {
     }
 
     /**
-     * 保存定时任务
+     * Save scheduled tasks
      */
     @PostMapping
     public ResponseEntity<ApiResponse> addJob(@Valid JobForm form) {
@@ -51,7 +51,7 @@ public class JobController {
     }
 
     /**
-     * 删除定时任务
+     * Delete scheduled tasks
      */
     @DeleteMapping
     public ResponseEntity<ApiResponse> deleteJob(JobForm form) throws SchedulerException {
@@ -64,7 +64,7 @@ public class JobController {
     }
 
     /**
-     * 暂停定时任务
+     * Pause scheduled tasks
      */
     @PutMapping(params = "pause")
     public ResponseEntity<ApiResponse> pauseJob(JobForm form) throws SchedulerException {
@@ -77,7 +77,7 @@ public class JobController {
     }
 
     /**
-     * 恢复定时任务
+     * Resume scheduled tasks
      */
     @PutMapping(params = "resume")
     public ResponseEntity<ApiResponse> resumeJob(JobForm form) throws SchedulerException {
@@ -90,7 +90,7 @@ public class JobController {
     }
 
     /**
-     * 修改定时任务，定时时间
+     * Modify timed tasks, timed time
      */
     @PutMapping(params = "cron")
     public ResponseEntity<ApiResponse> cronJob(@Valid JobForm form) {

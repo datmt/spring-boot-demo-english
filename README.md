@@ -1,11 +1,14 @@
-<h1 align="center"><a href="https://github.com/xkcoding" target="_blank">Spring Boot Demo in English</a></h1>
+# Spring Boot Demo in English
 
 
 This repo is a clone of the original repo in Chinese. Credits to the orginal creator.
 
 Repo translated using Azure translator.
 
+I keep the original README data below.
 
+
+[Original repository](https://github.com/xkcoding/spring-boot-demo)
 
 <p align="center">
   <a href="https://travis-ci.com/xkcoding/spring-boot-demo"><img alt="Travis-CI" src="https://travis-ci.com/xkcoding/spring-boot-demo.svg?branch=master"/></a>
